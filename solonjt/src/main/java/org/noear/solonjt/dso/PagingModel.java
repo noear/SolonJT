@@ -102,6 +102,30 @@ public class PagingModel {
             list.add(i);
         }
 
+        if(size>7 && pages() > size){
+            if(isleft){
+                if((pages() - list.get(list.size()-1)) > 3){
+                    list.remove(list.size()-1);
+                    list.remove(list.size()-1);
+                    list.remove(list.size()-1);
+
+                    list.add(-1l);
+                    list.add(pages()-1);
+                    list.add(pages());
+                }
+            }else{
+                if((list.get(0) - 1) > 3){
+                    list.remove(0);
+                    list.remove(0);
+                    list.remove(0);
+
+                    list.add(0,-1l);//-1代理..
+                    list.add(0,2l);
+                    list.add(0,1l);
+                }
+            }
+        }
+
         return list;
     }
 
