@@ -13,21 +13,20 @@ public class MethodUtils {
 
     public static List<Map<String, Object>> getMethods(Map<String, Object> kvColl) {
         List<Map<String, Object>> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
 
         kvColl.forEach((k, v) -> {
             if(v instanceof Class<?>){
-                list.add(getMethods(k,(Class<?>) v));
+                list.add(getMethods(sb,k,(Class<?>) v));
             }else{
-                list.add(getMethods(k, v.getClass()));
+                list.add(getMethods(sb,k, v.getClass()));
             }
         });
-
-        Collections.sort(list, Comparator.comparing(m -> m.get("name").toString().toLowerCase()));
 
         return list;
     }
 
-    public static Map<String, Object> getMethods(String k, Class<?> cls) {
+    public static Map<String, Object> getMethods(StringBuilder sb,String k, Class<?> cls) {
 
         Map<String, Object> v1 = new HashMap<>();
 
@@ -65,7 +64,7 @@ public class MethodUtils {
                 m1.put("note", "/** " + tmp.value() + " */");
             }
 
-            StringBuilder sb = new StringBuilder();
+            sb.setLength(0);
             sb.append(k).append(".");
             sb.append(m.getName());
 

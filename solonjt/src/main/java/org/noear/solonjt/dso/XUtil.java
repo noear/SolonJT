@@ -424,8 +424,8 @@ public class XUtil {
     /**
      *
      ****************************/
-    @XNote("获取共享对象列表（接口清单）")
-    public List<Map<String, Object>> sharedList() {
+    @XNote("获取接口开放列表（接口清单）")
+    public List<Map<String, Object>> openList() {
         Map<String, Object> tmp = new HashMap<>();
 
         tmp.putAll(XApp.global().shared());
@@ -442,10 +442,17 @@ public class XUtil {
         tmp.put("new Timecount()", Timecount.class);
         tmp.put("new Timespan(date)", Timespan.class);
 
-        return MethodUtils.getMethods(tmp);
+        List<Map<String, Object>> list = MethodUtils.getMethods(tmp);
+
+        XFun.g.openList(list);
+
+        //排序
+        Collections.sort(list, Comparator.comparing(m -> m.get("name").toString().toLowerCase()));
+
+        return list;
     }
 
-    @XNote("添加共享对象")
+    @XNote("添加共享对象（key, 以 _ 开头）")
     public boolean sharedAdd(String key, Object obj){
         if(TextUtils.isEmpty(key)){
             return false;
@@ -457,6 +464,15 @@ public class XUtil {
         }else{
             return false;
         }
+    }
+
+    @XNote("检查共享对象")
+    public boolean sharedHas(String key) {
+        if (TextUtils.isEmpty(key)) {
+            return false;
+        }
+
+        return XApp.global().shared().containsKey(key);
     }
 
     @XNote("获取扩展目录下的文件")
