@@ -27,6 +27,7 @@ public class AFileStaticHandler {
             if (modified_since.equals(modified_now)) {
                 context.headerSet(CACHE_CONTROL, "max-age=6000");
                 context.headerSet(LAST_MODIFIED, modified_now);
+                context.charset("utf-8");
                 context.status(304);
                 return;
             }
@@ -40,6 +41,7 @@ public class AFileStaticHandler {
                 context.headerSet(CACHE_CONTROL, "max-age=6000");
                 context.headerSet(LAST_MODIFIED, file.update_fulltime.toString());
                 context.contentType(mime);
+                context.charset("utf-8");
             }
         }
 

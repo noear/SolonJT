@@ -126,10 +126,11 @@ public class InitUtil {
                 "  `menu_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',\n" +
                 "  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',\n" +
                 "  `tag` varchar(40) NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
-                "  `label` varchar(40) DEFAULT '' COMMENT '分类：主菜单、顶部菜单、底部菜单等',\n" +
+                "  `label` varchar(100) DEFAULT '' COMMENT '分类：主菜单、顶部菜单、底部菜单等',\n" +
                 "  `txt` varchar(100) DEFAULT NULL COMMENT '文本内容',\n" +
                 "  `url` varchar(512) DEFAULT NULL COMMENT '链接的url',\n" +
                 "  `target` varchar(32) DEFAULT NULL COMMENT '打开的方式',\n" +
+                "  `level` int(11) NOT NULL DEFAULT '0' COMMENT '级别',\n" +
                 "  `icon` varchar(64) DEFAULT NULL COMMENT '菜单的icon',\n" +
                 "  `flag` varchar(32) DEFAULT NULL COMMENT '菜单标识',\n" +
                 "  `order_number` int(11) DEFAULT '0' COMMENT '排序字段',\n" +
@@ -181,8 +182,9 @@ public class InitUtil {
         }
 
         if(TextUtils.isEmpty(node)==false){
-            String addr = XUtil.g.localAddr();
             try {
+                String addr = XUtil.g.localAddr();
+
                 DbApi.cfgSet(node, addr, "cluster.node");
             }catch (Exception ex){
                 ex.printStackTrace();

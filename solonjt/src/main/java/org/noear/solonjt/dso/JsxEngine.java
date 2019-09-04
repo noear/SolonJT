@@ -40,9 +40,9 @@ public class JsxEngine {
             sb.append("var XContext = Java.type('org.noear.solon.core.XContext');");
             sb.append("var ONode = Java.type('org.noear.snack.ONode');");
 
-            sb.append("var Datetime = Java.type('org.noear.thinkjt.utils.Datetime');");
-            sb.append("var Timecount = Java.type('org.noear.thinkjt.utils.Timecount');");
-            sb.append("var Timespan = Java.type('org.noear.thinkjt.utils.Timespan');");
+            sb.append("var Datetime = Java.type('org.noear.solonjt.utils.Datetime');");
+            sb.append("var Timecount = Java.type('org.noear.solonjt.utils.Timecount');");
+            sb.append("var Timespan = Java.type('org.noear.solonjt.utils.Timespan');");
 
             sb.append("function modelAndView(tml,mod){return JTAPI.modelAndView(tml,mod);};");
             //sb.append("function require(path){var c=JTAPI.require(path); return eval(c);}");

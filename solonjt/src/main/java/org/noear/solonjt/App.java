@@ -25,7 +25,8 @@ public class App {
         xarg.put("extend",extend);
 
         //3.启动服务
-        XApp app = XApp.start(App.class, xarg,(x)->{});
+        XApp app = XApp.start(null, xarg,(x)->{}); //source 不要传值，光在会在没有db情况下提前初始化
+        app.sharedAdd("XFun", XFun.g);
         app.sharedAdd("XUtil", XUtil.g);
 
         //4.初始化功能

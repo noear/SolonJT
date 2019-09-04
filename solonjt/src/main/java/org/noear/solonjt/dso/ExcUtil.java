@@ -23,6 +23,8 @@ public class ExcUtil {
             return;
         }
 
+        ctx.charset("utf-8");
+
 
         if (TextUtils.isEmpty(file.content_type) == false) {
             ctx.contentType(file.content_type);
@@ -37,18 +39,18 @@ public class ExcUtil {
                 sb.append(call).append("(").append(text).append(");");
                 text = sb.toString();
 
-                ctx.contentType("application/x-javascript;charset=utf-8");
+                ctx.contentType("application/x-javascript");
             } else {
                 if (TextUtils.isEmpty(file.content_type)) {
                     /**
                      * 如果没有预设content type；则自动检测
                      * */
                     if (text.startsWith("<")) {
-                        ctx.contentType("text/html;charset=utf-8");
+                        ctx.contentType("text/html");
                     }
 
                     if (text.startsWith("{")) {
-                        ctx.contentType("application/json;charset=utf-8");
+                        ctx.contentType("application/json");
                     }
                 }
             }

@@ -82,10 +82,37 @@ public class XUtil {
         return tmp;
     }
 
+    /**
+     * 空的只读集合
+     * */
+    private final Map<String, Object> _empMap = Collections.unmodifiableMap(new HashMap<>());
+    @XNote("空的Map<String,Object>集合")
+    public Map<String, Object> empMap() {
+        return _empMap;
+    }
+
+
+    private List<Object> _empList = Collections.unmodifiableList(new ArrayList<>());
+    @XNote("空的List<Object>集合")
+    public List<Object> empList() {
+        return _empList;
+    }
+
+    private Set<Object> _empSet = Collections.unmodifiableSet(new HashSet<>());
+    @XNote("创建一个Set<Object>集合")
+    public Set<Object> empSet() {
+        return _empSet;
+    }
+
+
+    /**
+     * 新建集合
+     * */
     @XNote("创建一个Map<String,Object>集合")
     public Map<String, Object> newMap() {
         return new HashMap<>();
     }
+
 
     @XNote("创建一个List<Object>集合")
     public List<Object> newList() {
@@ -320,8 +347,11 @@ public class XUtil {
 
     @XNote("文件刷新缓存")
     public boolean fileFlush(String path, boolean is_del) {
-        String path2 = path;
-        String name = path2.replace("/", "__");
+        if(TextUtils.isEmpty(path)){
+            return false;
+        }
+
+        String name = path.replace("/", "__");
 
         if(is_del){
             RouteHelper.del(path);
@@ -329,7 +359,7 @@ public class XUtil {
             RouteHelper.add(path);
         }
 
-        AFileUtil.remove(path2);
+        AFileUtil.remove(path);
         FtlUtil.g().del(name);
         JsxUtil.g().del(name);
         return true;
@@ -337,6 +367,10 @@ public class XUtil {
 
     @XNote("文件刷新缓存")
     public boolean fileFlush(String path, boolean is_del, String label, String note) {
+        if(TextUtils.isEmpty(path)){
+            return false;
+        }
+
         String path2 = path;
         String name = path2.replace("/", "__");
 
@@ -539,31 +573,6 @@ public class XUtil {
         return JarUtils.loadJar(path,data64,plugin);
     }
 
-    private Map<String,XFun> _xfunMap = new HashMap<>();
-    @XNote("函数设置")
-    public void xfunSet(String name,XFun fun){
-        _xfunMap.put(name,fun);
-    }
-    @XNote("函数获取")
-    public XFun xfunGet(String name){
-        return _xfunMap.get(name);
-    }
-    @XNote("函数检查")
-    public boolean xfunHas(String name){
-        return _xfunMap.containsKey(name);
-    }
-
-    @XNote("调用一个函数")
-    public Object callXfun(String name,Map<String,Object> args)  {
-        XFun fun = _xfunMap.get(name);
-        if(fun!=null){
-            return fun.run(args);
-        }else{
-            return null;
-        }
-    }
-
-
     @XNote("调用一个文件")
     public Object callFile(String path) throws Exception {
         return CallUtil.callFile(path);
@@ -576,24 +585,24 @@ public class XUtil {
     }
 
     @XNote("调用一组勾子")
-    public String callHook(String tag, String label, boolean useCache) {
+    public String callHook(String tag, String label, boolean useCache) throws Exception{
         return CallUtil.callHook(tag, label, useCache);
     }
 
     @XNote("调用一组勾子")
-    public String callHook(String tag,String label, boolean useCache, Map<String,Object> attrs) {
+    public String callHook(String tag,String label, boolean useCache, Map<String,Object> attrs) throws Exception{
         XContext.current().attrSet(attrs);
         return CallUtil.callHook(tag, label, useCache);
     }
 
     @XNote("日志")
-    public boolean log(Map<String,Object> data) {
+    public boolean log(Map<String,Object> data) throws Exception{
         return LogUtil.log(data);
     }
 
     private String _localAddr;
     @XNote("服务地址")
-    public String localAddr(){
+    public String localAddr() throws Exception{
         if(_localAddr == null) {
             _localAddr = LocalUtil.getLocalAddress(XApp.global().port());
         }
@@ -602,7 +611,7 @@ public class XUtil {
     }
 
     @XNote("设置上下文状态（用于在模板中停止请求）")
-    public int statusSet(int status) throws IOException{
+    public int statusSet(int status) throws Exception{
         XContext.current().status(status);
         throw new RuntimeException("404 error");
     }

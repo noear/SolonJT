@@ -184,11 +184,11 @@ public class DbApi {
                 .getMapList();
     }
 
-    public static AImageModel imgGet(String path) throws Exception{
+    public static AImageModel imgGet(String path) throws Exception {
         return db().table("a_image")
-                .where("`path`=?",path)
+                .where("`path`=?", path)
                 .select("*")
-                .caching(DbUtil.cache)
+                .caching(DbUtil.cache).cacheTag("image_path_" + path)
                 .getItem(AImageModel.class);
     }
 
@@ -222,8 +222,14 @@ public class DbApi {
     public static boolean imgUpd(String path, String data) throws Exception {
         boolean is_ok = db().table("a_image")
                 .set("`data`",data)
+                .set("`data_size`",data.length())
+                .set("update_fulltime","$NOW()")
                 .where("`path`=?",path)
                 .update()>0;
+
+        DbUtil.cache.clear("image_path_" + path);
+
+        AImageUtil.remove(path);
 
         return is_ok;
     }
@@ -291,11 +297,11 @@ public class DbApi {
 
     private static boolean do_log(Map<String,Object> map){
 
-        XFun fun = XUtil.g.xfunGet("log");
+        XFunHandler fun = XFun.g.find("log");
 
         try {
             if(fun!=null){
-                fun.run(map);
+                fun.call(map);
             }else {
                 db().table("a_log")
                         .setMap(map)

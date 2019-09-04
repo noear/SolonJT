@@ -3,13 +3,14 @@ package org.noear.solonjt.dso;
 import org.noear.solon.annotation.XNote;
 import org.noear.solon.core.XContext;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 分页条数据模型
  * */
-public class PagingModel {
+public class PagingModel implements Serializable {
 
     public PagingModel(XContext ctx, long pageSize, boolean fixedSize) {
         _page = ctx.paramAsLong("_page", 1);

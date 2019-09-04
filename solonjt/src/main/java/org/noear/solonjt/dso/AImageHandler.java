@@ -26,6 +26,7 @@ public class AImageHandler {
                 context.headerSet(CACHE_CONTROL, "max-age=6000");
                 context.headerSet(LAST_MODIFIED, modified_now);
                 context.contentType(file.content_type);
+                context.charset("utf-8");
                 context.status(304);
                 return;
             }
@@ -39,6 +40,7 @@ public class AImageHandler {
                 context.headerSet(CACHE_CONTROL, "max-age=6000");
                 context.headerSet(LAST_MODIFIED, app_runtime.toString());
                 context.contentType(file.content_type);
+                context.charset("utf-8");
             }
         }
 
