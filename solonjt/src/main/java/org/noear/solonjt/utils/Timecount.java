@@ -1,18 +1,23 @@
 package org.noear.solonjt.utils;
 
+import org.noear.solon.annotation.XNote;
+
 public class Timecount {
     private long start_time;
 
+    @XNote("开始计时")
     public Timecount start() {
         start_time = System.currentTimeMillis();
         return this;
     }
 
+    @XNote("结束计时，并返回间隔时间")
     public Timespan stop() {
         return new Timespan(System.currentTimeMillis(), start_time);
     }
 
-    //@ref_second:参考少数
+
+    @XNote("结束计时，并返回间隔秒数")
     public String stop(long ref_second) {
         double temp = (stop().milliseconds() / 10) / 100.00d;
 

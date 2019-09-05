@@ -94,7 +94,7 @@ public class ExcUtil {
             }
         } catch (Exception ex) {
             //如果出错，输出异常
-            if(ctx.status() < 400) {
+            if (ctx != null && ctx.status() < 400) {
                 String err = ExceptionUtils.getString(ex);
                 if (ctx != null) {
                     ctx.output(err);

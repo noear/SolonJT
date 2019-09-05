@@ -1,5 +1,7 @@
 package org.noear.solonjt.utils;
 
+import org.noear.solon.annotation.XNote;
+
 import java.util.Date;
 
 //时间间隔
@@ -32,26 +34,28 @@ public class Timespan {
         interval = time1 - time2;
     }
 
+
+    @XNote("总毫秒数")
     public long milliseconds(){
         return interval;
     }
 
-    //相差秒数
+    @XNote("总秒数")
     public long seconds(){
         return interval /1000;
     }
 
-    //相差分钟
+    @XNote("总分钟")
     public long minutes(){
         return seconds()/60;
     }
 
-    //相差小时
+    @XNote("总小时")
     public long hours(){
         return minutes()/60;
     }
 
-    //相差天数
+    @XNote("总天数")
     public long days(){
         return hours()/24;
     }
