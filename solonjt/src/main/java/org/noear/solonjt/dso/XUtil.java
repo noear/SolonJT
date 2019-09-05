@@ -486,20 +486,26 @@ public class XUtil {
     }
 
 
-    /**
-     * 生成md5码
-     */
+
     @XNote("生成md5码")
     public String md5(String str) {
-        return EncryptUtils.md5(str);
+        return EncryptUtils.md5(str, "UTF-16LE");
     }
 
-    /**
-     * 生成sha1码
-     */
+    @XNote("生成md5码")
+    public String md5(String str, String charset) {
+        return EncryptUtils.md5(str, charset);
+    }
+
+
     @XNote("生成sha1码")
     public String sha1(String str) {
-        return EncryptUtils.sha1(str);
+        return EncryptUtils.sha1(str, "UTF-16LE");//UTF-16LE, utf-8
+    }
+
+    @XNote("生成sha1码")
+    public String sha1(String str, String charset) {
+        return EncryptUtils.sha1(str, charset);
     }
 
 

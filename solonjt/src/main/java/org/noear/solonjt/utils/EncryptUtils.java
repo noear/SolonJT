@@ -6,12 +6,12 @@ public class EncryptUtils {
     private static final char[] _hexDigits = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     /** 生成md5码 */
-    public static String sha1(String cleanData) {
-        return hashEncode("SHA-1", cleanData);
+    public static String sha1(String cleanData, String chaerset) {
+        return hashEncode("SHA-1", cleanData,chaerset);
     }
 
-    public static String md5(String cleanData) {
-        return hashEncode("MD5", cleanData);
+    public static String md5(String cleanData, String chaerset) {
+        return hashEncode("MD5", cleanData,chaerset);
     }
 
     public static String md5Bytes(byte[] bytes) {
@@ -23,10 +23,10 @@ public class EncryptUtils {
         }
     }
 
-    private static String hashEncode(String algorithm, String cleanData) {
+    private static String hashEncode(String algorithm, String cleanData, String chaerset) {
 
         try {
-            byte[] btInput = cleanData.getBytes("UTF-16LE");
+            byte[] btInput = cleanData.getBytes(chaerset);
             return do_hashEncode(algorithm,btInput);
         } catch (Exception ex) {
             ex.printStackTrace();
