@@ -1,12 +1,14 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.annotation.XNote;
+import org.noear.solonjt.utils.ThreadUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/** 引擎扩展函数管理器 */
 public class XFun {
     public static final XFun g  = new XFun();
 

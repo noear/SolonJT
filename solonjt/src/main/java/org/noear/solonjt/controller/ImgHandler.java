@@ -1,7 +1,7 @@
 package org.noear.solonjt.controller;
 
 import org.noear.solonjt.dso.AImageHandler;
-import org.noear.solonjt.dso.AImageModel;
+import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.dso.AImageUtil;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;

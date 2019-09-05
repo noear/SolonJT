@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.solon.XUtil;
 import org.noear.solon.core.XMap;
+import org.noear.solonjt.utils.ThreadUtils;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.LocalCache;
 
@@ -34,7 +35,7 @@ public class DbUtil {
 
     private static DbContext getDb(String db, String url,String server, String usr, String pwd) {
         if (TextUtils.isEmpty(url)) {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = ThreadUtils.getStringBuilder();
             sb.append("jdbc:mysql://")
                     .append(server)
                     .append("/")

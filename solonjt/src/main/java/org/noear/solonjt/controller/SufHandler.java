@@ -2,6 +2,8 @@ package org.noear.solonjt.controller;
 
 import org.noear.solonjt.Config;
 import org.noear.solonjt.dso.*;
+import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
@@ -13,8 +15,16 @@ import java.util.List;
  * 文件后缀拦截器的代理（数据库安全）
  * */
 public class SufHandler implements XHandler {
-    private static final SufHandler _g = new SufHandler();
+    private static final String _lock = "";
+    private static  SufHandler _g = null;
     public static SufHandler g(){
+        if(_g == null){
+            synchronized (_lock){
+                if(_g == null){
+                    _g = new SufHandler();
+                }
+            }
+        }
         return  _g;
     }
 
@@ -54,7 +64,7 @@ public class SufHandler implements XHandler {
             return;
         }
 
-        ExcUtil.exec(name,file,ctx);
+        EngineFactory.exec(name,file,ctx);
     }
 
 

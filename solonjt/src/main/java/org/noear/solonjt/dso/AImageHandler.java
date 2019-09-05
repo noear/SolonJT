@@ -1,5 +1,6 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.Base64Utils;
 import org.noear.solon.core.XContext;
 

@@ -4,6 +4,8 @@ import org.noear.solonjt.Config;
 import org.noear.solonjt.dso.*;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
+import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.TextUtils;
 
@@ -14,10 +16,19 @@ import java.util.List;
  * 文件路径拦截器的代理（数据库安全）
  * */
 public class FrmInterceptor implements XHandler {
-    private static final FrmInterceptor _g = new FrmInterceptor();
+    private static final String _lock = "";
+    private static  FrmInterceptor _g = null;
     public static FrmInterceptor g(){
+        if(_g == null){
+            synchronized (_lock){
+                if(_g == null){
+                    _g = new FrmInterceptor();
+                }
+            }
+        }
         return  _g;
     }
+
 
 
     private FrmInterceptor(){
@@ -56,10 +67,8 @@ public class FrmInterceptor implements XHandler {
             return;
         }
 
-        String name = path2.replace("/", "__");
-
         try {
-            JsxUtil.g().runApi(name, file, false);
+            EngineFactory.execOnly(file, ctx);
         }catch (Exception ex) {
             String err = ExceptionUtils.getString(ex);
             ctx.output(err);

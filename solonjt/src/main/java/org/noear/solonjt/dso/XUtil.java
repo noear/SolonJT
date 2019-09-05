@@ -4,6 +4,8 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.noear.solonjt.Config;
 import org.noear.solonjt.controller.FrmInterceptor;
 import org.noear.solonjt.controller.SufHandler;
+import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.*;
 import org.noear.snack.ONode;
 import org.noear.solon.XApp;
@@ -213,7 +215,7 @@ public class XUtil {
         String extension = file.extension;
         byte[] data_byte = IOUtils.toBytes(file.content);
         String data = Base64Utils.encodeByte(data_byte);
-        StringBuilder path = new StringBuilder();
+        StringBuilder path = ThreadUtils.getStringBuilder();
 
         if(name_mod==0) {
             //自动
@@ -360,8 +362,7 @@ public class XUtil {
         }
 
         AFileUtil.remove(path);
-        FtlUtil.g().del(name);
-        JsxUtil.g().del(name);
+        EngineFactory.del(name);
         return true;
     }
 
@@ -375,8 +376,7 @@ public class XUtil {
         String name = path2.replace("/", "__");
 
         AFileUtil.remove(path2);
-        FtlUtil.g().del(name);
-        JsxUtil.g().del(name);
+        EngineFactory.del(name);
 
         //应用路由
         if(is_del){
@@ -410,8 +410,9 @@ public class XUtil {
     public boolean restart() {
         AFileUtil.removeAll();
         AImageUtil.removeAll();
-        FtlUtil.g().delAll();
-        JsxUtil.g().delAll();
+
+        EngineFactory.delAll();
+
         DbUtil.cache.clear();
 
         SufHandler.g().reset();
@@ -527,7 +528,7 @@ public class XUtil {
      */
     @XNote("生成随机码")
     public String codeByRandom(int len) {
-        return CodeUtils.codeByRandom(len);
+        return TextUtils.codeByRandom(len);
     }
 
     /**

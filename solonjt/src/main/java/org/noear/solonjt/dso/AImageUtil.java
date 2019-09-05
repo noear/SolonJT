@@ -1,6 +1,7 @@
 package org.noear.solonjt.dso;
 
 
+import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.TextUtils;
 
 import java.util.HashMap;

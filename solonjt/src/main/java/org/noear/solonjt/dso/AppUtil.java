@@ -13,6 +13,7 @@ import org.noear.solon.core.XMethod;
 
 import java.net.URL;
 
+/** 应用协助控制工具 */
 public class AppUtil {
     /**
      * 初始化数据库和内核
@@ -120,8 +121,8 @@ public class AppUtil {
         app.get(Config.frm_root_img + "**", new ImgHandler());
 
         //文件代理
-        app.all("/", AppHandler.g);
-        app.all("/**", AppHandler.g);
+        app.all("/", AppHandler.g());
+        app.all("/**", AppHandler.g());
 
         //后缀代理（置于所有代理的前面）
         XHandler h1 = app.handlerGet();

@@ -6,6 +6,7 @@ import org.noear.solonjt.utils.TextUtils;
 import java.io.File;
 import java.util.*;
 
+/** 扩展文件夹工具 */
 public class ExtendUtil {
     private static String _path;
     private static File _file;
@@ -14,7 +15,7 @@ public class ExtendUtil {
         _file = new File(_path);
     }
 
-    /** 如果是目录的话，只处理一级 */
+    /** 扫描扩展文件夹（如果是目录的话，只处理一级） */
     public static List<Map<String,Object>> scan() {
         List<Map<String,Object>> list = new ArrayList<>();
 
@@ -35,6 +36,7 @@ public class ExtendUtil {
         return list;
     }
 
+    /** 删除扩展文件夹里的文件 */
     public static boolean del(String name){
         if(TextUtils.isEmpty(name)){
             return false;

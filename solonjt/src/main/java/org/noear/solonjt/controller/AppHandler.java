@@ -1,6 +1,8 @@
 package org.noear.solonjt.controller;
 
 import org.noear.solonjt.dso.*;
+import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
@@ -10,7 +12,19 @@ import org.noear.solon.core.XHandler;
  * */
 public class AppHandler implements XHandler {
 
-    public static final AppHandler g = new AppHandler();
+    private static final String _lock = "";
+    private static  AppHandler _g = null;
+    public static AppHandler g(){
+        if(_g == null){
+            synchronized (_lock){
+                if(_g == null){
+                    _g = new AppHandler();
+                }
+            }
+        }
+        return  _g;
+    }
+
 
     @Override
     public void handle(XContext ctx) throws Exception {
@@ -63,6 +77,6 @@ public class AppHandler implements XHandler {
             return;
         }
 
-        ExcUtil.exec(name, file, ctx);
+        EngineFactory.exec(name, file, ctx);
     }
 }

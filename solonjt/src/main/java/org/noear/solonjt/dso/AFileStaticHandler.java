@@ -1,6 +1,8 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.core.*;
+import org.noear.solonjt.model.AFileModel;
+
 import java.util.Date;
 
 /**

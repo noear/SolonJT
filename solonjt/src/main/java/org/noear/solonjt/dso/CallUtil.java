@@ -1,18 +1,21 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.solon.core.XContext;
+import org.noear.solonjt.utils.ThreadUtils;
 
 public class CallUtil {
 
-    private static Object do_call(String path, boolean asApi) throws Exception {
+    private static Object do_call(String path, boolean asRaw) throws Exception {
         String path2 = path;//不用转换*
         String name = path2.replace("/", "__");
 
         AFileModel file = AFileUtil.get(path2);
 
         if (file.file_id > 0 && TextUtils.isEmpty(file.content) == false) {
-            return ExcUtil.call(name, file, XContext.current(), asApi);
+            return EngineFactory.call(name, file, XContext.current(), null, asRaw);
         } else {
             return "";
         }
@@ -26,7 +29,7 @@ public class CallUtil {
             return null;
         }
 
-        return do_call(path,false);
+        return do_call(path,true);
     }
 
     /**
@@ -37,13 +40,13 @@ public class CallUtil {
             return "";
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = ThreadUtils.getStringBuilder();
 
         try {
             DbApi.fileGetPaths(tag,label,useCache)
                     .forEach((f) -> {
                         try {
-                            Object tmp = do_call(f.path, true);
+                            Object tmp = do_call(f.path, false);
                             if (tmp != null) {
                                 sb.append(tmp.toString()).append("\r\n");
                             }

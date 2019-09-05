@@ -347,7 +347,7 @@ public class InitUtil {
         file.delete();
         file.createNewFile();
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = ThreadUtils.getStringBuilder();
         map.forEach((k, v) -> {
             if("center".equals(k) || "node".equals(k)){
                 sb.append(Config.code).append(".");

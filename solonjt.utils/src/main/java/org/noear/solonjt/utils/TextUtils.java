@@ -1,0 +1,57 @@
+package org.noear.solonjt.utils;
+
+import org.noear.snack.core.exts.ThData;
+
+import java.util.Random;
+
+public class TextUtils {
+    /** 是否为空 */
+    public static boolean isEmpty(String str) {
+        return str == null || str.isEmpty();
+    }
+
+    /** 是否为数字 */
+    public static boolean isNumber(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return false;
+        }
+
+        for (int i = str.length(); --i >= 0; ) {
+            if (!Character.isDigit(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    private static final ThData<StringBuilder> _tlBuilder = new ThData(new StringBuilder(1024*5));
+
+    /** 生成随机字符串 */
+    public static String codeByRandom(int len) {
+        int TEMPLATE_SIZE = 62;
+        char codeTemplate[] = {
+                'a', 'b', 'c', 'd', 'e', 'f',
+                'g', 'h', 'i', 'j', 'k', 'l',
+                'm', 'n', 'o', 'p', 'q', 'r',
+                's', 't', 'u', 'v', 'w', 'x',
+                'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F',
+                'G', 'H', 'I', 'J', 'K', 'L',
+                'M', 'N', 'O', 'P', 'Q', 'R',
+                'S', 'T', 'U', 'V', 'W', 'X',
+                'Y', 'Z',
+                '0', '1', '2', '3', '4', '5',
+                '6', '7', '8', '9'
+        };
+        StringBuilder sb = _tlBuilder.get();
+        sb.setLength(0);
+
+        Random random = new Random();
+        for (int i = 0; i < len; i++) {
+            sb.append(codeTemplate[random.nextInt(TEMPLATE_SIZE) % TEMPLATE_SIZE]);
+        }
+
+        return sb.toString();
+    }
+}
