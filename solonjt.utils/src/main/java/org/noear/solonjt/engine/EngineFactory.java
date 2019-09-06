@@ -71,7 +71,7 @@ public class EngineFactory {
      */
     public static void exec(String name, AFileModel file, XContext ctx) throws Exception {
         //最后是动态的
-        String text = (String) call(name, file, ctx, null, false);
+        String text = (String) call(name, file, ctx, null, true);
         String call = ctx.param("callback");
 
         if (ctx.status() == 404) {
@@ -117,16 +117,31 @@ public class EngineFactory {
     }
 
     /**
+     * 纯执行一个js文件（不返回；一般用于执行拉截器）
+     */
+    public static void execOnly(AFileModel file, XContext ctx) throws Exception {
+        IJtEngine tmp = _map.get(file.edit_mode);
+
+        //最后是动态的
+        if (tmp != null) {
+            String path = file.path;
+            String name = path.replace("/", "__");
+
+            tmp.exec(name, file, ctx, null, false);
+        }
+    }
+
+    /**
      * 执行一个文件并返回
      */
-    public static Object call(String name, AFileModel file, XContext ctx, Map<String, Object> model, boolean asRaw) throws Exception {
+    public static Object call(String name, AFileModel file, XContext ctx, Map<String, Object> model, boolean outString) throws Exception {
         IJtEngine tmp = _map.get(file.edit_mode);
 
         try {
             if (tmp != null) {
-                return tmp.exec(name, file, ctx, model, asRaw);
+                return tmp.exec(name, file, ctx, model, outString);
             } else {
-                return _def.exec(name, file, ctx, model, asRaw);
+                return _def.exec(name, file, ctx, model, outString);
             }
         } catch (Exception ex) {
             //如果出错，输出异常
@@ -140,21 +155,6 @@ public class EngineFactory {
             }
 
             return null;
-        }
-    }
-
-    /**
-     * 纯执行一个js文件（不返回；一般用于执行拉截器）
-     */
-    public static void execOnly(AFileModel file, XContext ctx) throws Exception {
-        IJtEngine tmp = _map.get(file.edit_mode);
-
-        //最后是动态的
-        if (tmp != null) {
-            String path = file.path;
-            String name = path.replace("/", "__");
-
-            tmp.exec(name, file, ctx, null, true);
         }
     }
 }

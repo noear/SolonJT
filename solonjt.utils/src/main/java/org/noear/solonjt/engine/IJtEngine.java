@@ -10,7 +10,7 @@ public interface IJtEngine {
     String language();
 
     /** 执行 */
-    Object exec(String name, AFileModel file, XContext ctx, Map<String, Object> model, boolean asRaw) throws Exception;
+    Object exec(String name, AFileModel file, XContext ctx, Map<String, Object> model, boolean outString) throws Exception;
 
     /** 删除代码缓存 */
     void del(String name);

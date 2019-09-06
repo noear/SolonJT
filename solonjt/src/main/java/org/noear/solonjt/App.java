@@ -31,9 +31,11 @@ public class App {
         },AFileUtil::get);
 
         //4.启动服务
-        XApp app = XApp.start(App.class, xarg,(x)->{});
-        app.sharedAdd("XFun", XFun.g);
-        app.sharedAdd("XUtil", XUtil.g);
+        XApp app = XApp.start(App.class, xarg,(x)->{
+            x.sharedAdd("XFun", XFun.g);
+            x.sharedAdd("XUtil", XUtil.g);
+        });
+
 
 
         //5.初始化功能

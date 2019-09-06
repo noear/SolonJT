@@ -1,5 +1,6 @@
 package org.noear.solonjt.engine.javascript;
 
+import jdk.nashorn.internal.objects.annotations.Setter;
 import org.noear.snack.core.exts.ThData;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
@@ -7,12 +8,10 @@ import org.noear.solonjt.engine.EngineFactory;
 import org.noear.solonjt.engine.IJtEngine;
 import org.noear.solonjt.model.AFileModel;
 
+import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * javascript 代码运行工具
@@ -34,14 +33,16 @@ public class JavascriptJtEngine implements IJtEngine{
     }
 
 
-    private final ScriptEngine _jsEng;
-    private final List<String> obj_loaded;
+    private final ScriptEngine _eng;
+    private final Invocable    _eng_call;
+    private final Set<String>  _loaded_names;
 
     private JavascriptJtEngine(){
-        obj_loaded = Collections.synchronizedList(new ArrayList<>());
+        _loaded_names = Collections.synchronizedSet(new HashSet<>());
 
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-        _jsEng = scriptEngineManager.getEngineByName("nashorn");
+        _eng = scriptEngineManager.getEngineByName("nashorn");
+        _eng_call = (Invocable)_eng;
 
         XApp.global().shared().forEach((k, v)->{
             sharedSet(k, v);
@@ -51,7 +52,7 @@ public class JavascriptJtEngine implements IJtEngine{
             sharedSet(k, v);
         });
 
-        sharedSet("__JSAPI", new __JSAPI());
+        sharedSet("__JTEAPI", new __JTEAPI());
 
         try {
             StringBuilder sb = new StringBuilder();
@@ -67,9 +68,9 @@ public class JavascriptJtEngine implements IJtEngine{
             sb.append("var Timecount = Java.type('org.noear.solonjt.utils.Timecount');");
             sb.append("var Timespan = Java.type('org.noear.solonjt.utils.Timespan');");
 
-            sb.append("function modelAndView(tml,mod){return __JSAPI.modelAndView(tml,mod);};");
+            sb.append("function modelAndView(tml,mod){return __JTEAPI.modelAndView(tml,mod);};");
 
-            sb.append("function require(path){__JSAPI.require(path);return __global.lib[path]}");
+            sb.append("function require(path){__JTEAPI.require(path);return __global.lib[path]}");
 
             //为JSON.stringify 添加java的对象处理
 
@@ -77,7 +78,7 @@ public class JavascriptJtEngine implements IJtEngine{
 
             sb.append("function API_RUN(api){var rst=api(XContext.current());if(rst){if(typeof(rst)=='object'){return JSON.stringify(rst,stringify_java)}else{return rst}}else{return null}};");
 
-            _jsEng.eval(sb.toString());
+            _eng.eval(sb.toString());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -88,7 +89,7 @@ public class JavascriptJtEngine implements IJtEngine{
     }
 
     public void sharedSet(String name,Object val){
-        _jsEng.put(name, val);
+        _eng.put(name, val);
     }
 
     //
@@ -101,15 +102,15 @@ public class JavascriptJtEngine implements IJtEngine{
 
     @Override
     public boolean isLoaded(String name2) {
-        return obj_loaded.contains(name2);
+        return _loaded_names.contains(name2);
     }
 
     @Override
     public boolean preLoad(String name2, AFileModel file) throws Exception {
         if (isLoaded(name2) == false) {
-            obj_loaded.add(name2);
+            _loaded_names.add(name2);
 
-            _jsEng.eval(compilerAsFun(name2, file));
+            _eng.eval(compilerAsFun(name2, file));
         }
 
         return true;
@@ -118,33 +119,32 @@ public class JavascriptJtEngine implements IJtEngine{
     @Override
     public  void del(String name) {
         String name2 = name.replace(".", "_");
-        obj_loaded.remove(name2);
-        obj_loaded.remove(name2 + "__lib");
+        _loaded_names.remove(name2);
+        _loaded_names.remove(name2 + "__lib");
     }
 
     @Override
     public  void delAll() {
-        obj_loaded.clear();
+        _loaded_names.clear();
     }
 
     @Override
-    public  Object exec(String name, AFileModel file, XContext ctx, Map<String,Object> model, boolean asRaw) throws Exception {
+    public  Object exec(String name, AFileModel file, XContext ctx, Map<String,Object> model, boolean outString) throws Exception {
         String name2 = name.replace(".","_");
 
         preLoad(name2, file);
 
-        String code = compilerAsRun(name2, asRaw);
+        if(outString){
+            Object api = _eng.get("API_"+name2);
+            Object tmp = _eng_call.invokeFunction("API_RUN",api);
 
-        Object tmp = _jsEng.eval(code);
-
-        if (tmp == null) {
-            return null;
-        } else {
-            if (asRaw) {
-                return tmp;
-            }else{
+            if (tmp == null) {
+                return null;
+            } else {
                 return tmp.toString();
             }
+        }else{
+            return _eng_call.invokeFunction("API_"+name2, ctx);
         }
     }
 
@@ -166,37 +166,12 @@ public class JavascriptJtEngine implements IJtEngine{
         sb.append("\r\n\r\n};");
 
         if (name.endsWith("__lib")) {
-            sb.append("API_")
-                    .append(name)
-                    .append(".g = ")
-                    .append("new API_")
-                    .append(name)
-                    .append("();");
-
             sb.append("__global.lib['")
                     .append(file.path)
                     .append("']=")
-                    .append("API_")
+                    .append("new API_")
                     .append(name)
-                    .append(".g;");
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * 编译为运行代码
-     * */
-    public  String compilerAsRun(String name, boolean asRaw){
-        StringBuilder sb = _tlBuilder.get();
-        sb.setLength(0);
-
-        if(asRaw) {
-            sb.append("this.API_").append(name).append("(XContext.current())");
-        }else{
-            sb.append("API_RUN(");
-            sb.append("this.API_").append(name);
-            sb.append(");");
+                    .append("();");
         }
 
         return sb.toString();
@@ -206,7 +181,7 @@ public class JavascriptJtEngine implements IJtEngine{
     /**
      * javascript 引擎嵌入接口
      * */
-    public static class __JSAPI {
+    public static class __JTEAPI {
         public String require(String path) throws Exception {
             String name = path.replace("/", "__");
             String name2 = name.replace(".", "_") + "__lib";
@@ -225,7 +200,7 @@ public class JavascriptJtEngine implements IJtEngine{
             AFileModel file = EngineFactory.fileGet(path2);
 
             if (file.file_id > 0) {
-                return EngineFactory.call(name,file,XContext.current(),model,false);
+                return EngineFactory.call(name,file,XContext.current(),model,true);
             } else {
                 return "";
             }

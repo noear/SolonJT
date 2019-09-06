@@ -38,7 +38,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>snack3</artifactId>
-            <version>3.0.8</version>
+            <version>3.0.9</version>
         </dependency>
 
         <dependency>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.utils</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
@@ -78,6 +78,19 @@
             <artifactId>solonjt.engine.javascript</artifactId>
             <version>1.0.1</version>
         </dependency>
+
+
+<!--        <dependency>-->
+<!--            <groupId>org.noear</groupId>-->
+<!--            <artifactId>solonjt.engine.groovy</artifactId>-->
+<!--            <version>1.0.1</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.noear</groupId>-->
+<!--            <artifactId>solonjt.engine.python</artifactId>-->
+<!--            <version>1.0.1</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 

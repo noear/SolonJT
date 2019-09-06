@@ -81,7 +81,7 @@ public class FreemarkerJtEngine implements IJtEngine{
     //
     @Override
     public String language() {
-        return "freemarker";
+        return "ftl";
     }
 
 
@@ -110,7 +110,7 @@ public class FreemarkerJtEngine implements IJtEngine{
     }
 
     @Override
-    public Object exec(String name, AFileModel file, XContext ctx, Map<String,Object> model, boolean asRaw) throws Exception {
+    public Object exec(String name, AFileModel file, XContext ctx, Map<String,Object> model, boolean outString) throws Exception {
         if(preLoad(name,file)){
             if(model == null){
                 model = new HashMap<>();
