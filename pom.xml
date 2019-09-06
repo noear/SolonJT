@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.noear</groupId>
-    <artifactId>thinkjt-parent</artifactId>
+    <artifactId>solonjt-parent</artifactId>
     <version>pre</version>
     <packaging>pom</packaging>
 
     <name>root</name>
-    <description>Java project for ThinkJT</description>
+    <description>Java project for SolonJT</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,8 +22,11 @@
         <module>solonjt</module>
         <module>solonjt.utils</module>
 
-        <module>solonjt.engine.freemarker</module>
-        <module>solonjt.engine.javascript</module>
+        <module>solonjt.actuator.freemarker</module>
+        <module>solonjt.actuator.javascript</module>
+        <module>solonjt.actuator.groovy</module>
+        <module>solonjt.actuator.python</module>
+        <module>solonjt.actuator.velocity</module>
     </modules>
 
 </project>
