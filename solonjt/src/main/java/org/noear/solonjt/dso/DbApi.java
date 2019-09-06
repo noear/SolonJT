@@ -1,7 +1,7 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solonjt.Config;
-import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.actuator.ActuatorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.Datetime;
@@ -105,7 +105,7 @@ public class DbApi {
         String name = path2.replace("/", "__");
 
         AFileUtil.remove(path2);
-        EngineFactory.del(name);
+        ActuatorFactory.del(name);
 
         return true;
     }

@@ -4,7 +4,7 @@ import org.noear.solonjt.Config;
 import org.noear.solonjt.dso.*;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XHandler;
-import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.actuator.ActuatorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.TextUtils;
@@ -68,7 +68,7 @@ public class FrmInterceptor implements XHandler {
         }
 
         try {
-            EngineFactory.execOnly(file, ctx);
+            ActuatorFactory.execOnly(file, ctx);
         }catch (Exception ex) {
             String err = ExceptionUtils.getString(ex);
             ctx.output(err);

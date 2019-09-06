@@ -6,13 +6,13 @@
 
     <groupId>org.noear</groupId>
     <artifactId>solonjt.utils</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>Java project for solon</description>
-    <url>https://github.com/noear/solon</url>
+    <description>java project for ${project.artifactId}</description>
+    <url>https://github.com/noear/solonjt</url>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
@@ -28,9 +28,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git@github.com:noear/solon.git</connection>
-        <developerConnection>scm:git:git@github.com:noear/solon.git</developerConnection>
-        <url>https://github.com/noear/solon</url>
+        <connection>scm:git:git@github.com:noear/solonjt.git</connection>
+        <developerConnection>scm:git:git@github.com:noear/solonjt.git</developerConnection>
+        <url>https://github.com/noear/solonjt</url>
     </scm>
 
 

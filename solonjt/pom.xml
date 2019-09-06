@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>solonjt</artifactId>
-    <version>0.1.8.1</version>
+    <version>0.2.0.2</version>
     <packaging>jar</packaging>
 
     <name>jt</name>
@@ -65,31 +65,36 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.utils</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.4</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.engine.freemarker</artifactId>
-            <version>1.0.1</version>
+            <artifactId>solonjt.actuator.freemarker</artifactId>
+            <version>1.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.engine.javascript</artifactId>
-            <version>1.0.1</version>
+            <artifactId>solonjt.actuator.javascript</artifactId>
+            <version>1.0.4</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.noear</groupId>-->
+<!--            <artifactId>solonjt.actuator.velocity</artifactId>-->
+<!--            <version>1.0.4</version>-->
+<!--        </dependency>-->
 
 <!--        <dependency>-->
 <!--            <groupId>org.noear</groupId>-->
 <!--            <artifactId>solonjt.engine.groovy</artifactId>-->
-<!--            <version>1.0.1</version>-->
+<!--            <version>1.0.4</version>-->
 <!--        </dependency>-->
 
 <!--        <dependency>-->
 <!--            <groupId>org.noear</groupId>-->
 <!--            <artifactId>solonjt.engine.python</artifactId>-->
-<!--            <version>1.0.1</version>-->
+<!--            <version>1.0.4</version>-->
 <!--        </dependency>-->
 
     </dependencies>

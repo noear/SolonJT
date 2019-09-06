@@ -4,7 +4,7 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.noear.solonjt.Config;
 import org.noear.solonjt.controller.FrmInterceptor;
 import org.noear.solonjt.controller.SufHandler;
-import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.actuator.ActuatorFactory;
 import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.*;
 import org.noear.snack.ONode;
@@ -362,7 +362,7 @@ public class XUtil {
         }
 
         AFileUtil.remove(path);
-        EngineFactory.del(name);
+        ActuatorFactory.del(name);
         return true;
     }
 
@@ -376,7 +376,7 @@ public class XUtil {
         String name = path2.replace("/", "__");
 
         AFileUtil.remove(path2);
-        EngineFactory.del(name);
+        ActuatorFactory.del(name);
 
         //应用路由
         if(is_del){
@@ -411,7 +411,7 @@ public class XUtil {
         AFileUtil.removeAll();
         AImageUtil.removeAll();
 
-        EngineFactory.delAll();
+        ActuatorFactory.delAll();
 
         DbUtil.cache.clear();
 
@@ -425,8 +425,8 @@ public class XUtil {
     /**
      *
      ****************************/
-    @XNote("获取接口开放列表（接口清单）")
-    public List<Map<String, Object>> openList() {
+    @XNote("获取接口开放清单")
+    public List<Map<String, Object>> interfaceList() {
         Map<String, Object> tmp = new HashMap<>();
 
         tmp.putAll(XApp.global().shared());
@@ -451,6 +451,11 @@ public class XUtil {
         Collections.sort(list, Comparator.comparing(m -> m.get("name").toString().toLowerCase()));
 
         return list;
+    }
+
+    @XNote("获取执行器清单")
+    public Set<String> actuatorList(){
+        return ActuatorFactory.list();
     }
 
     @XNote("添加共享对象（key, 以 _ 开头）")

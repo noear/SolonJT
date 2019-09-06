@@ -2,7 +2,7 @@ package org.noear.solonjt.controller;
 
 import org.noear.solonjt.Config;
 import org.noear.solonjt.dso.*;
-import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.actuator.ActuatorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.solon.core.XContext;
@@ -64,7 +64,7 @@ public class SufHandler implements XHandler {
             return;
         }
 
-        EngineFactory.exec(name,file,ctx);
+        ActuatorFactory.exec(name,file,ctx);
     }
 
 

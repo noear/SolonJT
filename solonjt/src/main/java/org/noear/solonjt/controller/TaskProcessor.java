@@ -2,7 +2,7 @@ package org.noear.solonjt.controller;
 
 
 import org.noear.solonjt.dso.*;
-import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.actuator.ActuatorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.Datetime;
 import org.noear.solonjt.utils.ExceptionUtils;
@@ -145,7 +145,7 @@ public class TaskProcessor implements TaskUtil.ITask {
 
 
         //2.2.执行
-        EngineFactory.execOnly(task, null);
+        ActuatorFactory.execOnly(task, null);
 
 
         //3.更新状态

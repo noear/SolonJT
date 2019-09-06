@@ -1,6 +1,6 @@
 package org.noear.solonjt.dso;
 
-import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.actuator.ActuatorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.solon.core.XContext;
@@ -15,7 +15,7 @@ public class CallUtil {
         AFileModel file = AFileUtil.get(path2);
 
         if (file.file_id > 0 && TextUtils.isEmpty(file.content) == false) {
-            return EngineFactory.call(name, file, XContext.current(), null, outString);
+            return ActuatorFactory.call(name, file, XContext.current(), null, outString);
         } else {
             return "";
         }

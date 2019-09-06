@@ -3,7 +3,7 @@ package org.noear.solonjt;
 import org.noear.solonjt.dso.*;
 import org.noear.solon.XApp;
 import org.noear.solon.core.*;
-import org.noear.solonjt.engine.EngineFactory;
+import org.noear.solonjt.actuator.ActuatorFactory;
 
 public class App {
 
@@ -25,10 +25,8 @@ public class App {
 
         xarg.put("extend",extend);
 
-        //3.初始化引擎工厂
-        EngineFactory.init((file,err)->{
-            LogUtil.log("_file", file.tag, file.path, 0, "", err);
-        },AFileUtil::get);
+        //3.初始化执行器工厂
+        ActuatorFactory.init(new ActuatorFactoryAdapter("freemarker"));
 
         //4.启动服务
         XApp app = XApp.start(App.class, xarg,(x)->{
