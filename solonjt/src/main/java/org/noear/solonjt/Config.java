@@ -3,10 +3,10 @@ package org.noear.solonjt;
 import org.noear.solonjt.dso.DbApi;
 
 public class Config {
-    public static final String code="thinkjt";
-    public static final String code_db="thinkjt.db";
-    public static final String code_center="thinkjt.center";
-    public static final String code_node="thinkjt.node";
+    public static final String code="solonjt";
+    public static final String code_db="solonjt.db";
+    public static final String code_center="solonjt.center";
+    public static final String code_node="solonjt.node";
 
     public static final String code_ext="jt_ext";
 

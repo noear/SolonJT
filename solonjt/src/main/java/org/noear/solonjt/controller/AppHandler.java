@@ -57,6 +57,11 @@ public class AppHandler implements XHandler {
             return;
         }
 
+        if(file.content_type != null && file.content_type.endsWith("/class")){
+            ctx.status(403);
+            return;
+        }
+
         //如果有跳转，则跳转
         if (TextUtils.isEmpty(file.link_to) == false) {
             if (file.link_to.startsWith("@")) {

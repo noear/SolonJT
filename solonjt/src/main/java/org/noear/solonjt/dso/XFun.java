@@ -1,6 +1,7 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.annotation.XNote;
+import org.noear.solonjt.utils.TextUtils;
 import org.noear.solonjt.utils.ThreadUtils;
 
 import java.util.ArrayList;
@@ -12,23 +13,31 @@ import java.util.Map;
 public class XFun {
     public static final XFun g  = new XFun();
 
-    private Map<String, XFunHandler> _xfunMap = new HashMap<>();
-    private Map<String, String> _xfunNot = new HashMap<>();
+    private Map<String, XFunEntity> _xfunMap = new HashMap<>();
 
     @XNote("函数设置")
     public void set(String name, XFunHandler fun){
-        _xfunMap.put(name,fun);
+        set(name,null,0,fun);
     }
     @XNote("函数设置（带注释）")
     public void set(String name, String note, XFunHandler fun){
-        _xfunMap.put(name,fun);
-        _xfunNot.put(name,note);
+        set(name,note,0,fun);
+    }
+    @XNote("函数设置（带注释、优先级）")
+    public void set(String name, String note, int priority, XFunHandler fun) {
+        XFunEntity ent = _xfunMap.get(name);
+        if (ent != null && ent.priority > priority) {
+            return;
+        }
+
+        _xfunMap.put(name, new XFunEntity(fun, priority, note));
     }
 
     @XNote("函数获取")
-    public XFunHandler find(String name){ //不能用get；不然，模板可以: XFun.xxx.call({}); //不用于统一
+    public XFunHandler find(String name) { //不能用get；不然，模板可以: XFun.xxx.call({}); //不用于统一
         return _xfunMap.get(name);
     }
+
     @XNote("函数检查")
     public boolean contains(String name){
         return _xfunMap.containsKey(name);
@@ -37,6 +46,7 @@ public class XFun {
     @XNote("函数调用")
     public Object call(String name, Map<String,Object> args) throws Exception{ //留着 Exception
         XFunHandler fun = _xfunMap.get(name);
+
         Object tmp = null;
         if (fun != null) {
             tmp = fun.call(args);
@@ -55,9 +65,13 @@ public class XFun {
 
         StringBuilder sb = new StringBuilder();
 
-        _xfunNot.forEach((k, v) -> {
+        _xfunMap.forEach((k, ent) -> {
+            if(TextUtils.isEmpty(ent.note)){
+                return;
+            }
+
             Map<String, Object> m1 = new HashMap<>();
-            String[] ss = v.split("#");
+            String[] ss = ent.note.split("#");
 
             //注解
             m1.put("note", "/** " + ss[0] + " */");
