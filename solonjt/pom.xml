@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>solonjt</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.utils</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.6</version>
         </dependency>
 
         <!-- ORM 框架 -->
@@ -67,9 +67,9 @@
 
         <!-- Http 框架 -->
         <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.12.1</version>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.11.0</version>
         </dependency>
 
         <!-- 缩略图 框架 -->

@@ -7,7 +7,7 @@ import java.io.StringWriter;
  * 异常格式化工具
  * */
 public class ExceptionUtils {
-    public static String getString(Exception ex){
+    public static String getString(Throwable ex){
         StringWriter sw = new StringWriter();
         PrintWriter ps = new PrintWriter(sw);
         ex.printStackTrace(ps);

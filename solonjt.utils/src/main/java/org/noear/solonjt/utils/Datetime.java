@@ -7,9 +7,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 //时间类（参考了.net 的接口）
@@ -181,6 +179,20 @@ public class Datetime implements Serializable,Cloneable,Comparable<Datetime> {
         return Integer.parseInt(toString("yyyyMMdd"));
     }
 
+    @Override
+    @XNote("转为字符串")
+    public String toString(){
+        return toString("yyyy-MM-dd HH:mm:ss");
+    }
+
+    @XNote("转为GMT格式字符串")
+    public String toGmtString() {
+        return toString("EEE, dd MMM yyyy HH:mm:ss 'GMT'",
+                Locale.US,
+                TimeZone.getTimeZone("GMT"));
+
+    }
+
     //转成String
     @XNote("格式化为字符串")
     public String toString(String format){
@@ -188,11 +200,24 @@ public class Datetime implements Serializable,Cloneable,Comparable<Datetime> {
         return df.format(_datetime);
     }
 
-    @Override
-    @XNote("转为字符串")
-    public String toString(){
-        return toString("yyyy-MM-dd HH:mm:ss");
+    //转成String
+    @XNote("格式化为字符串")
+    public String toString(String format, Locale locale, TimeZone timeZone) {
+        DateFormat df = null;
+        if (locale == null) {
+            df = new SimpleDateFormat(format);
+        } else {
+            df = new SimpleDateFormat(format, locale);
+        }
+
+        if (timeZone != null) {
+            df.setTimeZone(timeZone);
+        }
+
+        return df.format(_datetime);
     }
+
+
 
     //===================
     //

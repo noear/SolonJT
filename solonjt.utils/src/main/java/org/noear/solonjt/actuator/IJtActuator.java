@@ -9,6 +9,9 @@ public interface IJtActuator {
     /** 支持语言 */
     String language();
 
+    /** 编译 */
+    //String compile(String name, AFileModel file);
+
     /** 执行 */
     Object exec(String name, AFileModel file, XContext ctx, Map<String, Object> model, boolean outString) throws Exception;
 

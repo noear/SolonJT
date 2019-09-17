@@ -23,7 +23,7 @@ public class ActuatorFactory {
     }
 
     /** 记录日志 */
-    public static void errorLog(AFileModel file,String msg, Exception err){
+    public static void errorLog(AFileModel file,String msg, Throwable err){
         _adapter.errorLog(file,msg,err);
     }
 
@@ -122,9 +122,9 @@ public class ActuatorFactory {
     }
 
     /**
-     * 纯执行一个js文件（不返回；一般用于执行拉截器）
+     * 纯执行一个js文件（一般用于执行拦截器 或任务）
      */
-    public static void execOnly(AFileModel file, XContext ctx) throws Exception {
+    public static Object execOnly(AFileModel file, XContext ctx) throws Exception {
         IJtActuator tmp = _map.get(file.edit_mode);
 
         //最后是动态的
@@ -132,8 +132,10 @@ public class ActuatorFactory {
             String path = file.path;
             String name = path.replace("/", "__");
 
-            tmp.exec(name, file, ctx, null, false);
+            return tmp.exec(name, file, ctx, null, false);
         }
+
+        return null;
     }
 
     /**
@@ -148,7 +150,7 @@ public class ActuatorFactory {
             } else {
                 return _def.exec(name, file, ctx, model, outString);
             }
-        } catch (Exception err) {
+        } catch (Throwable err) {
             //如果出错，输出异常
             if (ctx != null && ctx.status() < 400) {
                 String msg = ExceptionUtils.getString(err);

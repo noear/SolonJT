@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.noear</groupId>
-    <artifactId>solonjt-parent</artifactId>
+    <artifactId>thinkjt-parent</artifactId>
     <version>pre</version>
     <packaging>pom</packaging>
 
@@ -22,11 +22,21 @@
         <module>solonjt</module>
         <module>solonjt.utils</module>
 
-        <module>solonjt.actuator.freemarker</module>
-        <module>solonjt.actuator.javascript</module>
-        <module>solonjt.actuator.groovy</module>
-        <module>solonjt.actuator.python</module>
-        <module>solonjt.actuator.velocity</module>
+        <module>solonjt.actuator.s.python</module>
+        <module>solonjt.actuator.s.ruby</module>
+        <module>solonjt.actuator.s.javascript</module>
+        <module>solonjt.actuator.s.groovy</module>
+        <module>solonjt.actuator.s.lua</module>
+        <module>solonjt.actuator.s.graaljs</module>
+
+        <module>solonjt.actuator.m.freemarker</module>
+        <module>solonjt.actuator.m.velocity</module>
+        <module>solonjt.actuator.m.thymeleaf</module>
+        <module>solonjt.actuator.m.beetl</module>
+        <module>solonjt.actuator.m.enjoy</module>
+
+        <module>solonjt.task.message</module>
+        <module>solonjt.task.schedule</module>
     </modules>
 
 </project>

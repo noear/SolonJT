@@ -7,7 +7,7 @@ import org.noear.solonjt.model.AFileModel;
  * */
 public interface IActuatorFactoryAdapter {
 
-    void errorLog(AFileModel file,String msg, Exception err);
+    void errorLog(AFileModel file,String msg, Throwable err);
 
     AFileModel fileGet(String path) throws Exception;
 
