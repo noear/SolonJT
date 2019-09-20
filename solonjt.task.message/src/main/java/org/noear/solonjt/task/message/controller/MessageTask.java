@@ -1,7 +1,11 @@
 package org.noear.solonjt.task.message.controller;
 
-import org.noear.solonjt.actuator.ActuatorFactory;
-import org.noear.solonjt.actuator.IJtTask;
+import org.noear.snack.ONode;
+import org.noear.solon.core.XContext;
+import org.noear.solon.core.XContextEmpty;
+import org.noear.solon.core.XContextUtil;
+import org.noear.solonjt.executor.ExecutorFactory;
+import org.noear.solonjt.executor.JtTaskBase;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.task.message.dso.*;
 import org.noear.solonjt.utils.ExceptionUtils;
@@ -12,23 +16,22 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-public class MessageTask implements IJtTask {
-    @Override
-    public String getName() {
-        return "_message";
-    }
-
-    int _interval = 500;
-
-    @Override
-    public int getInterval() {
-        return _interval;
+public class MessageTask extends JtTaskBase {
+    public MessageTask(){
+        super("_message", 500);
     }
 
     private int rows = 100;
 
     @Override
     public void exec() throws Exception {
+        if(node_current_can_run() == false){
+            return;
+        }
+
+        //如果可运行，恢复为备份的时间间隔
+        _interval = _interval_bak;
+
 
         int ntime = DisttimeUtil.currTime();
         List<Long> msgList = DbMsgApi.msgGetList(rows, ntime);
@@ -58,8 +61,10 @@ public class MessageTask implements IJtTask {
 
         if (msgList.size() == 0) {
             _interval = 1000 * 2;
+            _interval_bak = _interval;
         } else {
             _interval = 500;
+            _interval_bak = _interval;
         }
     }
 
@@ -141,7 +146,13 @@ public class MessageTask implements IJtTask {
             if (dist.receive_way == 0) {
                 new Thread(() -> {
                     try {
-                        Object tmp = ActuatorFactory.execOnly(task, null);
+                        XContext ctx = XContextEmpty.create();
+                        XContextUtil.currentSet(ctx);
+
+                        ctx.attrSet("topic",msg.topic);
+                        ctx.attrSet("content",msg.content);
+
+                        Object tmp = ExecutorFactory.execOnly(task, ctx);
                         dist._duration = new Timespan(System.currentTimeMillis(), dist._start_time).seconds();
 
                         if(tmp == null || tmp.toString().equals("OK")){
@@ -151,9 +162,11 @@ public class MessageTask implements IJtTask {
                             distributeMessage_log(msg,dist,(tmp==null?"null" : tmp.toString()));
                             callback.run(tag, dist, false);
                         }
-                    } catch (Exception ex) {
+                    } catch (Throwable ex) {
                         distributeMessage_log(msg,dist,ExceptionUtils.getString(ex));
                         callback.run(tag, dist, false);
+                    }finally {
+                        XContextUtil.currentRemove();
                     }
 
                 }).start();

@@ -1,7 +1,7 @@
 package org.noear.solonjt.task.schedule.controller;
 
-import org.noear.solonjt.actuator.ActuatorFactory;
-import org.noear.solonjt.actuator.IJtTask;
+import org.noear.solonjt.executor.ExecutorFactory;
+import org.noear.solonjt.executor.JtTaskBase;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.task.schedule.dso.DbApi;
 import org.noear.solonjt.task.schedule.dso.LogUtil;
@@ -16,22 +16,23 @@ import java.util.List;
 /**
  * 定时任务处理器（数据库安全）
  * */
-public class ScheduleTask implements IJtTask {
-    @Override
-    public String getName() {
-        return "_schedule";
+public class ScheduleTask extends JtTaskBase {
+    public ScheduleTask(){
+        super("_schedule", 1000 * 60);
     }
-
-    @Override
-    public int getInterval() {
-        return 1000 * 60;
-    }
-
 
     private boolean _init = false;
 
     @Override
     public void exec() throws Exception {
+        if(node_current_can_run() == false){
+            return;
+        }
+
+        //如果可运行，恢复为备份的时间间隔
+        _interval = _interval_bak;
+
+
         if (_init == false) {
             _init = true;
 
@@ -145,7 +146,7 @@ public class ScheduleTask implements IJtTask {
 
 
         //2.2.执行
-        ActuatorFactory.execOnly(task, null);
+        ExecutorFactory.execOnly(task, null);
 
 
         //3.更新状态

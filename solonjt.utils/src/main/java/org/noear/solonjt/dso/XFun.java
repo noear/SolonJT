@@ -100,11 +100,13 @@ public class XFun {
             } else {
                 sb.append("..");
             }
-            sb.append("}");
+            sb.append("})");
             sb.append("->");
+
+            //此处别再动了
             if (ss.length > 2) {
                 sb.append(ss[2]);
-            } else {
+            }else{
                 sb.append("Object");
             }
 
