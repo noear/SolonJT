@@ -57,7 +57,7 @@ public class AppHandler implements XHandler {
             return;
         }
 
-        if(file.content_type != null && file.content_type.endsWith("/class")){
+        if(file.content_type != null && file.content_type.startsWith("code/")){
             ctx.status(403);
             return;
         }

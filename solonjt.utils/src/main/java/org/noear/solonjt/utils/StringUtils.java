@@ -176,12 +176,14 @@ public class StringUtils {
         }
     }
 
+    //借用StringBuilder（基于Stack管理）
     public static StringBuilder borrowBuilder() {
         synchronized(builders) {
             return builders.empty() ? new StringBuilder(8192) : (StringBuilder)builders.pop();
         }
     }
 
+    //释放StringBuilder（基于Stack管理）
     public static String releaseBuilder(StringBuilder sb) {
         AssertUtils.notNull(sb);
         String string = sb.toString();

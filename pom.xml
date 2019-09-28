@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.noear</groupId>
-    <artifactId>thinkjt-parent</artifactId>
+    <artifactId>solonjt-parent</artifactId>
     <version>pre</version>
     <packaging>pom</packaging>
 

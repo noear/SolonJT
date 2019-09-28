@@ -3,8 +3,8 @@ package org.noear.solonjt.executor;
 import org.noear.solon.core.XContext;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ExceptionUtils;
+import org.noear.solonjt.utils.StringUtils;
 import org.noear.solonjt.utils.TextUtils;
-import org.noear.solonjt.utils.ThreadUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,9 +95,9 @@ public class ExecutorFactory {
                 /**
                  * jsonp 的请求支持
                  * */
-                StringBuilder sb = ThreadUtils.getStringBuilder();
+                StringBuilder sb = StringUtils.borrowBuilder();
                 sb.append(call).append("(").append(text).append(");");
-                text = sb.toString();
+                text = StringUtils.releaseBuilder(sb);
 
                 ctx.contentType("application/x-javascript");
             } else {

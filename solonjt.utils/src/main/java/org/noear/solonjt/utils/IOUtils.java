@@ -1,10 +1,28 @@
 package org.noear.solonjt.utils;
 
+
+import org.noear.solonjt.utils.io.ByteArrayInputStreamEx;
+
 import java.io.*;
 
 public class IOUtils {
+    public static final boolean reset(InputStream stream) {
+        try {
+            stream.reset();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static final InputStream copyOf(InputStream stream) throws Exception{
+        return fromBytes(toBytes(stream));
+    }
+
     public static final InputStream fromBytes(byte[] buf) {
-        return new ByteArrayInputStream(buf);
+        return new ByteArrayInputStreamEx(buf);
     }
 
     public static final byte[] toBytes(InputStream stream) throws IOException {
@@ -35,7 +53,7 @@ public class IOUtils {
 
     public static final InputStream outToIn(OutputStream out){
         ByteArrayOutputStream out2 = (ByteArrayOutputStream) out;
-        final ByteArrayInputStream in2 = new ByteArrayInputStream(out2.toByteArray());
+        final ByteArrayInputStreamEx in2 = new ByteArrayInputStreamEx(out2.toByteArray());
         return in2;
     }
 

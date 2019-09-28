@@ -4,7 +4,7 @@ import freemarker.template.utility.StringUtil;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.executor.m.freemarker.FreemarkerJtExecutor;
 import org.noear.solonjt.model.AFileModel;
-import org.noear.solonjt.utils.ThreadUtils;
+import org.noear.solonjt.utils.StringUtils;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -182,7 +182,8 @@ public class StringTemplateLoaderEx implements TemplateLoader {
      */
     @Override
     public String toString() {
-        StringBuilder sb = ThreadUtils.getStringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
+
         sb.append(TemplateLoaderUtils.getClassNameForToString(this));
         sb.append("(Map { ");
         int cnt = 0;
@@ -202,6 +203,7 @@ public class StringTemplateLoaderEx implements TemplateLoader {
             sb.append(' ');
         }
         sb.append("})");
-        return sb.toString();
+
+        return StringUtils.releaseBuilder(sb);
     }
 }

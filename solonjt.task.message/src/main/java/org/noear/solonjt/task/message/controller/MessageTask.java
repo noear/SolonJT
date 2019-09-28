@@ -4,11 +4,13 @@ import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XContextEmpty;
 import org.noear.solon.core.XContextUtil;
+import org.noear.solonjt.dso.XBus;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.executor.JtTaskBase;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.task.message.dso.*;
 import org.noear.solonjt.utils.ExceptionUtils;
+import org.noear.solonjt.utils.TextUtils;
 import org.noear.solonjt.utils.Timespan;
 import org.noear.weed.ext.Act3;
 
@@ -134,8 +136,8 @@ public class MessageTask extends JtTaskBase {
         }
     };
 
-    private void distributeMessage_log(AMessageModel msg, AMessageDistributionModel dist, String note){
-        LogUtil.log(getName(), "distributeMessage", msg.msg_id + "", dist.file_id + "", 0, dist.receive_url, note);
+    private void distributeMessage_log(AMessageModel msg, AMessageDistributionModel dist, String note) {
+        LogUtil.log(getName(), "distributeMessage", msg.topic, msg.msg_id + "", dist.file_id + "", 0, dist.receive_url, note);
     }
 
     private void distributeMessage(StateTag tag, AMessageModel msg, AMessageDistributionModel dist, Act3<StateTag, AMessageDistributionModel, Boolean> callback) {
@@ -156,6 +158,11 @@ public class MessageTask extends JtTaskBase {
                         dist._duration = new Timespan(System.currentTimeMillis(), dist._start_time).seconds();
 
                         if(tmp == null || tmp.toString().equals("OK")){
+                            if(TextUtils.isEmpty(msg.topic_source)==false){
+                                //尝试转发消息到下一层
+                                XBus.g.forward(msg.topic,msg.content,msg.topic_source);
+                            }
+
                             distributeMessage_log(msg,dist,"OK");
                             callback.run(tag, dist, true);
                         }else{

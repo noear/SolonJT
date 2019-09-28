@@ -2,14 +2,19 @@ package org.noear.solonjt.task.message.dso;
 
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.task.message.Config;
+import org.noear.solonjt.utils.Datetime;
 import org.noear.solonjt.utils.ExceptionUtils;
+import org.noear.weed.DataItem;
+import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
+import org.noear.weed.DbTableQuery;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public class DbMsgApi {
-    private static DbContext db(){
+    private static DbContext db() {
         return Config.db;
     }
 
@@ -22,21 +27,12 @@ public class DbMsgApi {
 
     public static List<AFileModel> msgGetSubs(String topic) throws Exception {
         return db().table("a_file")
-                .where("label=? AND is_disabled=0",topic)
+                .where("label=? AND is_disabled=0", topic)
                 .select("file_id,tag,label,path,is_disabled")
                 .getList(AFileModel.class);
     }
 
-    public static void msgAdd(String topic, String content) throws Exception{
-        db().table("a_message")
-                .set("topic",topic)
-                .set("content",content)
-                .set("log_date","$DATE(NOW())")
-                .set("log_fulltime","$NOW()")
-                .insert();
-    }
-
-    public static AMessageModel msgGet(long msg_id) throws Exception{
+    public static AMessageModel msgGet(long msg_id) throws Exception {
         AMessageModel m = db().table("a_message")
                 .where("msg_id=? AND state=0", msg_id)
                 .select("*")
@@ -52,7 +48,7 @@ public class DbMsgApi {
     public static List<Long> msgGetList(int rows, int ntime) throws SQLException {
         return
                 db().table("a_message")
-                        .where("state=0 AND dist_ntime<?",ntime)
+                        .where("state=0 AND dist_ntime<?", ntime)
                         .orderBy("msg_id ASC")
                         .limit(rows)
                         .select("msg_id")
@@ -60,8 +56,8 @@ public class DbMsgApi {
     }
 
 
-    public static boolean msgSetState(long msg_id, int state){
-        return msgSetState(msg_id,state, 0);
+    public static boolean msgSetState(long msg_id, int state) {
+        return msgSetState(msg_id, state, 0);
     }
 
     public static boolean msgSetState(long msg_id, int state, int nexttime) {
@@ -92,7 +88,7 @@ public class DbMsgApi {
     }
 
     //设置消息重试状态（过几秒后再派发）
-    public static boolean msgSetRepet(AMessageModel msg, int state)  {
+    public static boolean msgSetRepet(AMessageModel msg, int state) {
         try {
             msg.dist_count += 1;
 
@@ -106,10 +102,10 @@ public class DbMsgApi {
                     .update();
 
             return true;
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
 
-            LogUtil.log("msg","setMessageRepet",msg.msg_id+"",0,"",ExceptionUtils.getString(ex));
+            LogUtil.log("msg", "setMessageRepet", msg.msg_id + "", 0, "", ExceptionUtils.getString(ex));
 
             return false;
         }
@@ -134,7 +130,7 @@ public class DbMsgApi {
         }
     }
 
-    public static List<AMessageDistributionModel> msgGetDistributionList(long msg_id) throws  Exception{
+    public static List<AMessageDistributionModel> msgGetDistributionList(long msg_id) throws Exception {
         return db().table("a_message_distribution")
                 .where("msg_id=? AND (state=0 OR state=1)", msg_id)
                 .select("*")
@@ -146,17 +142,93 @@ public class DbMsgApi {
         try {
             db().table("a_message_distribution")
                     .set("state", state)
-                    .set("duration",dist._duration)
-                    .where("msg_id=? and file_id=? and state<>2",msg_id, dist.file_id)
+                    .set("duration", dist._duration)
+                    .where("msg_id=? and file_id=? and state<>2", msg_id, dist.file_id)
                     .update();
 
             return true;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
 
-            LogUtil.log("msg","setDistributionState",msg_id+"", 0, "",ExceptionUtils.getString(ex));
+            LogUtil.log("msg", "setDistributionState", msg_id + "", 0, "", ExceptionUtils.getString(ex));
 
             return false;
         }
     }
+
+    //发布消息
+    public static Object msgPublish(Map<String, Object> data) throws Exception {
+        return msgAppend(data.get("topic"), data.get("content"), null, data.get("delay"));
+    }
+
+    //转发消息（会层层递进）
+    public static Object msgRorward(Map<String, Object> data) throws Exception {
+        if (data.containsKey("topic_source") == false) {
+            return 0;
+        }
+
+        String topic = data.get("topic").toString();
+        String content = data.get("content").toString();
+        String topic_source = data.get("topic_source").toString();
+
+
+        DataList list = db().table("a_file")
+                .where("label LIKE ? AND is_disabled=0", topic_source + "-%").orderBy("rank ASC")
+                .select("label")
+                .caching(Config.cache).cacheTag("msg_topic_" + topic_source)
+                .getDataList();
+
+        if (list.getRowCount() == 0) {
+            return 0;
+        }
+
+        if (topic.equals(topic_source)) {//如果主题与源相同，说明是第一次发出
+            DataItem item = list.getRow(0);
+            String ntopic = item.getString("label"); //下个可传递的主题
+
+            msgAppend(ntopic, content, topic_source, data.get("delay"));
+        } else {
+            boolean is_do = false;
+            for (DataItem item : list) {
+                String ntopic = item.getString("label"); //下个可传递的主题
+
+                if (is_do) {
+                    if (topic.equals(ntopic) == false) { //找到下一个不同的主题
+                        msgAppend(ntopic, content, topic_source, data.get("delay"));
+                        break;
+                    }
+                } else {
+                    if (topic.equals(ntopic)) {
+                        is_do = true;
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private static Object msgAppend(Object topic, Object content, String topic_source, Object delay) throws Exception {
+        DbTableQuery qr = db().table("a_message")
+                .set("topic", topic)
+                .set("content", content)
+                .set("log_date", Datetime.Now().getDate())
+                .set("log_fulltime", "$NOW()");
+
+        if (topic_source != null) {
+            qr.set("topic_source", topic_source);
+        }
+
+        if (delay != null) {
+            int delay2 = Integer.parseInt(delay.toString());
+
+            if (delay2 > 0) {
+                int ntime2 = DisttimeUtil.nextTime(delay2);
+                qr.set("dist_ntime", ntime2);
+            }
+        }
+
+        return qr.insert();
+    }
+
 }

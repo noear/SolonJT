@@ -69,7 +69,7 @@ public class GraaljsJtExecutor implements IJtExecutor {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("var __global={lib:{}};");
+            sb.append("var __global={lib_obj:{},lib_cls:{}};");
 
             sb.append("Date.prototype.toJSON =function(){ return this.getTime()};");
 
@@ -82,7 +82,7 @@ public class GraaljsJtExecutor implements IJtExecutor {
 
             sb.append("function modelAndView(tml,mod){return __JTEAPI.modelAndView(tml,mod);};");
 
-            sb.append("function require(path){__JTEAPI.require(path);return __global.lib[path]}");
+            sb.append("function require(path,newInstance){__JTEAPI.require(path);if(newInstance){return new __global.lib_cls[path]()}else{return __global.lib_obj[path]}}");
 
             //为JSON.stringify 添加java的对象处理
 
@@ -178,12 +178,19 @@ public class GraaljsJtExecutor implements IJtExecutor {
         sb.append("\r\n\r\n};");
 
         if (name.endsWith("__lib")) {
-            sb.append("__global.lib['")
+            sb.append("__global.lib_obj['")
                     .append(file.path)
                     .append("']=")
                     .append("new API_")
                     .append(name)
                     .append("();");
+
+            sb.append("__global.lib_cls['")
+                    .append(file.path)
+                    .append("']=")
+                    .append("this.API_")
+                    .append(name)
+                    .append(";");
         }
 
         return sb.toString();

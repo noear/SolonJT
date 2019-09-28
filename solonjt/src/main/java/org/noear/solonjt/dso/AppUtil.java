@@ -121,7 +121,7 @@ public class AppUtil {
             do_runSev(app);
         }
 
-        CallUtil.callHook(null, "hook.start", false);
+        CallUtil.callLabel(null, "hook.start", false ,null);
     }
 
     private static void do_runWeb(XApp app) {

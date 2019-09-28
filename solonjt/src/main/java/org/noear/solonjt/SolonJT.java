@@ -24,9 +24,7 @@ public class SolonJT {
 
         xarg.put("extend",extend);
 
-        XFun.g.set("log","记录日志#tag,tag1?,tag2?,tag3?,tag4?,level?,summary?,content?",DbApi::log);
-        XFun.g.set("xbus_publish","发布消息#topic,content",1,DbApi::msgAdd);
-        XFun.g.set("cfg_get","获取配置#name#{}",1,DbApi::cfgGetMap);
+        InitXfunUtil.init();
 
         //3.初始化执行器工厂
         ExecutorFactory.init(new ActuatorFactoryAdapter(defActuator));

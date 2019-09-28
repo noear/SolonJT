@@ -1,7 +1,5 @@
 package org.noear.solonjt.utils;
 
-import org.noear.snack.core.exts.ThData;
-
 import java.util.Random;
 
 public class TextUtils {
@@ -24,9 +22,6 @@ public class TextUtils {
         return true;
     }
 
-
-    private static final ThData<StringBuilder> _tlBuilder = new ThData(new StringBuilder(1024*5));
-
     /** 生成随机字符串 */
     public static String codeByRandom(int len) {
         int TEMPLATE_SIZE = 62;
@@ -44,7 +39,7 @@ public class TextUtils {
                 '0', '1', '2', '3', '4', '5',
                 '6', '7', '8', '9'
         };
-        StringBuilder sb = _tlBuilder.get();
+        StringBuilder sb = StringUtils.borrowBuilder();
         sb.setLength(0);
 
         Random random = new Random();
@@ -52,6 +47,6 @@ public class TextUtils {
             sb.append(codeTemplate[random.nextInt(TEMPLATE_SIZE) % TEMPLATE_SIZE]);
         }
 
-        return sb.toString();
+        return StringUtils.releaseBuilder(sb);
     }
 }

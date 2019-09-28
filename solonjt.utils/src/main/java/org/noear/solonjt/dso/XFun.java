@@ -14,61 +14,6 @@ public class XFun {
 
     private Map<String, XFunEntity> _xfunMap = new HashMap<>();
 
-    @XNote("函数设置")
-    public void set(String name, XFunHandler fun){
-        set(name,null,0,fun);
-    }
-    @XNote("函数设置（带注释）")
-    public void set(String name, String note, XFunHandler fun){
-        set(name,note,0,fun);
-    }
-    @XNote("函数设置（带注释、优先级）")
-    public void set(String name, String note, int priority, XFunHandler fun) {
-        XFunEntity ent = _xfunMap.get(name);
-        if (ent != null && ent.priority > priority) {
-            return;
-        }
-
-        _xfunMap.put(name, new XFunEntity(fun, priority, note));
-    }
-
-    @XNote("函数获取")
-    public XFunHandler find(String name) { //不能用get；不然，模板可以: XFun.xxx.call({}); //不用于统一
-        return _xfunMap.get(name);
-    }
-
-    @XNote("函数检查")
-    public boolean contains(String name){
-        return _xfunMap.containsKey(name);
-    }
-
-    @XNote("函数调用")
-    public Object call(String name, Map<String,Object> args) throws Exception{ //留着 Exception
-        XFunHandler fun = _xfunMap.get(name);
-
-        Object tmp = null;
-        if (fun != null) {
-            tmp = fun.call(args);
-        }
-
-        return tmp;
-    }
-
-    @XNote("函数调用")
-    public Object tryCall(String name, Map<String,Object> args){ //留着 Exception
-        XFunHandler fun = _xfunMap.get(name);
-
-        Object tmp = null;
-        if (fun != null) {
-            try {
-                tmp = fun.call(args);
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-        }
-
-        return tmp;
-    }
 
     public void openList(List<Map<String, Object>> list) {
         Map<String, Object> v1 = new HashMap<>();
@@ -117,5 +62,87 @@ public class XFun {
 
         list.add(v1);
     }
+
+    @XNote("函数设置")
+    public void set(String name, XFunHandler fun){
+        set(name,null,0,fun);
+    }
+    @XNote("函数设置（带注释）")
+    public void set(String name, String note, XFunHandler fun){
+        set(name,note,0,fun);
+    }
+    @XNote("函数设置（带注释、优先级）")
+    public void set(String name, String note, int priority, XFunHandler fun) {
+        XFunEntity ent = _xfunMap.get(name);
+        if (ent != null && ent.priority > priority) {
+            return;
+        }
+
+        _xfunMap.put(name, new XFunEntity(fun, priority, note));
+    }
+
+    @XNote("函数获取")
+    public XFunHandler find(String name) { //不能用get；不然，模板可以: XFun.xxx.call({}); //不用于统一
+        return _xfunMap.get(name);
+    }
+
+    @XNote("函数检查")
+    public boolean contains(String name){
+        return _xfunMap.containsKey(name);
+    }
+
+    @XNote("函数调用")
+    public Object tryCall(String name, Map<String,Object> args) {
+        XFunHandler fun = _xfunMap.get(name);
+
+        Object tmp = null;
+        if (fun != null) {
+            try {
+                tmp = fun.call(args);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+
+        return tmp;
+    }
+
+    @XNote("函数调用")
+    public Object call(String name, Map<String,Object> args) throws Exception{ //留着 Exception
+        return callT(name,args);
+    }
+
+    @XNote("函数调用")
+    public <T> T callT(String name, Map<String,Object> args) throws Exception{ //留着 Exception
+        XFunHandler fun = _xfunMap.get(name);
+
+        Object tmp = null;
+        if (fun != null) {
+            tmp = fun.call(args);
+        }
+
+        return (T)tmp;
+    }
+
+    @XNote("调用一个文件")
+    public Object callFile(String path) throws Exception {
+        return CallUtil.callFile(path ,null);
+    }
+
+    @XNote("调用一个文件")
+    public Object callFile(String path, Map<String,Object> attrs) throws Exception {
+        return CallUtil.callFile(path, attrs);
+    }
+
+    @XNote("调用一组勾子")
+    public String callLabel(String tag, String label, boolean useCache) throws Exception{
+        return CallUtil.callLabel(tag, label, useCache, null);
+    }
+
+    @XNote("调用一组勾子")
+    public String callLabel(String tag,String label, boolean useCache, Map<String,Object> attrs) throws Exception{
+        return CallUtil.callLabel(tag, label, useCache, attrs);
+    }
+
 }
 

@@ -20,11 +20,13 @@ import java.util.Map;
  * 引擎基础的数据库处理接口
  * */
 public class DbApi {
-    private static DbContext db(){
+    private static DbContext db() {
         return DbUtil.db();
     }
 
-    /** 新建文件 */
+    /**
+     * 新建文件
+     */
     public static boolean fileNew(int fid, XContext ctx) throws Exception {
         DbTableQuery qr = db().table("a_file")
                 .set("path", ctx.param("path", ""))
@@ -50,20 +52,20 @@ public class DbApi {
                 .getItem(AFileModel.class);
     }
 
-    public static List<AFileModel> fileGetPaths(String tag,String label, boolean isCache) throws Exception {
-        if(TextUtils.isEmpty(tag) && TextUtils.isEmpty(label)){
+    public static List<AFileModel> fileGetPaths(String tag, String label, boolean isCache) throws Exception {
+        if (TextUtils.isEmpty(tag) && TextUtils.isEmpty(label)) {
             return new ArrayList<>();
         }
 
         return db().table("a_file").where("1=1").expre((tb) -> {
-                    if (TextUtils.isEmpty(tag) == false) {
-                        tb.and("`tag`=?", tag);
-                    }
+            if (TextUtils.isEmpty(tag) == false) {
+                tb.and("`tag`=?", tag);
+            }
 
-                    if (TextUtils.isEmpty(label) == false) {
-                        tb.and("`label`=?", label);
-                    }
-                })
+            if (TextUtils.isEmpty(label) == false) {
+                tb.and("`label`=?", label);
+            }
+        })
                 .select("path,note")
                 .caching(DbUtil.cache)
                 .usingCache(isCache)
@@ -77,11 +79,11 @@ public class DbApi {
 
 
     public static boolean fileSet(int fid, String fcontent) throws Exception {
-        if(fid<1){
+        if (fid < 1) {
             return false;
         }
 
-        if(fcontent == null){
+        if (fcontent == null) {
             return false;
         }
 
@@ -91,7 +93,7 @@ public class DbApi {
                 .getItem(AFileModel.class);
 
 
-        if(fm.is_editable==false){
+        if (fm.is_editable == false) {
             return false;
         }
 
@@ -110,27 +112,27 @@ public class DbApi {
         return true;
     }
 
-    public static List<AFileModel> fileFilters() throws Exception{
-        return
-        DbUtil.db().table("a_file")
-                .where("`label` = ?", Config.filter_file)
-                .select("path,note")
-                .getList(AFileModel.class);
-
-    }
-
-    public static List<AFileModel> pathFilters() throws Exception{
+    public static List<AFileModel> fileFilters() throws Exception {
         return
                 DbUtil.db().table("a_file")
-                        .where("`label` = ?",Config.filter_path)
+                        .where("`label` = ?", Config.filter_file)
                         .select("path,note")
                         .getList(AFileModel.class);
 
     }
 
-    public static Object cfgGetMap(Map<String,Object> map) throws Exception{
+    public static List<AFileModel> pathFilters() throws Exception {
+        return
+                DbUtil.db().table("a_file")
+                        .where("`label` = ?", Config.filter_path)
+                        .select("path,note")
+                        .getList(AFileModel.class);
+
+    }
+
+    public static Object cfgGetMap(Map<String, Object> map) throws Exception {
         Object name = map.get("name");
-        if(name == null){
+        if (name == null) {
             return null;
         }
 
@@ -143,7 +145,7 @@ public class DbApi {
     }
 
     public static String cfgGet(String name) {
-        return cfgGet(name,"");
+        return cfgGet(name, "");
     }
 
     public static String cfgGet(String name, String def) {
@@ -154,75 +156,75 @@ public class DbApi {
                     .caching(DbUtil.cache)
                     .cacheTag("cfg_" + name)
                     .getValue(def);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return def;
         }
     }
 
-    public static boolean cfgSet(String name, String value, String label) throws Exception{
-        boolean is_ok =false;
-        if(db().table("a_config") .where("`name`=?",name).exists()){
+    public static boolean cfgSet(String name, String value, String label) throws Exception {
+        boolean is_ok = false;
+        if (db().table("a_config").where("`name`=?", name).exists()) {
             is_ok = db().table("a_config")
-                    .set("value",value)
-                    .expre((tb)->{
-                        if(label!=null){
-                            tb.set("label",label);
+                    .set("value", value)
+                    .expre((tb) -> {
+                        if (label != null) {
+                            tb.set("label", label);
                         }
                     })
-                    .set("update_fulltime","$NOW()")
-                    .where("`name`=?",name)
-                    .update()>0;
-        }else{
+                    .set("update_fulltime", "$NOW()")
+                    .where("`name`=?", name)
+                    .update() > 0;
+        } else {
             is_ok = db().table("a_config")
-                    .set("name",name)
-                    .set("value",value)
-                    .expre((tb)->{
-                        if(label!=null){
-                            tb.set("label",label);
-                        }
-                    })
-                    .insert() > 0;
-        }
-
-        DbUtil.cache.clear("cfg_"+name);
-
-        return is_ok;
-    }
-
-
-    public static boolean cfgSetNote(String name, String note, String label) throws Exception{
-        boolean is_ok =false;
-        if(db().table("a_config") .where("`name`=?",name).exists()){
-            is_ok = db().table("a_config")
-                    .set("note",note)
-                    .expre((tb)->{
-                        if(label!=null){
-                            tb.set("label",label);
-                        }
-                    })
-                    .set("update_fulltime","$NOW()")
-                    .where("`name`=?",name)
-                    .update()>0;
-        }else{
-            is_ok = db().table("a_config")
-                    .set("name",name)
-                    .set("note",note)
-                    .set("create_fulltime","$NOW()")
-                    .set("update_fulltime","$NOW()")
-                    .expre((tb)->{
-                        if(label!=null){
-                            tb.set("label",label);
+                    .set("name", name)
+                    .set("value", value)
+                    .expre((tb) -> {
+                        if (label != null) {
+                            tb.set("label", label);
                         }
                     })
                     .insert() > 0;
         }
 
-        DbUtil.cache.clear("cfg_"+name);
+        DbUtil.cache.clear("cfg_" + name);
 
         return is_ok;
     }
 
-    public static List<Map<String,Object>> menuGet(String label,int pid) throws SQLException {
+
+    public static boolean cfgSetNote(String name, String note, String label) throws Exception {
+        boolean is_ok = false;
+        if (db().table("a_config").where("`name`=?", name).exists()) {
+            is_ok = db().table("a_config")
+                    .set("note", note)
+                    .expre((tb) -> {
+                        if (label != null) {
+                            tb.set("label", label);
+                        }
+                    })
+                    .set("update_fulltime", "$NOW()")
+                    .where("`name`=?", name)
+                    .update() > 0;
+        } else {
+            is_ok = db().table("a_config")
+                    .set("name", name)
+                    .set("note", note)
+                    .set("create_fulltime", "$NOW()")
+                    .set("update_fulltime", "$NOW()")
+                    .expre((tb) -> {
+                        if (label != null) {
+                            tb.set("label", label);
+                        }
+                    })
+                    .insert() > 0;
+        }
+
+        DbUtil.cache.clear("cfg_" + name);
+
+        return is_ok;
+    }
+
+    public static List<Map<String, Object>> menuGet(String label, int pid) throws SQLException {
         return db().table("a_menu")
                 .where("`label`=? AND pid=? AND is_disabled=0", label, pid)
                 .orderBy("order_number ASC")
@@ -240,26 +242,26 @@ public class DbApi {
                 .getItem(AImageModel.class);
     }
 
-    public static boolean imgSet(String tag,String path,String content_type, String data,String label) throws Exception{
-        boolean is_ok =false;
+    public static boolean imgSet(String tag, String path, String content_type, String data, String label) throws Exception {
+        boolean is_ok = false;
 
         DbTableQuery qr = db().table("a_image")
-                .set("`content_type`",content_type)
-                .set("`data`",data)
-                .set("`data_size`",data.length())
-                .set("`label`",label)
-                .set("update_fulltime","$NOW()");
+                .set("`content_type`", content_type)
+                .set("`data`", data)
+                .set("`data_size`", data.length())
+                .set("`label`", label)
+                .set("update_fulltime", "$NOW()");
 
-        if(tag!=null){
-            qr.set("`tag`",tag);
+        if (tag != null) {
+            qr.set("`tag`", tag);
         }
 
-        if(db().table("a_image") .where("`path`=?",path).exists()){
-            is_ok = qr.where("`path`=?",path)
-                    .update()>0;
+        if (db().table("a_image").where("`path`=?", path).exists()) {
+            is_ok = qr.where("`path`=?", path)
+                    .update() > 0;
 
             AImageUtil.remove(path);
-        }else {
+        } else {
             is_ok = qr.set("`path`", path)
                     .insert() > 0;
         }
@@ -269,11 +271,11 @@ public class DbApi {
 
     public static boolean imgUpd(String path, String data) throws Exception {
         boolean is_ok = db().table("a_image")
-                .set("`data`",data)
-                .set("`data_size`",data.length())
-                .set("update_fulltime","$NOW()")
-                .where("`path`=?",path)
-                .update()>0;
+                .set("`data`", data)
+                .set("`data_size`", data.length())
+                .set("update_fulltime", "$NOW()")
+                .where("`path`=?", path)
+                .update() > 0;
 
         DbUtil.cache.clear("image_path_" + path);
 
@@ -282,8 +284,8 @@ public class DbApi {
         return is_ok;
     }
 
-    public static boolean log(Map<String,Object> data)  {
-        Map<String,Object> map = new HashMap<>();
+    public static boolean log(Map<String, Object> data) {
+        Map<String, Object> map = new HashMap<>();
 
 
         map.put("tag", data.get("tag"));
@@ -295,8 +297,8 @@ public class DbApi {
         map.put("content", data.get("content"));
 
         map.put("level", data.get("level"));
-        map.put("log_date",Datetime.Now().getDate());
-        map.put("log_fulltime","$NOW()");
+        map.put("log_date", Datetime.Now().getDate());
+        map.put("log_fulltime", "$NOW()");
 
         try {
             db().table("a_log")
@@ -307,18 +309,5 @@ public class DbApi {
             ex.printStackTrace();
             return false;
         }
-    }
-
-    public static Object msgAdd(Map<String,Object> data) throws Exception{
-        Map<String,Object> map = new HashMap<>();
-
-        map.put("topic", data.get("topic"));
-        map.put("content", data.get("content"));
-        map.put("log_date",Datetime.Now().getDate());
-        map.put("log_fulltime","$NOW()");
-
-        return db().table("a_message")
-            .setMap(map)
-            .insert();
     }
 }

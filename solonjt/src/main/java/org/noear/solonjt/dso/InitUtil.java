@@ -40,11 +40,12 @@ public class InitUtil {
         db().exec("CREATE TABLE IF NOT EXISTS `a_config` (\n" +
                 "  `cfg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配置ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
-                "  `label` varchar(40) NOT NULL DEFAULT '' COMMENT '标记',\n" +
-                "  `name` varchar(99) NOT NULL COMMENT '名称',\n" +
+                "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标记',\n" +
+                "  `name` varchar(100) NOT NULL COMMENT '名称',\n" +
                 "  `value` varchar(999) NOT NULL DEFAULT '' COMMENT '值',\n" +
-                "  `note` varchar(99) NOT NULL DEFAULT '' COMMENT '备注',\n" +
-                "  `edit_mode` varchar(40) DEFAULT NULL COMMENT '编辑模式',\n" +
+                "  `note` varchar(100) NOT NULL DEFAULT '' COMMENT '备注',\n" +
+                "  `edit_type` varchar(40) DEFAULT NULL COMMENT '编辑类型',\n" +
+                "  `edit_placeholder` varchar(100) DEFAULT NULL COMMENT '编辑提示',\n" +
                 "  `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '禁止使用',\n" +
                 "  `is_exclude` tinyint(1) NOT NULL DEFAULT '0' COMMENT '排除导入',\n" +
                 "  `is_modified` tinyint(1) NOT NULL DEFAULT '0' COMMENT '可修改的（终端用户）',\n" +
@@ -59,8 +60,9 @@ public class InitUtil {
         db().exec("CREATE TABLE IF NOT EXISTS `a_file` (\n" +
                 "  `file_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文件ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组村签',\n" +
-                "  `label` varchar(40) NOT NULL DEFAULT '' COMMENT '标记',\n" +
+                "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标记',\n" +
                 "  `path` varchar(100) NOT NULL COMMENT '文件路径',\n" +
+                "  `rank` int(11) NOT NULL DEFAULT '0' COMMENT '排列（小的排前）',\n" +
                 "  `is_staticize` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否静态',\n" +
                 "  `is_editable` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否可编辑',\n" +
                 "  `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',\n" +
@@ -88,13 +90,13 @@ public class InitUtil {
         db().exec("CREATE TABLE IF NOT EXISTS `a_image` (\n" +
                 "  `img_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '图片ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
-                "  `label` varchar(40) NOT NULL DEFAULT '' COMMENT '标签',\n" +
-                "  `path` varchar(99) NOT NULL COMMENT '文件路径',\n" +
-                "  `content_type` varchar(99) NOT NULL COMMENT '内容类型',\n" +
+                "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标签',\n" +
+                "  `path` varchar(100) NOT NULL COMMENT '文件路径',\n" +
+                "  `content_type` varchar(100) NOT NULL COMMENT '内容类型',\n" +
                 "  `data` longtext COMMENT '数据',\n" +
-                "  `data_size` int(11) NOT NULL DEFAULT '0' COMMENT '数据长度',\n" +
+                "  `data_size` bigint(20) NOT NULL DEFAULT '0' COMMENT '数据长度',\n" +
                 "  `data_md5` varchar(40) DEFAULT NULL COMMENT '数据MD5值',\n" +
-                "  `note` varchar(99) DEFAULT NULL COMMENT '备注',\n" +
+                "  `note` varchar(100) DEFAULT NULL COMMENT '备注',\n" +
                 "  `create_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',\n" +
                 "  `update_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',\n" +
                 "  PRIMARY KEY (`img_id`),\n" +
@@ -106,11 +108,11 @@ public class InitUtil {
         db().exec("CREATE TABLE IF NOT EXISTS `a_log` (\n" +
                 "  `log_id` bigint(20) NOT NULL AUTO_INCREMENT,\n" +
                 "  `level` int(11) NOT NULL DEFAULT '0' COMMENT '等级',\n" +
-                "  `tag` varchar(99) NOT NULL DEFAULT '' COMMENT '标签',\n" +
-                "  `tag1` varchar(99) NOT NULL DEFAULT '' COMMENT '标签1',\n" +
-                "  `tag2` varchar(99) NOT NULL DEFAULT '' COMMENT '标签2',\n" +
-                "  `tag3` varchar(99) NOT NULL DEFAULT '' COMMENT '标签3',\n" +
-                "  `tag4` varchar(99) NOT NULL DEFAULT '' COMMENT '标签4',\n" +
+                "  `tag` varchar(100) NOT NULL DEFAULT '' COMMENT '标签',\n" +
+                "  `tag1` varchar(100) NOT NULL DEFAULT '' COMMENT '标签1',\n" +
+                "  `tag2` varchar(100) NOT NULL DEFAULT '' COMMENT '标签2',\n" +
+                "  `tag3` varchar(100) NOT NULL DEFAULT '' COMMENT '标签3',\n" +
+                "  `tag4` varchar(100) NOT NULL DEFAULT '' COMMENT '标签4',\n" +
                 "  `summary` varchar(1000) NOT NULL DEFAULT '' COMMENT '摘要',\n" +
                 "  `content` longtext COMMENT '内容',\n" +
                 "  `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '记录日期',\n" +
@@ -137,7 +139,7 @@ public class InitUtil {
                 "  `icon` varchar(64) DEFAULT NULL COMMENT '菜单的icon',\n" +
                 "  `flag` varchar(32) DEFAULT NULL COMMENT '菜单标识',\n" +
                 "  `order_number` int(11) DEFAULT '0' COMMENT '排序字段',\n" +
-                "  `rel_table` varchar(32) DEFAULT NULL COMMENT '该菜单是否和其他表关联',\n" +
+                "  `rel_table` varchar(40) DEFAULT NULL COMMENT '该菜单是否和其他表关联',\n" +
                 "  `rel_id` bigint(20) unsigned DEFAULT NULL COMMENT '关联的具体数据id',\n" +
                 "  `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',\n" +
                 "  `create_fulltime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',\n" +
@@ -150,7 +152,8 @@ public class InitUtil {
 
         db().exec("CREATE TABLE IF NOT EXISTS `a_message` (\n" +
                 "  `msg_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息ID',\n" +
-                "  `topic` varchar(100) NOT NULL DEFAULT '',\n" +
+                "  `topic` varchar(100) NOT NULL DEFAULT '' COMMENT '主题',\n" +
+                "  `topic_source` varchar(100) DEFAULT NULL COMMENT '原始主题',\n" +
                 "  `content` varchar(4000) NOT NULL COMMENT '消息内容',\n" +
                 "  `state` int(11) NOT NULL DEFAULT '0' COMMENT '状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）',\n" +
                 "  `dist_count` int(11) NOT NULL DEFAULT '0' COMMENT '派发累记次数',\n" +
@@ -176,14 +179,15 @@ public class InitUtil {
                 "  `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '分发日期（yyyyMMdd）',\n" +
                 "  `log_fulltime` datetime NOT NULL COMMENT '分发时间',\n" +
                 "  PRIMARY KEY (`dist_id`),\n" +
+                "  UNIQUE KEY `IX_key` (`msg_id`,`file_id`) USING BTREE,\n" +
                 "  KEY `IX_date` (`log_date`)\n" +
-                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-消息派发表';\n");
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-消息派发表';");
 
         db().exec("CREATE TABLE IF NOT EXISTS `a_plugin` (\n" +
                 "  `plugin_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '插件ID',\n" +
-                "  `plugin_tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '插件标签',\n" +
+                "  `plugin_tag` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '插件标签',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n" +
-                "  `label` varchar(40) NOT NULL DEFAULT '' COMMENT '标记',\n" +
+                "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标记',\n" +
                 "  `category` varchar(40) NOT NULL DEFAULT '' COMMENT '分类（预留）',\n" +
                 "  `name` varchar(40) NOT NULL COMMENT '名称',\n" +
                 "  `author` varchar(40) NOT NULL COMMENT '作者',\n" +
@@ -383,7 +387,7 @@ public class InitUtil {
         file.delete();
         file.createNewFile();
 
-        StringBuilder sb = ThreadUtils.getStringBuilder();
+        StringBuilder sb = StringUtils.borrowBuilder();
         map.forEach((k, v) -> {
             if("center".equals(k) || "node".equals(k)){
                 sb.append(Config.code).append(".");
@@ -394,7 +398,7 @@ public class InitUtil {
         });
 
         FileWriter fw = new FileWriter(file);
-        fw.write(sb.toString());
+        fw.write(StringUtils.releaseBuilder(sb));
         fw.flush();
         fw.close();
     }

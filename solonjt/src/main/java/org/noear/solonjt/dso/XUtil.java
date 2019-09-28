@@ -131,9 +131,14 @@ public class XUtil {
         return new HashSet<>();
     }
 
-    @XNote("创建一个ByteArrayOutputStream")
+    @XNote("创建一个ByteArrayOutputStream空对象")
     public OutputStream newOutputStream(){
         return new ByteArrayOutputStream();
+    }
+
+    @XNote("创建一个XFile空对象")
+    public XFile newXfile(){
+        return new XFile();
     }
 
     @XNote("执行 HTTP 请求")
@@ -211,7 +216,7 @@ public class XUtil {
         String extension = file.extension;
         byte[] data_byte = IOUtils.toBytes(file.content);
         String data = Base64Utils.encodeByte(data_byte);
-        StringBuilder path = ThreadUtils.getStringBuilder();
+        StringBuilder path = StringUtils.borrowBuilder();
 
         if(name_mod==0) {
             //自动
@@ -235,7 +240,7 @@ public class XUtil {
             path.append(file.name);
         }
 
-        String path2= path.toString().replace("//", "/");
+        String path2= StringUtils.releaseBuilder(path).replace("//", "/");
 
         DbApi.imgSet(tag, path2, file.contentType, data, "");
 
@@ -289,6 +294,7 @@ public class XUtil {
         return path;
     }
 
+
     @XNote("设定图片输出名称")
     public String imgOutName(XContext ctx, String filename) throws Exception {
         String filename2 = URLEncoder.encode(filename, "utf-8");
@@ -312,11 +318,24 @@ public class XUtil {
     /**
      * 获取图片内容
      */
-    @XNote("获取图片内容")
+    @XNote("获取图片内容(string)")
     public String imgGet(String path) throws Exception {
         AImageModel img = DbApi.imgGet(path);
         return img2String(img.data);
     }
+
+    @XNote("获取图片内容(byte[])")
+    public byte[] imgGetBytes(String path) throws Exception {
+        AImageModel img = DbApi.imgGet(path);
+
+        if (TextUtils.isEmpty(img.data)) {
+            return null;
+        } else {
+            return Base64Utils.decodeByte(img.data);
+        }
+
+    }
+
 
     @XNote("图片内容转为字符串")
     public String img2String(String data) {
@@ -429,7 +448,7 @@ public class XUtil {
         tmp.put("XUtil.http(url)", HttpUtils.class);
         tmp.put("XUtil.db(cfg)", DbContext.class);
         tmp.put("XUtil.paging(ctx,pageSize)", PagingModel.class);
-        tmp.put("XUtil.thumbnail(file)", Thumbnails.Builder.class);
+        tmp.put("XUtil.thumbnailOf(stream)", Thumbnails.Builder.class);
 
         tmp.put("ctx", XContext.class);
 
@@ -563,6 +582,11 @@ public class XUtil {
         }else {
             if(obj instanceof String){
                 String tmp = ((String) obj).trim();
+
+                if(tmp.length()==0){
+                    return new ONode();
+                }
+
                 if(tmp.startsWith("{")){
                     return ONode.fromStr(tmp);
                 }
@@ -587,10 +611,9 @@ public class XUtil {
         return TimeUtils.liveTime(date);
     }
 
-
     @XNote("创建缩略图工具")
-    public Object thumbnail(XFile file){
-        return Thumbnails.of(file.content);
+    public Object thumbnailOf(InputStream stream){
+        return Thumbnails.of(stream);
     }
 
 
@@ -606,24 +629,22 @@ public class XUtil {
 
     @XNote("调用一个文件")
     public Object callFile(String path) throws Exception {
-        return CallUtil.callFile(path);
+        return CallUtil.callFile(path ,null);
     }
 
     @XNote("调用一个文件")
-    public Object callFile(String path,Map<String,Object> attrs) throws Exception {
-        XContext.current().attrSet(attrs);
-        return CallUtil.callFile(path);
+    public Object callFile(String path, Map<String,Object> attrs) throws Exception {
+        return CallUtil.callFile(path, attrs);
     }
 
     @XNote("调用一组勾子")
     public String callHook(String tag, String label, boolean useCache) throws Exception{
-        return CallUtil.callHook(tag, label, useCache);
+        return CallUtil.callLabel(tag, label, useCache, null);
     }
 
     @XNote("调用一组勾子")
     public String callHook(String tag,String label, boolean useCache, Map<String,Object> attrs) throws Exception{
-        XContext.current().attrSet(attrs);
-        return CallUtil.callHook(tag, label, useCache);
+        return CallUtil.callLabel(tag, label, useCache, attrs);
     }
 
     @XNote("日志")
@@ -645,5 +666,18 @@ public class XUtil {
     public int statusSet(int status) throws Exception{
         XContext.current().status(status);
         throw new RuntimeException(status+" status");
+    }
+
+    @XNote("将对象转为string")
+    public String stringOf(Object obj){
+        if(obj == null){
+            return null;
+        }
+
+        if(obj instanceof Throwable){
+            return ExceptionUtils.getString((Throwable)obj);
+        }
+
+        return obj.toString();
     }
 }
