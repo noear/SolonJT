@@ -47,14 +47,19 @@ public class XUtil {
      * 生成数据库上下文
      */
     @XNote("生成数据库上下文")
-    public DbContext db(String cfg) {
+    public DbContext db(String cfg) throws Exception{
         return db(cfg,null);
     }
 
     @XNote("生成数据库上下文")
-    public DbContext db(String cfg, DbContext def) {
+    public DbContext db(String cfg, DbContext def) throws Exception{
         if (TextUtils.isEmpty(cfg)) {
             return def;
+        }
+
+        if(cfg.startsWith("@")){
+            //转为真实的配置
+            cfg = cfgGet(cfg.substring(1));
         }
 
         DbContext tmp = _db_cache.get(cfg);
@@ -64,15 +69,26 @@ public class XUtil {
                 tmp = _db_cache.get(cfg);
 
                 if (tmp == null) {
-                    List<String> args = new ArrayList<>();
-                    String[] strs = cfg.split(" |\n|\r|\t");
-                    for(int i=0,len=strs.length; i<len; i++){
-                        if(strs[i].length()>0){
-                            args.add(strs[i]);
+                    Map<String,String> _map = new HashMap<>();
+                    if(cfg.startsWith("{")){
+                        Map<String,Object> tmp2 = (Map<String,Object>)ONode.fromStr(cfg).toData();
+                        tmp2.forEach((k,v)->{
+                            _map.put(k,v.toString());
+                        });
+
+                    }else{
+                        List<String> args = new ArrayList<>();
+                        String[] strs = cfg.split(" |\n|\r|\t");
+                        for(int i=0,len=strs.length; i<len; i++){
+                            if(strs[i].length()>0){
+                                args.add(strs[i]);
+                            }
                         }
+                        _map.putAll(XMap.from(args));
                     }
 
-                    tmp = DbUtil.getDb(XMap.from(args));
+
+                    tmp = DbUtil.getDb(_map);
 
                     if (tmp != null) {
                         _db_cache.put(cfg, tmp);

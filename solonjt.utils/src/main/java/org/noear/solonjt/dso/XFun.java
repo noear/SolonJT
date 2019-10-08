@@ -78,7 +78,13 @@ public class XFun {
             return;
         }
 
-        _xfunMap.put(name, new XFunEntity(fun, priority, note));
+        if(ent == null) {
+            ent = new XFunEntity();
+            ent.set(fun, priority, note);
+            _xfunMap.put(name, ent);
+        }else{
+            ent.set(fun, priority, note);
+        }
     }
 
     @XNote("函数获取")

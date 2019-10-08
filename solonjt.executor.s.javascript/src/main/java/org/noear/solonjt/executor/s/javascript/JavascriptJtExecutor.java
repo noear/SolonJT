@@ -55,7 +55,7 @@ public class JavascriptJtExecutor implements IJtExecutor {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("var __global={lib_obj:{},lib_cls:{}};");
+            sb.append("var __global={lib:{}};");
 
             sb.append("Date.prototype.toJSON =function(){ return this.getTime()};");
 
@@ -68,14 +68,14 @@ public class JavascriptJtExecutor implements IJtExecutor {
 
             sb.append("function modelAndView(tml,mod){return __JTEAPI.modelAndView(tml,mod);};");
 
-            sb.append("function require(path,newInstance){__JTEAPI.require(path);if(newInstance){return new __global.lib_cls[path]()}else{return __global.lib_obj[path]}}");
+            sb.append("function require(path){__JTEAPI.require(path);return __global.lib[path]}");
 
             //为JSON.stringify 添加java的对象处理
 
             sb.append("function stringify_java(k,v){if(v){if(v.getTicks){return v.getTicks()}if(v.getTime){return v.getTime()}if(v.putAll){var obj={};v.forEach(function(k2,v2){obj[k2]=v2});return obj}if(v.addAll){var ary=[];v.forEach(function(v2){ary.push(v2)});return ary}}return v};");
 
             sb.append("function API_RUN(api){var rst=api(XContext.current());if(rst){if(typeof(rst)=='object'){return JSON.stringify(rst,stringify_java)}else{return rst}}else{return null}};");
-            
+
             _eng.eval(sb.toString());
 
         } catch (Exception ex) {
@@ -164,19 +164,12 @@ public class JavascriptJtExecutor implements IJtExecutor {
         sb.append("\r\n\r\n};");
 
         if (name.endsWith("__lib")) {
-            sb.append("__global.lib_obj['")
+            sb.append("__global.lib['")
                     .append(file.path)
                     .append("']=")
                     .append("new API_")
                     .append(name)
                     .append("();");
-
-            sb.append("__global.lib_cls['")
-                    .append(file.path)
-                    .append("']=")
-                    .append("this.API_")
-                    .append(name)
-                    .append(";");
         }
 
         return sb.toString();

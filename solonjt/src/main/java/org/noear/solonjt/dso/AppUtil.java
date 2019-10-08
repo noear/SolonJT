@@ -108,6 +108,7 @@ public class AppUtil {
          * */
         app.sharedAdd("db", DbUtil.db());
         app.sharedAdd("cache", DbUtil.cache);
+        app.sharedAdd("localCache", DbUtil.cache);
 
         //2.尝试运行WEB应用
         if (TextUtils.isEmpty(sss) || sss.indexOf("web") >= 0) {

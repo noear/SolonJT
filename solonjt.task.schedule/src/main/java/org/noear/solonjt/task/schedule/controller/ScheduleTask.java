@@ -1,5 +1,8 @@
 package org.noear.solonjt.task.schedule.controller;
 
+import org.noear.solon.core.XContext;
+import org.noear.solon.core.XContextEmpty;
+import org.noear.solon.core.XContextUtil;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.executor.JtTaskBase;
 import org.noear.solonjt.model.AFileModel;
@@ -144,9 +147,13 @@ public class ScheduleTask extends JtTaskBase {
         task.plan_last_time = new Date();
         DbApi.taskSetState(task, 2);
 
+        XContext ctx = XContextEmpty.create();
+        XContextUtil.currentSet(ctx);
 
         //2.2.执行
-        ExecutorFactory.execOnly(task, null);
+        ExecutorFactory.execOnly(task, ctx);
+
+        XContextUtil.currentRemove();
 
 
         //3.更新状态

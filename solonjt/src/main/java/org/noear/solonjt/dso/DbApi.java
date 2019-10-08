@@ -47,7 +47,7 @@ public class DbApi {
 
     public static AFileModel fileGet(String path) throws Exception {
         return db().table("a_file")
-                .where("`path`=?", path)
+                .where("path=?", path)
                 .select("*")
                 .getItem(AFileModel.class);
     }
@@ -59,11 +59,11 @@ public class DbApi {
 
         return db().table("a_file").where("1=1").expre((tb) -> {
             if (TextUtils.isEmpty(tag) == false) {
-                tb.and("`tag`=?", tag);
+                tb.and("tag=?", tag);
             }
 
             if (TextUtils.isEmpty(label) == false) {
-                tb.and("`label`=?", label);
+                tb.and("label=?", label);
             }
         })
                 .select("path,note")

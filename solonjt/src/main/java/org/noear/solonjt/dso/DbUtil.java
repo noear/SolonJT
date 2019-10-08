@@ -33,25 +33,44 @@ public class DbUtil {
     }
 
 
-    private static DbContext getDb(String db, String url,String server, String usr, String pwd) {
+    private static DbContext getDb(String db, String driver, String type, String url,String server, String usr, String pwd) {
         if (TextUtils.isEmpty(url)) {
             StringBuilder sb = StringUtils.borrowBuilder();
-            sb.append("jdbc:mysql://")
+            sb.append("jdbc:").append(type).append("://")
                     .append(server)
                     .append("/")
-                    .append(db)
-                    .append("?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+                    .append(db);
 
+            if("mysql".equals(type)) {
+                sb.append("?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
+            }
             url = StringUtils.releaseBuilder(sb);
         }
 
-        HikariDataSource source = new HikariDataSource();
-        source.setJdbcUrl(url);
-        source.setUsername(usr);
-        source.setPassword(pwd);
-        source.setSchema(db);
+        if(TextUtils.isEmpty(driver)==false) {
+            try {
+                Class.forName(driver);
+            }catch (Throwable ex){
+                ex.printStackTrace();
+            }
+        }
 
-        return new DbContext(db, source, null);
+        if("mysql".equals(type)){
+            HikariDataSource source = new HikariDataSource();
+            source.setJdbcUrl(url);
+            source.setUsername(usr);
+            source.setPassword(pwd);
+            source.setSchema(db);
+            if(TextUtils.isEmpty(driver)==false) {
+                source.setDriverClassName(driver);
+            }
+
+            return new DbContext(db, source);
+        }else{
+            return new DbContext(db, url,usr,pwd);
+        }
+
+        //return new DbContext(db, url,usr,pwd, null);
     }
 
     public static DbContext getDb(Map<String,String> map) {
@@ -66,11 +85,17 @@ public class DbUtil {
         if(TextUtils.isEmpty(pwd)){
             pwd = map.get("pwd");
         }
+        String type = map.get("type");
+        if(TextUtils.isEmpty(type)){
+            type="mysql";
+        }
+
+        String driver = map.get("driver");
 
         if ((XUtil.isEmpty(url) && XUtil.isEmpty(server)) || XUtil.isEmpty(db) || XUtil.isEmpty(usr) || XUtil.isEmpty(pwd)) {
             throw new RuntimeException("please enter a normal database config");
         }
 
-        return getDb(db, url, server, usr, pwd);
+        return getDb(db, driver, type, url, server, usr, pwd);
     }
 }

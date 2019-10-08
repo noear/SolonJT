@@ -1,6 +1,7 @@
 package org.noear.solonjt.executor;
 
 import org.noear.solon.core.XContext;
+import org.noear.solonjt.dso.XFunEntity;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.StringUtils;
@@ -14,7 +15,7 @@ import java.util.Set;
  * 执行器工厂
  * */
 public class ExecutorFactory {
-    private static final Map<String, IJtExecutor> _map = new HashMap<>();
+    private static final Map<String, ExecutorEntity> _map = new HashMap<>();
     private static IJtExecutor _def;
     private static IExecutorFactoryAdapter _adapter;
 
@@ -44,12 +45,26 @@ public class ExecutorFactory {
     /**
      * 注册执行引擎
      */
-    public static void register(IJtExecutor engine) {
-        if(engine.language().equals(_adapter.defaultActuator())){
+    public static void register(IJtExecutor engine){
+        register(engine.language(),engine,0);
+    }
+
+    public static void register(String language, IJtExecutor engine, int priority) {
+        ExecutorEntity ent = _map.get(language);
+        if (ent != null && ent.priority > priority) {
+            return;
+        }
+
+        if(language.equals(_adapter.defaultActuator())){
             _def =engine;
         }
 
-        _map.put(engine.language(), engine);
+        if(ent == null) {
+            ent = new ExecutorEntity().set(language,engine, priority);
+            _map.put(language, ent);
+        }else{
+            ent.set(language,engine, priority);
+        }
     }
 
     /**
