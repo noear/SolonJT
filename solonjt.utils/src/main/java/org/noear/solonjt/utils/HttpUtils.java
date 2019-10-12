@@ -192,27 +192,27 @@ public class HttpUtils {
         }
     }
 
-    @XNote("发起GET请求，返回字符串（RESTAPI.select 从服务端获取一或多项资源）")
+    @XNote("发起GET请求，返回字符串（REST.select 从服务端获取一或多项资源）")
     public String get() throws Exception{
         return exec2("GET");
     }
 
-    @XNote("发起POST请求，返回字符串（RESTAPI.create 在服务端新建一项资源）")
+    @XNote("发起POST请求，返回字符串（REST.create 在服务端新建一项资源）")
     public String post() throws Exception{
         return exec2("POST");
     }
 
-    @XNote("发起PUT请求，返回字符串（RESTAPI.update 客户端提供改变后的完整资源）")
+    @XNote("发起PUT请求，返回字符串（REST.update 客户端提供改变后的完整资源）")
     public String put() throws Exception {
         return exec2("PUT");
     }
 
-    @XNote("发起PATCH请求，返回字符串（RESTAPI.update 客户端提供改变的属性）")
+    @XNote("发起PATCH请求，返回字符串（REST.update 客户端提供改变的属性）")
     public String patch() throws Exception {
         return exec2("PATCH");
     }
 
-    @XNote("发起DELETE请求，返回字符串（RESTAPI.delete 从服务端删除资源）")
+    @XNote("发起DELETE请求，返回字符串（REST.delete 从服务端删除资源）")
     public String delete() throws Exception {
         return exec2("DELETE");
     }

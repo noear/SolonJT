@@ -65,8 +65,10 @@ public class DbUtil {
                 source.setDriverClassName(driver);
             }
 
-            return new DbContext(db, source);
-        }else{
+            return new DbContext(db, source).fieldFormatSet("`%`").objectFormatSet("`%`");
+        } else if("postgresql".equals(type)){
+            return new DbContext(db, url,usr,pwd).fieldFormatSet("\"%\"").objectFormatSet("\"%\"");
+        } else{
             return new DbContext(db, url,usr,pwd);
         }
 

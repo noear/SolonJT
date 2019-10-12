@@ -270,7 +270,6 @@ public class InitUtil {
 
         ONode body = data.get("data").get("body");
         ONode meta = data.get("data").get("meta");
-        String tag = meta.get("tag").getString();
 
         String j_config = Base64Utils.decode(body.get("config").getString());
         String j_file = Base64Utils.decode(body.get("file").getString());

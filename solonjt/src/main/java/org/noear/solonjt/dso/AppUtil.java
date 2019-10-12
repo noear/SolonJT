@@ -1,11 +1,12 @@
 package org.noear.solonjt.dso;
 
 import org.noear.snack.ONode;
-import org.noear.snack.ONodeType;
 import org.noear.solonjt.Config;
-import org.noear.solonjt.executor.IJtTask;
+import org.noear.solonjt.event.http.AppHandler;
+import org.noear.solonjt.event.http.FrmInterceptor;
+import org.noear.solonjt.event.http.ImgHandler;
+import org.noear.solonjt.event.http.SufHandler;
 import org.noear.solonjt.executor.TaskFactory;
-import org.noear.solonjt.controller.*;
 import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.IOUtils;
 import org.noear.solonjt.utils.TextUtils;
@@ -15,6 +16,7 @@ import org.noear.solon.core.XHandler;
 import org.noear.solon.core.XHandlerLink;
 import org.noear.solon.core.XMap;
 import org.noear.solon.core.XMethod;
+import org.noear.weed.WeedConfig;
 
 import java.net.URL;
 
@@ -122,7 +124,10 @@ public class AppUtil {
             do_runSev(app);
         }
 
-        CallUtil.callLabel(null, "hook.start", false ,null);
+        //4.踪跟WEED异常
+        do_weedTrack();
+
+        CallUtil.callLabel(null, "hook.start", false, null);
     }
 
     private static void do_runWeb(XApp app) {
@@ -149,5 +154,24 @@ public class AppUtil {
 
     private static void do_runSev(XApp app){
         TaskFactory.run(TaskRunner.g);
+    }
+
+    private static void do_weedTrack(){
+        WeedConfig.onException((cmd, ex) -> {
+            if (cmd.text.indexOf("a_log") < 0 && cmd.isLog >= 0) {
+                System.out.println(cmd.text);
+                LogUtil.log("weed", "err_log",0, "出错", cmd.text + "<br/><br/>" + ExceptionUtils.getString(ex));
+            }
+        });
+
+        WeedConfig.onExecuteAft((cmd)->{
+            if(cmd.isLog<0){
+                return;
+            }
+
+            if(cmd.timespan()>1000){
+                LogUtil.log("weed", "slow_log",0, cmd.timespan()+"ms", cmd.text);
+            }
+        });
     }
 }

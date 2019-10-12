@@ -35,8 +35,8 @@
         <module>solonjt.actuator.m.beetl</module>
         <module>solonjt.actuator.m.enjoy</module>
 
-        <module>solonjt.task.message</module>
-        <module>solonjt.task.schedule</module>
+        <module>solonjt.event.message</module>
+        <module>solonjt.event.schedule</module>
     </modules>
 
 </project>

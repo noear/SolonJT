@@ -2,8 +2,8 @@ package org.noear.solonjt.dso;
 
 import net.coobird.thumbnailator.Thumbnails;
 import org.noear.solonjt.Config;
-import org.noear.solonjt.controller.FrmInterceptor;
-import org.noear.solonjt.controller.SufHandler;
+import org.noear.solonjt.event.http.FrmInterceptor;
+import org.noear.solonjt.event.http.SufHandler;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.*;
@@ -526,7 +526,7 @@ public class XUtil {
 
     @XNote("生成md5码")
     public String md5(String str) {
-        return EncryptUtils.md5(str, "UTF-16LE");
+        return EncryptUtils.md5(str, "UTF-8");
     }
 
     @XNote("生成md5码")
@@ -537,7 +537,7 @@ public class XUtil {
 
     @XNote("生成sha1码")
     public String sha1(String str) {
-        return EncryptUtils.sha1(str, "UTF-16LE");//UTF-16LE, utf-8
+        return EncryptUtils.sha1(str, "UTF-8");//UTF-16LE, utf-8
     }
 
     @XNote("生成sha1码")
@@ -641,26 +641,6 @@ public class XUtil {
     @XNote("加载插件里的jar包")
     public boolean loadJar(String path, String data64, String data_md5, String plugin) throws Exception {
         return JarUtil.loadJar(path,data64,data_md5,plugin);
-    }
-
-    @XNote("调用一个文件")
-    public Object callFile(String path) throws Exception {
-        return CallUtil.callFile(path ,null);
-    }
-
-    @XNote("调用一个文件")
-    public Object callFile(String path, Map<String,Object> attrs) throws Exception {
-        return CallUtil.callFile(path, attrs);
-    }
-
-    @XNote("调用一组勾子")
-    public String callHook(String tag, String label, boolean useCache) throws Exception{
-        return CallUtil.callLabel(tag, label, useCache, null);
-    }
-
-    @XNote("调用一组勾子")
-    public String callHook(String tag,String label, boolean useCache, Map<String,Object> attrs) throws Exception{
-        return CallUtil.callLabel(tag, label, useCache, attrs);
     }
 
     @XNote("日志")
