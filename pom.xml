@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.noear</groupId>
-    <artifactId>thinkjt-parent</artifactId>
+    <artifactId>solonjt_java</artifactId>
     <version>pre</version>
     <packaging>pom</packaging>
 
-    <name>root</name>
+    <name>solonjt_java</name>
     <description>Java project for SolonJT</description>
 
     <properties>
