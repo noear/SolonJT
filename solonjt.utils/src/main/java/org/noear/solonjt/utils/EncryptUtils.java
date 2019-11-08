@@ -1,6 +1,5 @@
 package org.noear.solonjt.utils;
 
-import java.nio.charset.Charset;
 import java.security.MessageDigest;
 
 public class EncryptUtils {

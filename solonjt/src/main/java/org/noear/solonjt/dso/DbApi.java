@@ -66,7 +66,7 @@ public class DbApi {
                 tb.and("label=?", label);
             }
         })
-                .select("path,note")
+                .select("path, note")
                 .caching(DbUtil.cache)
                 .usingCache(isCache)
                 .getList(AFileModel.class);
@@ -113,20 +113,18 @@ public class DbApi {
     }
 
     public static List<AFileModel> fileFilters() throws Exception {
-        return
-                DbUtil.db().table("a_file")
-                        .where("`label` = ?", Config.filter_file)
-                        .select("path,note")
-                        .getList(AFileModel.class);
+        return DbUtil.db().table("a_file")
+                .where("`label` = ?", Config.filter_file)
+                .select("path,note")
+                .getList(AFileModel.class);
 
     }
 
     public static List<AFileModel> pathFilters() throws Exception {
-        return
-                DbUtil.db().table("a_file")
-                        .where("`label` = ?", Config.filter_path)
-                        .select("path,note")
-                        .getList(AFileModel.class);
+        return DbUtil.db().table("a_file")
+                .where("`label` = ?", Config.filter_path)
+                .select("path,note")
+                .getList(AFileModel.class);
 
     }
 
@@ -295,6 +293,12 @@ public class DbApi {
         map.put("tag4", data.get("tag4"));
         map.put("summary", data.get("summary"));
         map.put("content", data.get("content"));
+
+        if(data.containsKey("from")) {
+            map.put("from", data.get("from"));
+        }else{
+            map.put("from", CfgUtil.nodeId());
+        }
 
         map.put("level", data.get("level"));
         map.put("log_date", Datetime.Now().getDate());

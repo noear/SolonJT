@@ -179,7 +179,7 @@ public class StringUtils {
     //借用StringBuilder（基于Stack管理）
     public static StringBuilder borrowBuilder() {
         synchronized(builders) {
-            return builders.empty() ? new StringBuilder(8192) : (StringBuilder)builders.pop();
+            return builders.empty() ? new StringBuilder(MaxCachedBuilderSize) : builders.pop();
         }
     }
 
@@ -187,8 +187,8 @@ public class StringUtils {
     public static String releaseBuilder(StringBuilder sb) {
         AssertUtils.notNull(sb);
         String string = sb.toString();
-        if (sb.length() > 8192) {
-            sb = new StringBuilder(8192);
+        if (sb.length() > MaxCachedBuilderSize) {
+            sb = new StringBuilder(MaxCachedBuilderSize);
         } else {
             sb.delete(0, sb.length());
         }
@@ -196,7 +196,7 @@ public class StringUtils {
         synchronized(builders) {
             builders.push(sb);
 
-            while(builders.size() > 8) {
+            while(builders.size() > MaxIdleBuilders) {
                 builders.pop();
             }
 

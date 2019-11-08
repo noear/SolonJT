@@ -52,12 +52,12 @@ public class XUtil {
     }
 
     @XNote("生成数据库上下文")
-    public DbContext db(String cfg, DbContext def) throws Exception{
+    public DbContext db(String cfg, DbContext def) throws Exception {
         if (TextUtils.isEmpty(cfg)) {
             return def;
         }
 
-        if(cfg.startsWith("@")){
+        if (cfg.startsWith("@")) {
             //转为真实的配置
             cfg = cfgGet(cfg.substring(1));
         }
@@ -69,24 +69,27 @@ public class XUtil {
                 tmp = _db_cache.get(cfg);
 
                 if (tmp == null) {
-                    Map<String,String> _map = new HashMap<>();
-                    if(cfg.startsWith("{")){
-                        Map<String,Object> tmp2 = (Map<String,Object>)ONode.fromStr(cfg).toData();
-                        tmp2.forEach((k,v)->{
-                            _map.put(k,v.toString());
+                    Map<String, String> _map = new HashMap<>();
+                    if (cfg.startsWith("{")) {
+                        //
+                        // json
+                        //
+                        Map<String, Object> tmp2 = (Map<String, Object>) ONode.load(cfg).toData();
+                        tmp2.forEach((k, v) -> {
+                            _map.put(k, v.toString());
                         });
 
-                    }else{
-                        List<String> args = new ArrayList<>();
-                        String[] strs = cfg.split(" |\n|\r|\t");
-                        for(int i=0,len=strs.length; i<len; i++){
-                            if(strs[i].length()>0){
-                                args.add(strs[i]);
-                            }
-                        }
-                        _map.putAll(XMap.from(args));
+                    } else {
+                        //
+                        // properties
+                        //
+                        StringReader cfg_reader = new StringReader(cfg);
+                        Properties prop = new Properties();
+                        RunUtil.runActEx(() -> prop.load(cfg_reader));
+                        prop.forEach((k, v) -> {
+                            _map.put(k.toString(), v.toString());
+                        });
                     }
-
 
                     tmp = DbUtil.getDb(_map);
 
@@ -604,11 +607,11 @@ public class XUtil {
                 }
 
                 if(tmp.startsWith("{")){
-                    return ONode.fromStr(tmp);
+                    return ONode.load(tmp);
                 }
             }
 
-            return ONode.fromObj(obj);
+            return ONode.load(obj);
         }
     }
 

@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>solonjt.executor.m.thymeleaf</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.3.1</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -49,20 +49,20 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
-            <version>1.0.2.18</version>
+            <version>1.0.3.18</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3</artifactId>
-            <version>3.1.9.3</version>
+           <version>3.2.2.1</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.utils</artifactId>
-            <version>1.0.6</version>
+            <version>1.0.3.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

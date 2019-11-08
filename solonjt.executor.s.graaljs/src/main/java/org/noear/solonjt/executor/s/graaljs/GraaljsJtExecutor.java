@@ -14,7 +14,7 @@ import java.util.function.Predicate;
  * javascript 代码运行工具
  * */
 public class GraaljsJtExecutor implements IJtExecutor {
-    private static final ThData<StringBuilder> _tlBuilder = new ThData(new StringBuilder(1024*5));
+    private static final ThData<StringBuilder> _tlBuilder = new ThData(()->new StringBuilder(1024*5));
     private static final String _lock ="";
     private static GraaljsJtExecutor _g;
     public static GraaljsJtExecutor singleton(){
@@ -50,8 +50,9 @@ public class GraaljsJtExecutor implements IJtExecutor {
 
         //添加配置，支持本地java对接
         Bindings bindings = _eng.getBindings(ScriptContext.ENGINE_SCOPE);
-        bindings.put("polyglot.js.allowHostAccess", true);
-        bindings.put("polyglot.js.allowHostClassLookup", (Predicate<String>) s -> true);
+        bindings.put("polyglot.js.allowAllAccess",true);
+        //bindings.put("polyglot.js.allowHostAccess", true);
+        //bindings.put("polyglot.js.allowHostClassLookup", (Predicate<String>) s -> true);
 
         _eng_call = (Invocable)_eng;
 

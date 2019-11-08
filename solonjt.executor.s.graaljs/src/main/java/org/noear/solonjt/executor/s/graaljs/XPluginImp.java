@@ -8,5 +8,7 @@ public class XPluginImp implements XPlugin {
     @Override
     public void start(XApp app) {
         ExecutorFactory.register(GraaljsJtExecutor.singleton());
+        //不能替代（不能识别，java的多态）
+        //ExecutorFactory.register("javascript",GraaljsJtExecutor.singleton(),1);
     }
 }

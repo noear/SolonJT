@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.noear</groupId>
-    <artifactId>solonjt-parent</artifactId>
+    <artifactId>thinkjt-parent</artifactId>
     <version>pre</version>
     <packaging>pom</packaging>
 
@@ -22,21 +22,27 @@
         <module>solonjt</module>
         <module>solonjt.utils</module>
 
-        <module>solonjt.actuator.s.python</module>
-        <module>solonjt.actuator.s.ruby</module>
-        <module>solonjt.actuator.s.javascript</module>
-        <module>solonjt.actuator.s.groovy</module>
-        <module>solonjt.actuator.s.lua</module>
-        <module>solonjt.actuator.s.graaljs</module>
+        <module>solonjt.executor.s.python</module>
+        <module>solonjt.executor.s.ruby</module>
+        <module>solonjt.executor.s.javascript</module>
+        <module>solonjt.executor.s.groovy</module>
+        <module>solonjt.executor.s.lua</module>
+        <module>solonjt.executor.s.graaljs</module>
 
-        <module>solonjt.actuator.m.freemarker</module>
-        <module>solonjt.actuator.m.velocity</module>
-        <module>solonjt.actuator.m.thymeleaf</module>
-        <module>solonjt.actuator.m.beetl</module>
-        <module>solonjt.actuator.m.enjoy</module>
+        <module>solonjt.executor.m.freemarker</module>
+        <module>solonjt.executor.m.velocity</module>
+        <module>solonjt.executor.m.thymeleaf</module>
+        <module>solonjt.executor.m.beetl</module>
+        <module>solonjt.executor.m.enjoy</module>
 
         <module>solonjt.event.message</module>
         <module>solonjt.event.schedule</module>
+
+        <module>thinkjt</module>
+        <module>thinkjt.extend.flexmark</module>
+        <module>thinkjt.extend.sited</module>
+        <module>thinkjt.extend.webmagic</module>
+        <module>thinkjt.extend.jsoup</module>
     </modules>
 
 </project>

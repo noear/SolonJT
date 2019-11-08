@@ -1,7 +1,6 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.XApp;
-import org.noear.solon.core.XAction;
 import org.noear.solonjt.Config;
 import org.noear.solonjt.utils.*;
 import org.noear.snack.ONode;
@@ -213,14 +212,15 @@ public class InitUtil {
         System.out.println("Complete table structure");
     }
 
-    public static void tryInitNode(XMap map){
-        String node = map.get(Config.code_node);
+    public static void tryInitNode(XApp app){
+        String node = app.prop().get(Config.code_node);
         if (TextUtils.isEmpty(node)) {
-            node = map.get("node");
+            node = app.prop().argx().get("node");
         }
 
         if(TextUtils.isEmpty(node)==false){
-            XApp.global().prop().argx().put("node", node);
+            app.prop().argx().put("node", node);
+            app.prop().put(Config.code_node, node);
 
             try {
                 String addr = XUtil.g.localAddr();
@@ -232,17 +232,17 @@ public class InitUtil {
         }
     }
 
-    public static void tryInitCore(XMap map){
+    public static void tryInitCore(XApp app){
         try{
-             do_initCore(map);
+             do_initCore(app);
         }catch (Throwable ex){
             ex.printStackTrace();
         }
     }
-    private static void do_initCore(XMap map) throws Exception {
-        String center = map.get(Config.code_center);
+    private static void do_initCore(XApp app) throws Exception {
+        String center = app.prop().get(Config.code_center);
         if (TextUtils.isEmpty(center)) {
-            center = map.get("center");
+            center = app.prop().argx().get("center");
         }
 
         if (TextUtils.isEmpty(center)) {
@@ -263,7 +263,7 @@ public class InitUtil {
 
 
         String json = new HttpUtils(url).get();
-        ONode data = ONode.fromStr(json);
+        ONode data = ONode.load(json);
         if (data.get("code").getInt() != 1) {
             return;
         }

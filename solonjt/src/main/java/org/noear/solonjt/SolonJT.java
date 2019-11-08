@@ -4,9 +4,15 @@ import org.noear.solonjt.dso.*;
 import org.noear.solon.XApp;
 import org.noear.solon.core.*;
 import org.noear.solonjt.executor.ExecutorFactory;
+import org.noear.weed.WeedConfig;
+import org.noear.weed.xml.XmlSqlLoader;
+
+import java.util.Map;
 
 public class SolonJT {
     public static void start(Class<?> source, String[] args, String defActuator) {
+
+        XmlSqlLoader.tryLoad();
 
         //0.构建参数
         XMap xarg = XMap.from(args);
@@ -18,11 +24,9 @@ public class SolonJT {
             throw new RuntimeException("Please enter an 'extend' parameter!");
         }
 
-        //2.加载扩展目录（包括：配置、jar）
+        //2.初始化扩展目录（包括：配置、jar）
         ExtendUtil.init(extend);
-        ExtendLoader.load(extend, xarg);
-
-        xarg.put("extend",extend);
+        xarg.put("extend", extend);
 
         InitXfunUtil.init();
 
@@ -30,7 +34,7 @@ public class SolonJT {
         ExecutorFactory.init(new ActuatorFactoryAdapter(defActuator));
 
         //4.启动服务
-        XApp app = XApp.start(source, xarg,(x)->{
+        XApp app = XApp.start(source, xarg, (x) -> {
             x.sharedAdd("XFun", XFun.g);
             x.sharedAdd("XBus", XBus.g);
             x.sharedAdd("XUtil", XUtil.g);
@@ -40,12 +44,12 @@ public class SolonJT {
         app.loadBean(SolonJT.class);
 
         //5.初始化功能
-        if (xarg.size() < 4) {
+        if (app.prop().size() < 4) {
             //5.1.如果没有DB配置；则启动配置服务
-            AppUtil.runAsInit(app,extend);
+            AppUtil.runAsInit(app, extend);
         } else {
             //5.2.如果有DB配置了；则启动工作服务
-            AppUtil.init(xarg, true);
+            AppUtil.init(app,true);
 
             AppUtil.runAsWork(app);
         }

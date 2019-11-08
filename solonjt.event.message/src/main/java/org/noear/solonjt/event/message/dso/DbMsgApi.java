@@ -1,5 +1,6 @@
 package org.noear.solonjt.event.message.dso;
 
+import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.event.message.Config;
 import org.noear.solonjt.utils.Datetime;

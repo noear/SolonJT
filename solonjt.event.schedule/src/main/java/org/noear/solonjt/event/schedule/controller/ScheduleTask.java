@@ -3,11 +3,11 @@ package org.noear.solonjt.event.schedule.controller;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XContextEmpty;
 import org.noear.solon.core.XContextUtil;
+import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.executor.JtTaskBase;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.event.schedule.dso.DbApi;
-import org.noear.solonjt.event.schedule.dso.LogUtil;
 import org.noear.solonjt.utils.Datetime;
 import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.Timecount;
@@ -20,7 +20,7 @@ import java.util.List;
  * 定时任务处理器（数据库安全）
  * */
 public class ScheduleTask extends JtTaskBase {
-    public ScheduleTask(){
+    public ScheduleTask() {
         super("_schedule", 1000 * 60);
     }
 
@@ -28,7 +28,7 @@ public class ScheduleTask extends JtTaskBase {
 
     @Override
     public void exec() throws Exception {
-        if(node_current_can_run() == false){
+        if (node_current_can_run() == false) {
             return;
         }
 
@@ -45,28 +45,28 @@ public class ScheduleTask extends JtTaskBase {
         List<AFileModel> list = DbApi.taskGetList();
 
         for (AFileModel task : list) {
-            new Thread(() -> {
+            poolExecute(() -> {
                 doExec(task);
-            }).start();
+            });
         }
     }
 
     private void doExec(AFileModel task) {
         try {
             runTask(task);
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             ex.printStackTrace();
 
             try {
                 String err = ExceptionUtils.getString(ex);
-                LogUtil.log(getName(), task.tag, task.path, task.file_id + "", 0, null, err);
-            } catch (Exception ee) {
+                LogUtil.log(getName(), task.tag, task.path, task.file_id + "", 0, "", err);
+            } catch (Throwable ee) {
                 ee.printStackTrace();
             }
 
             try {
                 DbApi.taskSetState(task, 8);
-            } catch (Exception ee) {
+            } catch (Throwable ee) {
                 ee.printStackTrace();
             }
         }
@@ -164,6 +164,6 @@ public class ScheduleTask extends JtTaskBase {
 
         DbApi.taskSetState(task, 9);
 
-        LogUtil.log(getName(), task.tag, task.path, task.file_id + "", 0, null, "执行成功");
+        LogUtil.log(getName(), task.tag, task.path, task.file_id + "", 0, "", "执行成功");
     }
 }

@@ -10,7 +10,7 @@ import java.util.Map;
 public class XBus {
     public static final XBus g  = new XBus();
 
-    static ThData<Map<String,Object>> th_map= new ThData<>(new HashMap<>());
+    static ThData<Map<String,Object>> th_map= new ThData<>(()->new HashMap<>());
 
     @XNote("转发消息")
     public boolean forward(String topic, Object content, String topic_source) throws Exception{
@@ -19,8 +19,8 @@ public class XBus {
         }
 
         Map<String,Object> data = th_map.get();
-
         data.clear();
+
         data.put("topic",topic);
         data.put("content",content.toString());
         data.put("topic_source",topic_source);
@@ -39,8 +39,8 @@ public class XBus {
         }
 
         Map<String,Object> data = th_map.get();
-
         data.clear();
+
         data.put("topic",topic);
         data.put("content",content.toString());
 

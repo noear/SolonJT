@@ -7,9 +7,9 @@ import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.IJtExecutor;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.Datetime;
+import org.noear.solonjt.utils.ThreadData;
 import org.noear.solonjt.utils.Timecount;
 import org.noear.solonjt.utils.Timespan;
-import org.noear.weed.ext.ThData;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -17,7 +17,7 @@ import javax.script.ScriptEngineManager;
 import java.util.*;
 
 public class GroovyJtExecutor implements IJtExecutor {
-    private static final ThData<StringBuilder> _tlBuilder = new ThData(new StringBuilder(1024 * 5));
+    private static final ThreadData<StringBuilder> _tlBuilder = new ThreadData(()->new StringBuilder(1024 * 5));
     private static final String _lock = "";
     private static GroovyJtExecutor _g;
 

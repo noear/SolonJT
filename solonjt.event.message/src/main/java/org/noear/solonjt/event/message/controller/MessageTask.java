@@ -1,9 +1,9 @@
 package org.noear.solonjt.event.message.controller;
 
-import org.noear.snack.ONode;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XContextEmpty;
 import org.noear.solon.core.XContextUtil;
+import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.dso.XBus;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.executor.JtTaskBase;
@@ -19,15 +19,15 @@ import java.util.List;
 import static java.lang.System.out;
 
 public class MessageTask extends JtTaskBase {
-    public MessageTask(){
+    public MessageTask() {
         super("_message", 500);
     }
 
-    private int rows = 100;
+    private int rows = 10;
 
     @Override
     public void exec() throws Exception {
-        if(node_current_can_run() == false){
+        if (node_current_can_run() == false) {
             return;
         }
 
@@ -45,20 +45,7 @@ public class MessageTask extends JtTaskBase {
                 continue;
             }
 
-            //置为处理中
-            DbMsgApi.msgSetState(msgID, 1);
-
-            try {
-                distribute(msg);
-
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-
-                DbMsgApi.msgSetRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
-
-                LogUtil.log(getName(), "distribute", msg.topic, msg.msg_id + "", 0, "", ExceptionUtils.getString(ex));
-            }
+            distribute(msg);
         }
 
         if (msgList.size() == 0) {
@@ -70,7 +57,22 @@ public class MessageTask extends JtTaskBase {
         }
     }
 
-    private void distribute(AMessageModel msg) throws Exception {
+    private void distribute(AMessageModel msg) {
+        //置为处理中
+        DbMsgApi.msgSetState(msg.msg_id, 1);
+
+        try {
+            do_distribute(msg);
+        } catch (Throwable ex) {
+            ex.printStackTrace();
+
+            DbMsgApi.msgSetRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
+
+            LogUtil.log(getName(), "distribute", msg.topic, msg.msg_id + "", 0, "", ExceptionUtils.getString(ex));
+        }
+    }
+
+    private void do_distribute(AMessageModel msg) throws Exception {
         //1.取出订阅者
         List<AFileModel> subsList = DbMsgApi.msgGetSubs(msg.topic);
 
@@ -103,8 +105,56 @@ public class MessageTask extends JtTaskBase {
         for (AMessageDistributionModel m : distList) {
             m._start_time = System.currentTimeMillis();
 
-            distributeMessage(state, msg, m, distributeMessage_callback);
+            poolExecute(()->{
+                distributeMessage(state, msg, m, distributeMessage_callback);
+            });
         }
+    }
+
+    private void distributeMessage(StateTag tag, AMessageModel msg, AMessageDistributionModel dist, Act3<StateTag, AMessageDistributionModel, Boolean> callback) {
+        try {
+            AFileModel task = DbMsgApi.fileGet(dist.receive_url);
+
+            if (dist.receive_way == 0) {
+                do_distributeMessage(task, tag, msg, dist, callback);
+            }
+
+        } catch (Throwable ex) {
+            distributeMessage_log(msg, dist, ExceptionUtils.getString(ex));
+            callback.run(tag, dist, false);
+        }
+    }
+
+    private void do_distributeMessage(AFileModel task, StateTag tag, AMessageModel msg, AMessageDistributionModel dist, Act3<StateTag, AMessageDistributionModel, Boolean> callback) throws Exception {
+        try {
+            XContext ctx = XContextEmpty.create();
+            XContextUtil.currentSet(ctx);
+
+            ctx.attrSet("topic", msg.topic);
+            ctx.attrSet("content", msg.content);
+
+            Object tmp = ExecutorFactory.execOnly(task, ctx);
+            dist._duration = new Timespan(System.currentTimeMillis(), dist._start_time).seconds();
+
+            if (tmp == null || tmp.toString().equals("OK")) {
+                if (TextUtils.isEmpty(msg.topic_source) == false) {
+                    //尝试转发消息到下一层
+                    XBus.g.forward(msg.topic, msg.content, msg.topic_source);
+                }
+
+                distributeMessage_log(msg, dist, "OK");
+                callback.run(tag, dist, true);
+            } else {
+                distributeMessage_log(msg, dist, (tmp == null ? "null" : tmp.toString()));
+                callback.run(tag, dist, false);
+            }
+        } finally {
+            XContextUtil.currentRemove();
+        }
+
+        //
+        // 异常交由上层处理
+        //
     }
 
     private Act3<StateTag, AMessageDistributionModel, Boolean> distributeMessage_callback = (tag, dist, isOk) -> {
@@ -136,52 +186,8 @@ public class MessageTask extends JtTaskBase {
         }
     };
 
+
     private void distributeMessage_log(AMessageModel msg, AMessageDistributionModel dist, String note) {
-        LogUtil.log(getName(), "distributeMessage", msg.topic, msg.msg_id + "", dist.file_id + "", 0, dist.receive_url, note);
-    }
-
-    private void distributeMessage(StateTag tag, AMessageModel msg, AMessageDistributionModel dist, Act3<StateTag, AMessageDistributionModel, Boolean> callback) {
-
-        try {
-            AFileModel task = DbMsgApi.fileGet(dist.receive_url);
-
-            if (dist.receive_way == 0) {
-                new Thread(() -> {
-                    try {
-                        XContext ctx = XContextEmpty.create();
-                        XContextUtil.currentSet(ctx);
-
-                        ctx.attrSet("topic",msg.topic);
-                        ctx.attrSet("content",msg.content);
-
-                        Object tmp = ExecutorFactory.execOnly(task, ctx);
-                        dist._duration = new Timespan(System.currentTimeMillis(), dist._start_time).seconds();
-
-                        if(tmp == null || tmp.toString().equals("OK")){
-                            if(TextUtils.isEmpty(msg.topic_source)==false){
-                                //尝试转发消息到下一层
-                                XBus.g.forward(msg.topic,msg.content,msg.topic_source);
-                            }
-
-                            distributeMessage_log(msg,dist,"OK");
-                            callback.run(tag, dist, true);
-                        }else{
-                            distributeMessage_log(msg,dist,(tmp==null?"null" : tmp.toString()));
-                            callback.run(tag, dist, false);
-                        }
-                    } catch (Throwable ex) {
-                        distributeMessage_log(msg,dist,ExceptionUtils.getString(ex));
-                        callback.run(tag, dist, false);
-                    }finally {
-                        XContextUtil.currentRemove();
-                    }
-
-                }).start();
-            }
-
-        } catch (Exception ex) {
-            distributeMessage_log(msg,dist,ExceptionUtils.getString(ex));
-            callback.run(tag, dist, false);
-        }
+        LogUtil.log(getName(), "distributeMessage", msg.topic, msg.msg_id + "", dist.file_id + "", 0, dist.receive_url , note);
     }
 }

@@ -17,14 +17,15 @@ import java.util.Map;
  * 启动参数示例：-server.port=8081 -extend=/data/sss/tk_ext/
  * */
 public class DbUtil {
-    /** 说明：
-     *
+    /**
+     * 说明：
+     * <p>
      * 为启动时配一下连接信息
-     * */
-    public static final LocalCache cache = new LocalCache("data", 60*5);
+     */
+    public static final LocalCache cache = new LocalCache("data", 60 * 5);
     private static DbContext _db = null;
 
-    public static DbContext db(){
+    public static DbContext db() {
         return _db;
     }
 
@@ -32,72 +33,81 @@ public class DbUtil {
         _db = getDb(map);
     }
 
+    public static DbContext getDb(Map<String, String> map) {
+        String url = map.get("url");
+        String server = map.get("server");
 
-    private static DbContext getDb(String db, String driver, String type, String url,String server, String usr, String pwd) {
+        String schema = map.get("schema");
+        if (TextUtils.isEmpty(schema)) {
+            schema = map.get("name");
+        }
+
+        String username = map.get("username");
+        if (TextUtils.isEmpty(username)) {
+            username = map.get("usr");
+        }
+        String password = map.get("password");
+        if (TextUtils.isEmpty(password)) {
+            password = map.get("pwd");
+        }
+        String type = map.get("type");
+
+        String driverClassName = map.get("driverClassName");
+        if (TextUtils.isEmpty(driverClassName)) {
+            driverClassName = map.get("driver");
+        }
+
+        if ((XUtil.isEmpty(url) && XUtil.isEmpty(server))
+                || XUtil.isEmpty(schema)
+                || XUtil.isEmpty(username)
+                || XUtil.isEmpty(password)) {
+            throw new RuntimeException("please enter a normal database config");
+        }
+
+        return getDb(schema, driverClassName, type, url, server, username, password);
+    }
+
+    private static DbContext getDb(String schema, String driverClassName, String type, String url, String server, String username, String password) {
+        if (TextUtils.isEmpty(type)) {
+            type = "mysql";
+        }
+
         if (TextUtils.isEmpty(url)) {
             StringBuilder sb = StringUtils.borrowBuilder();
             sb.append("jdbc:").append(type).append("://")
                     .append(server)
                     .append("/")
-                    .append(db);
+                    .append(schema);
 
-            if("mysql".equals(type)) {
+            if ("mysql".equals(type)) {
                 sb.append("?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");
             }
+
             url = StringUtils.releaseBuilder(sb);
         }
 
-        if(TextUtils.isEmpty(driver)==false) {
+        if (TextUtils.isEmpty(driverClassName) == false) {
             try {
-                Class.forName(driver);
-            }catch (Throwable ex){
+                Class.forName(driverClassName);
+            } catch (Throwable ex) {
                 ex.printStackTrace();
             }
         }
 
-        if("mysql".equals(type)){
+        if ("mysql".equals(type)) {
             HikariDataSource source = new HikariDataSource();
             source.setJdbcUrl(url);
-            source.setUsername(usr);
-            source.setPassword(pwd);
-            source.setSchema(db);
-            if(TextUtils.isEmpty(driver)==false) {
-                source.setDriverClassName(driver);
+            source.setUsername(username);
+            source.setPassword(password);
+            source.setSchema(schema);
+
+            if (TextUtils.isEmpty(driverClassName) == false) {
+                source.setDriverClassName(driverClassName);
             }
 
-            return new DbContext(db, source).fieldFormatSet("`%`").objectFormatSet("`%`");
-        } else if("postgresql".equals(type)){
-            return new DbContext(db, url,usr,pwd).fieldFormatSet("\"%\"").objectFormatSet("\"%\"");
-        } else{
-            return new DbContext(db, url,usr,pwd);
+            return new DbContext(schema, source).fieldFormatSet("`%`").objectFormatSet("`%`");
+        } else {
+            return new DbContext(schema, url, username, password);
         }
-
-        //return new DbContext(db, url,usr,pwd, null);
-    }
-
-    public static DbContext getDb(Map<String,String> map) {
-        String url = map.get("url");
-        String server = map.get("server");
-        String db = map.get("name");
-        String usr = map.get("username");
-        if(TextUtils.isEmpty(usr)){
-            usr = map.get("usr");
-        }
-        String pwd = map.get("password");
-        if(TextUtils.isEmpty(pwd)){
-            pwd = map.get("pwd");
-        }
-        String type = map.get("type");
-        if(TextUtils.isEmpty(type)){
-            type="mysql";
-        }
-
-        String driver = map.get("driver");
-
-        if ((XUtil.isEmpty(url) && XUtil.isEmpty(server)) || XUtil.isEmpty(db) || XUtil.isEmpty(usr) || XUtil.isEmpty(pwd)) {
-            throw new RuntimeException("please enter a normal database config");
-        }
-
-        return getDb(db, driver, type, url, server, usr, pwd);
     }
 }

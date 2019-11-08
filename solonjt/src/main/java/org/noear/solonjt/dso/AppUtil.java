@@ -25,19 +25,14 @@ public class AppUtil {
     /**
      * 初始化数据库和内核
      * */
-    public static void init(XMap xarg, boolean initDb){
+    public static void init(XApp app, boolean initDb){
         if(initDb) {
-            XProperties prop = new XProperties();
-            xarg.forEach((k, v) -> {
-                prop.setProperty(k, v);
-            });
-
-            DbUtil.setDefDb(prop.getXmap(Config.code_db));
+            DbUtil.setDefDb(app.prop().getXmap(Config.code_db));
         }
 
         InitUtil.tryInitDb();
-        InitUtil.tryInitCore(xarg);
-        InitUtil.tryInitNode(xarg);
+        InitUtil.tryInitCore(app);
+        InitUtil.tryInitNode(app);
     }
 
 
@@ -65,9 +60,20 @@ public class AppUtil {
                 DbUtil.db().sql("SHOW TABLES").execute();
 
                 InitUtil.trySaveConfig(extend, ctx.paramMap());
-                AppUtil.init(ctx.paramMap(), false);
 
-                ctx.outputAsJson("{\"code\":1}");
+                app.prop().argx().putAll(ctx.paramMap());
+
+                AppUtil.init(app, false);
+
+                String _usr = XUtil.g.cfgGet("_frm_admin_user");
+                String _pwd = XUtil.g.cfgGet("_frm_admin_pwd");
+                String _token  =XUtil.g.sha1(_usr+'#'+_pwd, "UTF-16LE").toUpperCase();
+
+                ONode rst = new ONode();
+                rst.set("code",1);
+                rst.set("token",_token);
+
+                ctx.outputAsJson(rst.toJson());
 
                 new Thread(() -> {
                     XApp.global().router().clear();

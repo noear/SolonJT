@@ -15,7 +15,7 @@ import java.util.*;
  * javascript 代码运行工具
  * */
 public class JavascriptJtExecutor implements IJtExecutor {
-    private static final ThData<StringBuilder> _tlBuilder = new ThData(new StringBuilder(1024*5));
+    private static final ThData<StringBuilder> _tlBuilder = new ThData(()->new StringBuilder(1024*5));
     private static final String _lock ="";
     private static JavascriptJtExecutor _g;
     public static JavascriptJtExecutor singleton(){
@@ -128,21 +128,21 @@ public class JavascriptJtExecutor implements IJtExecutor {
 
     @Override
     public  Object exec(String name, AFileModel file, XContext ctx, Map<String,Object> model, boolean outString) throws Exception {
-        String name2 = name.replace(".","_").replace("*","_");
+        String name2 = name.replace(".", "_").replace("*", "_");
 
         preLoad(name2, file);
 
-        if(outString){
-            Object api = _eng.get("API_"+name2);
-            Object tmp = _eng_call.invokeFunction("API_RUN",api);
+        if (outString) {
+            Object api = _eng.get("API_" + name2);
+            Object tmp = _eng_call.invokeFunction("API_RUN", api);
 
             if (tmp == null) {
                 return null;
             } else {
                 return tmp.toString();
             }
-        }else{
-            return _eng_call.invokeFunction("API_"+name2, ctx);
+        } else {
+            return _eng_call.invokeFunction("API_" + name2, ctx);
         }
     }
 
