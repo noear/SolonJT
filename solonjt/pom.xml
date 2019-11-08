@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>solonjt</artifactId>
-    <version>1.0.3.1</version>
+    <version>1.0.3.3</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.utils</artifactId>
-            <version>1.0.3.1</version>
+            <version>1.0.3.3</version>
         </dependency>
 
         <!-- ORM 框架 -->

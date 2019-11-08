@@ -70,14 +70,48 @@ public class DbUtil {
     private static DbContext getDb(String schema, String driverClassName, String type, String url, String server, String username, String password) {
         if (TextUtils.isEmpty(type)) {
             type = "mysql";
+        } else {
+            type = type.trim();
+        }
+
+        if (schema != null) {
+            schema = schema.trim();
+        }
+
+        if (driverClassName != null) {
+            driverClassName = driverClassName.trim();
+        }
+
+        if (schema != null) {
+            schema = schema.trim();
+        }
+
+        if (url != null) {
+            url = url.trim();
+        }
+
+        if (server != null) {
+            server = server.trim();
+        }
+
+        if (schema != null) {
+            schema = schema.trim();
+        }
+
+        if (username != null) {
+            username = username.trim();
+        }
+
+        if (password != null) {
+            password = password.trim();
         }
 
         if (TextUtils.isEmpty(url)) {
             StringBuilder sb = StringUtils.borrowBuilder();
             sb.append("jdbc:").append(type).append("://")
-                    .append(server)
+                    .append(server.trim())
                     .append("/")
-                    .append(schema);
+                    .append(schema.trim());
 
             if ("mysql".equals(type)) {
                 sb.append("?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true");

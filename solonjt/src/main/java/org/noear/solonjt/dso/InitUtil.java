@@ -354,7 +354,7 @@ public class InitUtil {
     }
 
     private static String do_buildRoot() {
-        String fileName = "application.properties";
+        String fileName = "setup.htm";
 
         URL temp = org.noear.solon.XUtil.getResource(fileName);
 

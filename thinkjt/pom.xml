@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>thinkjt</artifactId>
-    <version>1.0.3.1</version>
+    <version>1.0.3.2</version>
     <packaging>jar</packaging>
 
     <name>jt</name>
@@ -50,37 +50,37 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt</artifactId>
-            <version>1.0.3.1</version>
+            <version>1.0.3.3</version>
         </dependency>
         <!-- SolonJT freemarker 模板引擎 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.executor.m.freemarker</artifactId>
-            <version>1.0.3.1</version>
+            <version>1.0.3.2</version>
         </dependency>
         <!-- SolonJT javascript 脚本引擎 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.executor.s.javascript</artifactId>
-            <version>1.0.3.1</version>
+            <version>1.0.3.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.event.schedule</artifactId>
-            <version>1.0.3.1</version>
+            <version>1.0.3.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.event.message</artifactId>
-            <version>1.0.3.1</version>
+            <version>1.0.3.2</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>thinkjt.extend.jsoup</artifactId>
-            <version>1.0.3.1</version>
+            <version>1.0.3.2</version>
         </dependency>
 
 
