@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>thinkjt</artifactId>
-    <version>1.0.3.2</version>
+    <version>1.0.3.3</version>
     <packaging>jar</packaging>
 
     <name>jt</name>
@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.boot.smarthttp</artifactId>
+            <artifactId>solon.boot.jlhttp</artifactId>
             <version>1.0.3.6</version>
         </dependency>
 
