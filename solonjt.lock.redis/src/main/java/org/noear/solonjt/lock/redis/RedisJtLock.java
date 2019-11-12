@@ -1,6 +1,9 @@
 package org.noear.solonjt.lock.redis;
 
+import org.noear.solonjt.dso.CfgUtil;
 import org.noear.solonjt.dso.IJtLock;
+import org.noear.solonjt.dso.XLock;
+import org.noear.solonjt.utils.PropUtils;
 
 import java.util.Properties;
 
@@ -9,6 +12,17 @@ public class RedisJtLock implements IJtLock {
 
     public RedisJtLock(Properties prop){
         _redisX = new RedisX(prop);
+    }
+
+    public static void init(String cfg) throws Exception{
+        Properties prop = null;
+        if(cfg.startsWith("@")){
+            prop = CfgUtil.cfgGetProp(cfg.substring(1));
+        }else{
+            prop = PropUtils.getProp(cfg);
+        }
+
+        XLock.global = new RedisJtLock(prop);
     }
 
     @Override
