@@ -1,10 +1,10 @@
 package org.noear.solonjt.executor.s.javascript;
 
-import org.noear.snack.core.exts.ThData;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.IJtExecutor;
 import org.noear.solonjt.model.AFileModel;
+import org.noear.solonjt.utils.ThreadData;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -15,7 +15,7 @@ import java.util.*;
  * javascript 代码运行工具
  * */
 public class JavascriptJtExecutor implements IJtExecutor {
-    private static final ThData<StringBuilder> _tlBuilder = new ThData(()->new StringBuilder(1024*5));
+    private static final ThreadData<StringBuilder> _tlBuilder = new ThreadData(()->new StringBuilder(1024*5));
     private static final String _lock ="";
     private static JavascriptJtExecutor _g;
     public static JavascriptJtExecutor singleton(){

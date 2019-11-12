@@ -1,6 +1,6 @@
 package org.noear.solonjt.utils;
 
-import org.noear.weed.ext.Fun0;
+import org.noear.solonjt.utils.ext.Fun0;
 
 public class ThreadData<T> extends ThreadLocal<T> {
     private Fun0<T> _def;

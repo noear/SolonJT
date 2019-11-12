@@ -1,20 +1,19 @@
 package org.noear.solonjt.executor.s.graaljs;
 
-import org.noear.snack.core.exts.ThData;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.IJtExecutor;
 import org.noear.solonjt.model.AFileModel;
+import org.noear.solonjt.utils.ThreadData;
 
 import javax.script.*;
 import java.util.*;
-import java.util.function.Predicate;
 
 /**
  * javascript 代码运行工具
  * */
 public class GraaljsJtExecutor implements IJtExecutor {
-    private static final ThData<StringBuilder> _tlBuilder = new ThData(()->new StringBuilder(1024*5));
+    private static final ThreadData<StringBuilder> _tlBuilder = new ThreadData(()->new StringBuilder(1024*5));
     private static final String _lock ="";
     private static GraaljsJtExecutor _g;
     public static GraaljsJtExecutor singleton(){
