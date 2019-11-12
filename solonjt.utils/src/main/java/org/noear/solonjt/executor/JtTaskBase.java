@@ -75,7 +75,7 @@ public abstract class JtTaskBase implements IJtTask{
 
         if (TextUtils.isEmpty(node_id()) == false) {
             try {
-                String cfg_str = CfgUtil.cfgGet(node_id());
+                String cfg_str = CfgUtil.cfgGetValue(node_id());
 
                 if (XUtil.isEmpty(cfg_str) == false) {
                     cfg_str = cfg_str.trim();

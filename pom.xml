@@ -38,6 +38,8 @@
         <module>solonjt.event.message</module>
         <module>solonjt.event.schedule</module>
 
+        <module>solonjt.lock.redis</module>
+
         <module>thinkjt</module>
         <module>thinkjt.extend.flexmark</module>
         <module>thinkjt.extend.sited</module>

@@ -44,6 +44,7 @@ public class SolonJT {
             x.sharedAdd("XFun", XFun.g);
             x.sharedAdd("XBus", XBus.g);
             x.sharedAdd("XUtil", XUtil.g);
+            x.sharedAdd("XLock", XLock.g);
         });
 
         //4.1.加载自己的bean
