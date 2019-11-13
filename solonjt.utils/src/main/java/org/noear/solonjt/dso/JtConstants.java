@@ -1,12 +1,13 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.ext.Fun1;
+import org.noear.solonjt.executor.IJtExecutorAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class JtConstants {
-    private static IJtAdapter _adapter;
+    private static IJtExecutorAdapter _adapter;
     private static IJtLock _lock = new DefaultJtLock();
     private static Fun1<String, IJtQueue> _queueFactory = (name) -> new DefaultJtQueue(name);
     private static Map<String, IJtQueue> _queueMap = new HashMap<>();
@@ -28,7 +29,7 @@ public class JtConstants {
     /**
      * 设置数据适配器
      */
-    public static void adapterSet(IJtAdapter adapter) {
+    public static void adapterSet(IJtExecutorAdapter adapter) {
         _adapter = adapter;
     }
 
@@ -42,7 +43,7 @@ public class JtConstants {
     /**
      * 适配器
      */
-    public static IJtAdapter adapter() {
+    public static IJtExecutorAdapter adapter() {
         return _adapter;
     }
 

@@ -1,4 +1,4 @@
-package org.noear.solonjt.dso;
+package org.noear.solonjt.executor;
 
 import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.model.AFileModel;
@@ -6,7 +6,7 @@ import org.noear.solonjt.model.AFileModel;
 /**
  * 执行器适配器
  * */
-public interface IJtAdapter {
+public interface IJtExecutorAdapter {
     //记录异常
     void errorLog(AFileModel file,String msg, Throwable err);
     //获取文件

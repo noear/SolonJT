@@ -3,6 +3,7 @@ package org.noear.solonjt.event.schedule.controller;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XContextEmpty;
 import org.noear.solon.core.XContextUtil;
+import org.noear.solonjt.dso.JtLock;
 import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.executor.JtTaskBase;
@@ -45,6 +46,10 @@ public class ScheduleTask extends JtTaskBase {
         List<AFileModel> list = DbApi.taskGetList();
 
         for (AFileModel task : list) {
+            if (JtLock.g.tryLock("solonjt.event", getName() + "_" + task.file_id) == false) {
+                continue;
+            }
+
             poolExecute(() -> {
                 doExec(task);
             });

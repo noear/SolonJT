@@ -3,6 +3,7 @@ package org.noear.solonjt.event.message.controller;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XContextEmpty;
 import org.noear.solon.core.XContextUtil;
+import org.noear.solonjt.dso.JtLock;
 import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.dso.JtMsg;
 import org.noear.solonjt.executor.ExecutorFactory;
@@ -39,8 +40,12 @@ public class MessageTask extends JtTaskBase {
         List<Long> msgList = DbMsgApi.msgGetList(rows, ntime);
 
         for (Long msgID : msgList) {
+            if (JtLock.g.tryLock("solonjt.event", getName() + "_" + msgID) == false) {
+                continue;
+            }
 
             AMessageModel msg = DbMsgApi.msgGet(msgID);
+
             if (msg == null) {
                 continue;
             }

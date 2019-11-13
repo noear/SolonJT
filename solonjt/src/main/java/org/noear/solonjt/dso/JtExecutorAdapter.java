@@ -1,16 +1,17 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solonjt.executor.IJtExecutorAdapter;
 import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.model.AFileModel;
 
 /**
  * 执行工厂适配器
  * */
-public class JtAdapter implements IJtAdapter {
+public class JtExecutorAdapter implements IJtExecutorAdapter {
 
     private String _defaultExecutor = "freemarker";
 
-    public JtAdapter() {
+    public JtExecutorAdapter() {
     }
 
     @Override

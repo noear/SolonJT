@@ -28,7 +28,7 @@ public class SolonJT {
         InitXfunUtil.init();
 
         //3.初始化执行器工厂
-        JtAdapter jtAdapter = new JtAdapter();
+        JtExecutorAdapter jtAdapter = new JtExecutorAdapter();
         JtConstants.adapterSet(jtAdapter);
 
         //4.启动服务
