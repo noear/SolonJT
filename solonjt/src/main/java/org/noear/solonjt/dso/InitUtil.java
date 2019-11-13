@@ -223,7 +223,7 @@ public class InitUtil {
             app.prop().put(Config.code_node, node);
 
             try {
-                String addr = XUtil.g.localAddr();
+                String addr = JtUtil.g.localAddr();
 
                 DbApi.cfgSetNote(node, addr, "cluster.node");
             }catch (Exception ex){

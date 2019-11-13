@@ -4,7 +4,7 @@ import org.noear.solon.core.XContext;
 import org.noear.solon.core.XContextEmpty;
 import org.noear.solon.core.XContextUtil;
 import org.noear.solonjt.dso.LogUtil;
-import org.noear.solonjt.dso.XBus;
+import org.noear.solonjt.dso.JtMsg;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.executor.JtTaskBase;
 import org.noear.solonjt.model.AFileModel;
@@ -139,7 +139,7 @@ public class MessageTask extends JtTaskBase {
             if (tmp == null || tmp.toString().equals("OK")) {
                 if (TextUtils.isEmpty(msg.topic_source) == false) {
                     //尝试转发消息到下一层
-                    XBus.g.forward(msg.topic, msg.content, msg.topic_source);
+                    JtMsg.g.forward(msg.topic, msg.content, msg.topic_source);
                 }
 
                 distributeMessage_log(msg, dist, "OK");

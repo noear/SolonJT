@@ -11,10 +11,8 @@ import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.IOUtils;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.solon.XApp;
-import org.noear.solon.XProperties;
 import org.noear.solon.core.XHandler;
 import org.noear.solon.core.XHandlerLink;
-import org.noear.solon.core.XMap;
 import org.noear.solon.core.XMethod;
 import org.noear.weed.WeedConfig;
 
@@ -52,7 +50,7 @@ public class AppUtil {
             if (node2 != null && node2.length() > 30) {
                 ctx.paramMap().put("node", node2);
             } else {
-                ctx.paramMap().put("node", XUtil.g.guid());
+                ctx.paramMap().put("node", JtUtil.g.guid());
             }
 
             DbUtil.setDefDb(ctx.paramMap());
@@ -65,9 +63,9 @@ public class AppUtil {
 
                 AppUtil.init(app, false);
 
-                String _usr = XUtil.g.cfgGet("_frm_admin_user");
-                String _pwd = XUtil.g.cfgGet("_frm_admin_pwd");
-                String _token  =XUtil.g.sha1(_usr+'#'+_pwd, "UTF-16LE").toUpperCase();
+                String _usr = JtUtil.g.cfgGet("_frm_admin_user");
+                String _pwd = JtUtil.g.cfgGet("_frm_admin_pwd");
+                String _token  = JtUtil.g.sha1(_usr+'#'+_pwd, "UTF-16LE").toUpperCase();
 
                 ONode rst = new ONode();
                 rst.set("code",1);

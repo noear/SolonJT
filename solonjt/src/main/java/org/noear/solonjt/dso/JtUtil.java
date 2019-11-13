@@ -12,7 +12,6 @@ import org.noear.solon.XApp;
 import org.noear.solon.annotation.XNote;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XFile;
-import org.noear.solon.core.XMap;
 import org.noear.weed.DbContext;
 
 import java.awt.image.BufferedImage;
@@ -24,8 +23,8 @@ import java.util.*;
 /**
  * 引擎扩展工具，提供一些基础的操作支持
  * */
-public class XUtil {
-    public static final XUtil g = new XUtil();
+public class JtUtil {
+    public static final JtUtil g = new JtUtil();
 
     private final Map<String,DbContext> _db_cache = new HashMap<>();
 
@@ -479,7 +478,7 @@ public class XUtil {
 
         List<Map<String, Object>> list = MethodUtils.getMethods(tmp);
 
-        XFun.g.openList(list);
+        JtFun.g.openList(list);
 
         //排序
         Collections.sort(list, Comparator.comparing(m -> m.get("name").toString().toLowerCase()));

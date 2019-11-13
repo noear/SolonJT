@@ -3,7 +3,6 @@ package org.noear.solonjt;
 import org.noear.solonjt.dso.*;
 import org.noear.solon.XApp;
 import org.noear.solon.core.*;
-import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.xml.XmlSqlLoader;
 
@@ -30,7 +29,7 @@ public class SolonJT {
 
         //3.初始化执行器工厂
         JtAdapter jtAdapter = new JtAdapter();
-        JtConstants.init(jtAdapter);
+        JtConstants.adapterSet(jtAdapter);
 
         //4.启动服务
         XApp app = XApp.start(source, xarg, (x) -> {
@@ -40,10 +39,15 @@ public class SolonJT {
                 jtAdapter.defaultExecutorSet(def_exec);
             }
 
-            x.sharedAdd("XFun", XFun.g);
-            x.sharedAdd("XBus", XBus.g);
-            x.sharedAdd("XUtil", XUtil.g);
-            x.sharedAdd("XLock", XLock.g);
+            x.sharedAdd("XFun", JtFun.g);
+            x.sharedAdd("XBus", JtMsg.g);
+            x.sharedAdd("XUtil", JtUtil.g);
+            x.sharedAdd("XLock", JtLock.g);
+
+            x.sharedAdd("JtFun", JtFun.g);
+            x.sharedAdd("JtMsg", JtMsg.g);
+            x.sharedAdd("JtUtil", JtUtil.g);
+            x.sharedAdd("JtLock", JtLock.g);
         });
 
         //4.1.加载自己的bean
