@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Redis 使用类
  */
- public class RedisX {
+class RedisX {
     private JedisPool _jedisPool;
 
     public RedisX(Properties prop) {

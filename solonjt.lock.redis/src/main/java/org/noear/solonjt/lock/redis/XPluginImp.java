@@ -11,7 +11,7 @@ public class XPluginImp implements XPlugin {
     public void start(XApp app) {
         Properties prop = app.prop().getProp("solonjt.lock.redis");
 
-        if (prop.size() == 5) {
+        if (prop != null && prop.size() == 5) {
             JtConstants.lockSet(new RedisJtLock(prop));
         }
     }

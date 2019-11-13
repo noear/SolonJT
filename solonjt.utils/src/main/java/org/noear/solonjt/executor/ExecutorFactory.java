@@ -1,7 +1,6 @@
 package org.noear.solonjt.executor;
 
 import org.noear.solon.core.XContext;
-import org.noear.solonjt.dso.IJtAdapter;
 import org.noear.solonjt.dso.JtConstants;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ExceptionUtils;
