@@ -12,7 +12,7 @@ import java.util.Map;
 public class JtFun {
     public static final JtFun g  = new JtFun();
 
-    private Map<String, XFunEntity> _xfunMap = new HashMap<>();
+    private Map<String, JtFunEntity> _xfunMap = new HashMap<>();
 
 
     public void openList(List<Map<String, Object>> list) {
@@ -64,22 +64,22 @@ public class JtFun {
     }
 
     @XNote("函数设置")
-    public void set(String name, XFunHandler fun){
+    public void set(String name, JtFunHandler fun){
         set(name,null,0,fun);
     }
     @XNote("函数设置（带注释）")
-    public void set(String name, String note, XFunHandler fun){
+    public void set(String name, String note, JtFunHandler fun){
         set(name,note,0,fun);
     }
     @XNote("函数设置（带注释、优先级）")
-    public void set(String name, String note, int priority, XFunHandler fun) {
-        XFunEntity ent = _xfunMap.get(name);
+    public void set(String name, String note, int priority, JtFunHandler fun) {
+        JtFunEntity ent = _xfunMap.get(name);
         if (ent != null && ent.priority > priority) {
             return;
         }
 
         if(ent == null) {
-            ent = new XFunEntity();
+            ent = new JtFunEntity();
             ent.set(fun, priority, note);
             _xfunMap.put(name, ent);
         }else{
@@ -88,7 +88,7 @@ public class JtFun {
     }
 
     @XNote("函数获取")
-    public XFunHandler find(String name) { //不能用get；不然，模板可以: XFun.xxx.call({}); //不用于统一
+    public JtFunHandler find(String name) { //不能用get；不然，模板可以: XFun.xxx.call({}); //不用于统一
         return _xfunMap.get(name);
     }
 
@@ -99,7 +99,7 @@ public class JtFun {
 
     @XNote("函数调用")
     public Object tryCall(String name, Map<String,Object> args) {
-        XFunHandler fun = _xfunMap.get(name);
+        JtFunHandler fun = _xfunMap.get(name);
 
         Object tmp = null;
         if (fun != null) {
@@ -120,7 +120,7 @@ public class JtFun {
 
     @XNote("函数调用")
     public <T> T callT(String name, Map<String,Object> args) throws Exception{ //留着 Exception
-        XFunHandler fun = _xfunMap.get(name);
+        JtFunHandler fun = _xfunMap.get(name);
 
         Object tmp = null;
         if (fun != null) {
