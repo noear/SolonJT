@@ -3,7 +3,6 @@ package org.noear.solonjt.lock.redis;
 import org.noear.solonjt.dso.CfgUtil;
 import org.noear.solonjt.dso.IJtLock;
 import org.noear.solonjt.dso.JtConstants;
-import org.noear.solonjt.dso.JtLock;
 import org.noear.solonjt.utils.PropUtils;
 
 import java.util.Properties;
