@@ -59,17 +59,6 @@ public class MessageTask extends JtTaskBase {
     }
 
     private void distribute(AMessageModel msg) {
-        if (msg == null) {
-            return;
-        }
-
-        if (msg.state == 1) { //正在处理中
-            return;
-        }
-
-        //置为处理中
-        DbMsgApi.msgSetState(msg.msg_id, 1);
-
         try {
             do_distribute(msg);
         } catch (Throwable ex) {
@@ -82,6 +71,18 @@ public class MessageTask extends JtTaskBase {
     }
 
     private void do_distribute(AMessageModel msg) throws Exception {
+        if (msg == null) {
+            return;
+        }
+
+        if (msg.state == 1) { //正在处理中
+            return;
+        }
+
+        //置为处理中
+        DbMsgApi.msgSetState(msg.msg_id, 1);
+
+
         //1.取出订阅者
         List<AFileModel> subsList = DbMsgApi.msgGetSubs(msg.topic);
 

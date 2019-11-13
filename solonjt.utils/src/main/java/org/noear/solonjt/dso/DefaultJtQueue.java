@@ -4,7 +4,7 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class DefaultJtQueue implements IJtQueue {
-    Queue<String> _queue = new ConcurrentLinkedQueue<String>();
+    Queue<String> _queue = new ConcurrentLinkedQueue<>();
     String _name;
 
 

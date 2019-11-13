@@ -44,7 +44,6 @@
         <module>thinkjt</module>
         <module>thinkjt.extend.flexmark</module>
         <module>thinkjt.extend.sited</module>
-        <module>thinkjt.extend.webmagic</module>
         <module>thinkjt.extend.jsoup</module>
     </modules>
 

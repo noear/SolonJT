@@ -78,7 +78,9 @@ public class ScheduleTask extends JtTaskBase {
     }
 
     private void runTask(AFileModel task) throws Exception {
-
+        if(task == null || task.file_id==0) {
+            return;
+        }
 
         //1.1.检查次数
         if (task.plan_max > 0 && task.plan_count >= task.plan_max) {
