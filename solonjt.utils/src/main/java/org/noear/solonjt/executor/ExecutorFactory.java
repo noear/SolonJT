@@ -1,7 +1,8 @@
 package org.noear.solonjt.executor;
 
 import org.noear.solon.core.XContext;
-import org.noear.solonjt.dso.XFunEntity;
+import org.noear.solonjt.dso.IJtAdapter;
+import org.noear.solonjt.dso.JtConstants;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.StringUtils;
@@ -17,20 +18,15 @@ import java.util.Set;
 public class ExecutorFactory {
     private static final Map<String, ExecutorEntity> _map = new HashMap<>();
     private static IJtExecutor _def;
-    private static IExecutorFactoryAdapter _adapter;
-
-    public static void init(IExecutorFactoryAdapter adapter){
-        _adapter = adapter;
-    }
 
     /** 记录日志 */
     public static void errorLog(AFileModel file,String msg, Throwable err){
-        _adapter.errorLog(file,msg,err);
+        JtConstants.adapter().errorLog(file,msg,err);
     }
 
     /** 获取文件 */
     public static AFileModel fileGet(String path) throws Exception{
-        return _adapter.fileGet(path);
+        return JtConstants.adapter().fileGet(path);
     }
 
     /** 执行器清单 */
@@ -55,7 +51,7 @@ public class ExecutorFactory {
             return;
         }
 
-        if(language.equals(_adapter.defaultExecutor())){
+        if(language.equals(JtConstants.adapter().defaultExecutor())){
             _def =engine;
         }
 

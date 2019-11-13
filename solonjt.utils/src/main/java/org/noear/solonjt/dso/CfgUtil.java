@@ -2,6 +2,7 @@ package org.noear.solonjt.dso;
 
 import org.noear.snack.core.exts.ThData;
 import org.noear.solon.core.Aop;
+import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.utils.PropUtils;
 import org.noear.solonjt.utils.RunUtil;
 import org.noear.solonjt.utils.TextUtils;
@@ -14,29 +15,13 @@ import java.util.Properties;
 public class CfgUtil {
     static ThData<Map<String,Object>> th_map= new ThData<>(()->new HashMap<>());
 
-    //获取配置（一行记录）
-    public static Map<String,Object> cfgGet(String name) throws Exception {
-        Map<String, Object> map = th_map.get();
-        map.clear();
-
-        map.put("name", name);
-
-        Object tmp = XFun.g.call("cfg_get", map);
-
+    //获取配置值
+    public static String cfgGetValue(String name) throws Exception {
+        AConfigModel tmp = JtConstants.adapter().cfgGet(name);
         if (tmp == null) {
             return null;
         } else {
-            return (Map<String, Object>) tmp;
-        }
-    }
-
-    //获取配置值
-    public static String cfgGetValue(String name) throws Exception{
-        Map<String, Object> tmp = cfgGet(name);
-        if(tmp==null){
-            return null;
-        }else{
-            return (String) tmp.get("value");
+            return tmp.value;
         }
     }
 
