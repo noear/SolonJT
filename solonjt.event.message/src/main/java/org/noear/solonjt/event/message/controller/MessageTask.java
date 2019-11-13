@@ -147,7 +147,11 @@ public class MessageTask extends JtTaskBase {
             Object tmp = ExecutorFactory.execOnly(task, ctx);
             dist._duration = new Timespan(System.currentTimeMillis(), dist._start_time).seconds();
 
-            if (tmp == null || tmp.toString().equals("OK")) {
+            if(tmp == null){
+                tmp = "null";
+            }
+
+            if ("OK".equals(tmp.toString())) {
                 if (TextUtils.isEmpty(msg.topic_source) == false) {
                     //尝试转发消息到下一层
                     JtMsg.g.forward(msg.topic, msg.content, msg.topic_source);
@@ -156,7 +160,7 @@ public class MessageTask extends JtTaskBase {
                 distributeMessage_log(msg, dist, "OK");
                 callback.run(tag, dist, true);
             } else {
-                distributeMessage_log(msg, dist, (tmp == null ? "null" : tmp.toString()));
+                distributeMessage_log(msg, dist, tmp.toString());
                 callback.run(tag, dist, false);
             }
         } finally {
