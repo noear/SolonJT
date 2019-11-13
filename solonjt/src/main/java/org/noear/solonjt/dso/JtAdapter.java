@@ -1,16 +1,16 @@
 package org.noear.solonjt.dso;
 
-import org.noear.solonjt.executor.IExecutorFactoryAdapter;
+import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.model.AFileModel;
 
 /**
  * 执行工厂适配器
  * */
-public class ExecutorFactoryAdapter implements IExecutorFactoryAdapter {
+public class JtAdapter implements IJtAdapter {
 
     private String _defaultExecutor = "freemarker";
 
-    public ExecutorFactoryAdapter() {
+    public JtAdapter() {
     }
 
     @Override
@@ -21,6 +21,11 @@ public class ExecutorFactoryAdapter implements IExecutorFactoryAdapter {
     @Override
     public AFileModel fileGet(String path) throws Exception {
         return AFileUtil.get(path);
+    }
+
+    @Override
+    public AConfigModel cfgGet(String name) throws Exception {
+        return DbApi.cfgGetMod(name);
     }
 
     @Override

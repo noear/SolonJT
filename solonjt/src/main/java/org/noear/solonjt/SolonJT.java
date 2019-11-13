@@ -4,7 +4,6 @@ import org.noear.solonjt.dso.*;
 import org.noear.solon.XApp;
 import org.noear.solon.core.*;
 import org.noear.solonjt.executor.ExecutorFactory;
-import org.noear.solonjt.utils.StringUtils;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.xml.XmlSqlLoader;
 
@@ -30,15 +29,15 @@ public class SolonJT {
         InitXfunUtil.init();
 
         //3.初始化执行器工厂
-        ExecutorFactoryAdapter executorFactoryAdapter = new ExecutorFactoryAdapter();
-        ExecutorFactory.init(executorFactoryAdapter);
+        JtAdapter jtAdapter = new JtAdapter();
+        JtConstants.init(jtAdapter);
 
         //4.启动服务
         XApp app = XApp.start(source, xarg, (x) -> {
 
             String def_exec = x.prop().get("solonjt.executor.default");
             if(TextUtils.isEmpty(def_exec) == false){
-                executorFactoryAdapter.defaultExecutorSet(def_exec);
+                jtAdapter.defaultExecutorSet(def_exec);
             }
 
             x.sharedAdd("XFun", XFun.g);

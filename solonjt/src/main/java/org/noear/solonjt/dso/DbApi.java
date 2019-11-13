@@ -2,6 +2,7 @@ package org.noear.solonjt.dso;
 
 import org.noear.solonjt.Config;
 import org.noear.solonjt.executor.ExecutorFactory;
+import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.Datetime;
@@ -126,6 +127,19 @@ public class DbApi {
                 .select("path,note")
                 .getList(AFileModel.class);
 
+    }
+
+    public static AConfigModel cfgGetMod(String name) throws Exception {
+        if (name == null) {
+            return null;
+        }
+
+        return db().table("a_config")
+                .whereEq("name", name)
+                .select("*")
+                .caching(DbUtil.cache)
+                .cacheTag("cfg_" + name)
+                .getItem(AConfigModel.class);
     }
 
     public static Object cfgGetMap(Map<String, Object> map) throws Exception {
