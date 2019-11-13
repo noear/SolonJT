@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /** 引擎扩展函数管理器 */
-public class XFun {
-    public static final XFun g  = new XFun();
+public class JtFun {
+    public static final JtFun g  = new JtFun();
 
     private Map<String, XFunEntity> _xfunMap = new HashMap<>();
 

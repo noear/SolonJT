@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @XNote("消息总线接口")
-public class XBus {
-    public static final XBus g  = new XBus();
+public class JtMsg {
+    public static final JtMsg g  = new JtMsg();
 
     static ThData<Map<String,Object>> th_map= new ThData<>(()->new HashMap<>());
 
@@ -25,11 +25,11 @@ public class XBus {
         data.put("content",content.toString());
         data.put("topic_source",topic_source);
 
-        return XFun.g.call("xbus_forward", data) != null;
+        return JtFun.g.call("xbus_forward", data) != null;
     }
     @XNote("转发消息")
     public boolean forward(Map<String,Object> data) throws Exception{
-        return XFun.g.call("xbus_forward", data) != null;
+        return JtFun.g.call("xbus_forward", data) != null;
     }
 
     @XNote("发布消息")
@@ -44,11 +44,11 @@ public class XBus {
         data.put("topic",topic);
         data.put("content",content.toString());
 
-        return XFun.g.call("xbus_publish", data) != null;
+        return JtFun.g.call("xbus_publish", data) != null;
     }
 
     @XNote("发布消息")
     public boolean publish(Map<String,Object> data) throws Exception {
-        return XFun.g.call("xbus_publish", data) != null;
+        return JtFun.g.call("xbus_publish", data) != null;
     }
 }

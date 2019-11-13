@@ -1,7 +1,6 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.core.XContext;
-import org.noear.solon.core.XFile;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.StringUtils;
@@ -20,7 +19,7 @@ public class CallUtil {
         Map<String,Object> map  =new HashMap<>();
         map.put("path",path2);
 
-        AFileModel file = (AFileModel) XFun.g.call("afile_get",map);
+        AFileModel file = (AFileModel) JtFun.g.call("afile_get",map);
 
         if (file.file_id > 0 && TextUtils.isEmpty(file.content) == false) {
             return ExecutorFactory.call(name, file, XContext.current(), null, outString);
@@ -64,7 +63,7 @@ public class CallUtil {
             map.put("label",label);
             map.put("useCache",useCache);
 
-            List<AFileModel> list = XFun.g.callT("afile_get_paths",map);
+            List<AFileModel> list = JtFun.g.callT("afile_get_paths",map);
 
             list.forEach((f) -> {
                         try {

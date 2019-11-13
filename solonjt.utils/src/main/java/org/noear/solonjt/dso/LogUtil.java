@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class LogUtil {
     public static boolean log(Map<String,Object> data)  {
-         XFun.g.tryCall("log",data);
+         JtFun.g.tryCall("log",data);
          return true;
     }
 
@@ -59,7 +59,7 @@ public class LogUtil {
         
         map.put("from", CfgUtil.nodeId());
 
-        XFun.g.tryCall("log", map);
+        JtFun.g.tryCall("log", map);
         return true;
     }
 }
