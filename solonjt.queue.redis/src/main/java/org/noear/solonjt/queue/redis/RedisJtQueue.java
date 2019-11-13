@@ -7,8 +7,10 @@ import java.util.Properties;
 
 public class RedisJtQueue implements IJtQueue {
     private RedisX _redisX;
+    private String _name;
 
-    public RedisJtQueue(Properties prop){
+    public RedisJtQueue(String name, Properties prop) {
+        _name = name;
         _redisX = new RedisX(prop);
     }
 
@@ -26,26 +28,47 @@ public class RedisJtQueue implements IJtQueue {
 
         Properties prop2 = prop;
 
-        JtConstants.queueFactorySet(() -> new RedisJtQueue(prop2));
+        JtConstants.queueFactorySet((name) -> new RedisJtQueue(name, prop2));
+    }
+
+
+    @Override
+    public String name() {
+        return _name;
     }
 
     @Override
-    public void add(Object item) {
-
+    public void add(String item) {
+        if (item != null) {
+            _redisX.open0((rs) -> {
+                rs.key(name()).listAdd(item);
+            });
+        }
     }
 
     @Override
-    public Object peek() {
-        return null;
+    public void addAll(Iterable<String> items) {
+        _redisX.open0((rs) -> {
+            for (String item : items) {
+                if (item != null) {
+                    rs.key(name()).listAdd(item);
+                }
+            }
+        });
     }
 
     @Override
-    public Object poll() {
-        return null;
+    public String peek() {
+        return _redisX.open1( (rs) -> rs.key(name()).listGet(-1));
+    }
+
+    @Override
+    public String poll() {
+        return _redisX.open1((rs) -> rs.key(name()).listPop());
     }
 
     @Override
     public void remove() {
-
+        _redisX.open0((rs) -> rs.key(name()).listPop());
     }
 }

@@ -4,22 +4,40 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class DefaultJtQueue implements IJtQueue {
-    Queue _queue = new ConcurrentLinkedQueue();
+    Queue<String> _queue = new ConcurrentLinkedQueue<String>();
+    String _name;
+
+
+    public DefaultJtQueue(String name){
+        _name = name;
+    }
 
     @Override
-    public void add(Object item) {
+    public String name() {
+        return _name;
+    }
+
+    @Override
+    public void add(String item) {
         if (item != null) {
             _queue.add(item);
         }
     }
 
     @Override
-    public Object peek() {
+    public void addAll(Iterable<String> items) {
+        for (String item : items) {
+            add(item);
+        }
+    }
+
+    @Override
+    public String peek() {
         return _queue.peek();
     }
 
     @Override
-    public Object poll() {
+    public String poll() {
         return _queue.poll();
     }
 

@@ -39,6 +39,7 @@
         <module>solonjt.event.schedule</module>
 
         <module>solonjt.lock.redis</module>
+        <module>solonjt.queue.redis</module>
 
         <module>thinkjt</module>
         <module>thinkjt.extend.flexmark</module>

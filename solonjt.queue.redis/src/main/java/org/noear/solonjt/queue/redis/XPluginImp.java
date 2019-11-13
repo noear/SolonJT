@@ -12,7 +12,7 @@ public class XPluginImp implements XPlugin {
         Properties prop = app.prop().getProp("solonjt.queue.redis");
 
         if (prop != null && prop.size() == 5) {
-            JtConstants.queueFactorySet(() -> new RedisJtQueue(prop));
+            JtConstants.queueFactorySet((name) -> new RedisJtQueue(name, prop));
         }
     }
 }

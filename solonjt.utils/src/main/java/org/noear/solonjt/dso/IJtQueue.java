@@ -1,20 +1,27 @@
 package org.noear.solonjt.dso;
 
 public interface IJtQueue {
+    String name();
+
     /**
      * 推入到尾部
      */
-    void add(Object item);
+    void add(String item);
+
+    /**
+     * 推入到尾部
+     */
+    void addAll(Iterable<String> items);
 
     /*
      * 预览头部元素
      * */
-    Object peek();
+    String peek();
 
     /**
      * 拉取头部元素（同时移除）
      */
-    Object poll();
+    String poll();
 
     /**
      * 移除头部元素
