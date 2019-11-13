@@ -75,7 +75,8 @@ public class MessageTask extends JtTaskBase {
             return;
         }
 
-        if (msg.state == 1) { //正在处理中
+        //状态（-2无派发对象 ; -1:忽略；0:未处理；1处理中；2已完成；3派发超次数）
+        if (msg.state != 0) { //正在处理中
             return;
         }
 

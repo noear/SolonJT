@@ -3,6 +3,7 @@ package org.noear.solonjt.lock.redis;
 import org.noear.solonjt.dso.CfgUtil;
 import org.noear.solonjt.dso.IJtLock;
 import org.noear.solonjt.dso.JtConstants;
+import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.utils.PropUtils;
 
 import java.util.Properties;
@@ -19,14 +20,18 @@ public class RedisJtLock implements IJtLock {
             return;
         }
 
-        Properties prop = null;
+        String prop_str = cfg;
         if (cfg.startsWith("@")) {
-            prop = CfgUtil.cfgGetProp(cfg.substring(1));
-        } else {
-            prop = PropUtils.getProp(cfg);
+            prop_str = CfgUtil.cfgGetValue(cfg.substring(1));
         }
 
-        JtConstants.lockSet(new RedisJtLock(prop));
+        Properties prop = PropUtils.getProp(prop_str);
+
+        if (prop != null && prop.size() >= 5) {
+            JtConstants.lockSet(new RedisJtLock(prop));
+        } else {
+            LogUtil.log("RedisJtLock", 0, "初始化失败，参数有问题", prop_str);
+        }
     }
 
     @Override

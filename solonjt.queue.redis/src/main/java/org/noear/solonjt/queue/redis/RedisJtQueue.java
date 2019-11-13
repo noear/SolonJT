@@ -19,16 +19,18 @@ public class RedisJtQueue implements IJtQueue {
             return;
         }
 
-        Properties prop = null;
+        String prop_str = cfg;
         if (cfg.startsWith("@")) {
-            prop = CfgUtil.cfgGetProp(cfg.substring(1));
-        } else {
-            prop = PropUtils.getProp(cfg);
+            prop_str = CfgUtil.cfgGetValue(cfg.substring(1));
         }
 
-        Properties prop2 = prop;
+        Properties prop = PropUtils.getProp(prop_str);
 
-        JtConstants.queueFactorySet((name) -> new RedisJtQueue(name, prop2));
+        if (prop != null && prop.size() >= 5) {
+            JtConstants.queueFactorySet((name) -> new RedisJtQueue(name, prop));
+        }else{
+            LogUtil.log("RedisJtQueue", 0, "初始化失败，参数有问题", prop_str);
+        }
     }
 
 
