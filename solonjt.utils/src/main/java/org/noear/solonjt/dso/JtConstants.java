@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JtConstants {
-    private static IJtExecutorAdapter _adapter;
+    private static IJtExecutorAdapter _executorAdapter;
     private static IJtLock _lock = new DefaultJtLock();
     private static Fun1<String, IJtQueue> _queueFactory = (name) -> new DefaultJtQueue(name);
     private static Map<String, IJtQueue> _queueMap = new HashMap<>();
@@ -29,8 +29,8 @@ public class JtConstants {
     /**
      * 设置数据适配器
      */
-    public static void adapterSet(IJtExecutorAdapter adapter) {
-        _adapter = adapter;
+    public static void adapterSet(IJtExecutorAdapter executorAdapter) {
+        _executorAdapter = executorAdapter;
     }
 
     /**
@@ -43,8 +43,8 @@ public class JtConstants {
     /**
      * 适配器
      */
-    public static IJtExecutorAdapter adapter() {
-        return _adapter;
+    public static IJtExecutorAdapter executorAdapter() {
+        return _executorAdapter;
     }
 
     /*

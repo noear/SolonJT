@@ -20,12 +20,12 @@ public class ExecutorFactory {
 
     /** 记录日志 */
     public static void errorLog(AFileModel file,String msg, Throwable err){
-        JtConstants.adapter().errorLog(file,msg,err);
+        JtConstants.executorAdapter().errorLog(file,msg,err);
     }
 
     /** 获取文件 */
     public static AFileModel fileGet(String path) throws Exception{
-        return JtConstants.adapter().fileGet(path);
+        return JtConstants.executorAdapter().fileGet(path);
     }
 
     /** 执行器清单 */
@@ -50,7 +50,7 @@ public class ExecutorFactory {
             return;
         }
 
-        if(language.equals(JtConstants.adapter().defaultExecutor())){
+        if(language.equals(JtConstants.executorAdapter().defaultExecutor())){
             _def =engine;
         }
 

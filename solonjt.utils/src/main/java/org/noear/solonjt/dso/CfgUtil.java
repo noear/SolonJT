@@ -17,7 +17,7 @@ public class CfgUtil {
 
     //获取配置值
     public static String cfgGetValue(String name) throws Exception {
-        AConfigModel tmp = JtConstants.adapter().cfgGet(name);
+        AConfigModel tmp = JtConstants.executorAdapter().cfgGet(name);
         if (tmp == null) {
             return null;
         } else {
