@@ -46,10 +46,6 @@ public class MessageTask extends JtTaskBase {
 
             AMessageModel msg = DbMsgApi.msgGet(msgID);
 
-            if (msg == null) {
-                continue;
-            }
-
             distribute(msg);
         }
 
@@ -63,6 +59,14 @@ public class MessageTask extends JtTaskBase {
     }
 
     private void distribute(AMessageModel msg) {
+        if (msg == null) {
+            return;
+        }
+
+        if (msg.state == 1) { //正在处理中
+            return;
+        }
+
         //置为处理中
         DbMsgApi.msgSetState(msg.msg_id, 1);
 
