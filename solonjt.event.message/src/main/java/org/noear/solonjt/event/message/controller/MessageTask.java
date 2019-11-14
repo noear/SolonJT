@@ -66,7 +66,13 @@ public class MessageTask extends JtTaskBase {
 
             DbMsgApi.msgSetRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
 
-            LogUtil.log(getName(), "distribute", msg.topic, msg.msg_id + "", 0, "", ExceptionUtils.getString(ex));
+            LogUtil.log(getName(),
+                    "distribute",
+                    msg.topic,
+                    msg.msg_id + "",
+                    0,
+                    msg.content,
+                    ExceptionUtils.getString(ex));
         }
     }
 
@@ -203,6 +209,12 @@ public class MessageTask extends JtTaskBase {
 
 
     private void distributeMessage_log(AMessageModel msg, AMessageDistributionModel dist, String note) {
-        LogUtil.log(getName(), "distributeMessage", msg.topic, msg.msg_id + "", dist.file_id + "", 0, dist.receive_url , note);
+        LogUtil.log(getName(),
+                "distributeMessage",
+                msg.topic,
+                msg.msg_id + "",
+                0,
+                msg.content,
+                dist.receive_url + "::" + note);
     }
 }
