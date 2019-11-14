@@ -24,7 +24,7 @@ public class MessageTask extends JtTaskBase {
         super("_message", 500);
     }
 
-    private int rows = 10;
+    private int rows = 50;
 
     @Override
     public void exec() throws Exception {
