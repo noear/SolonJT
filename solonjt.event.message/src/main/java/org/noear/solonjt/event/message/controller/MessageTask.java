@@ -215,6 +215,6 @@ public class MessageTask extends JtTaskBase {
                 msg.msg_id + "",
                 0,
                 msg.content,
-                dist.receive_url + "::" + note);
+                dist.receive_url + ":" + note);
     }
 }
