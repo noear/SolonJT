@@ -21,5 +21,5 @@
 * 等等...
 * 重点是我有个很强的扩展机制，所以我就万能了（一个很自由的扩展中心哦...）
 
-# DEMO
+# 演示
 * http://jtt.noear.org/.admin/?_L0n5=1CE24B1CF36B0C5B94AACE6263DBD947FFA53531
