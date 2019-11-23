@@ -1,7 +1,6 @@
 package org.noear.solonjt.executor.s.lua;
 
 import org.noear.snack.ONode;
-import org.noear.snack.core.utils.NodeUtil;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.IJtExecutor;
@@ -146,7 +145,7 @@ public class LuaJtExecutor implements IJtExecutor {
                     return tmp.toString();
                 }else{
                     Object obj = LuaUtil.luaToObj(tmp);
-                    return NodeUtil.fromObj(obj).toJson();
+                    return ONode.loadObj(obj).toJson();
                 }
             }else{
                 return LuaUtil.luaToObj(tmp);

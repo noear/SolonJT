@@ -64,17 +64,18 @@ public class DbMsgApi {
     public static boolean msgSetState(long msg_id, int state, int nexttime) {
         try {
             db().table("a_message")
-                    .set("state", state).expre(tb -> {
-                if (state == 0) {
-                    int ntime = DisttimeUtil.nextTime(1);
-                    tb.set("dist_ntime", ntime);
-                    //可以检查处理中时间是否过长了？可手动恢复状态
-                }
+                    .set("state", state)
+                    .build(tb -> {
+                        if (state == 0) {
+                            int ntime = DisttimeUtil.nextTime(1);
+                            tb.set("dist_ntime", ntime);
+                            //可以检查处理中时间是否过长了？可手动恢复状态
+                        }
 
-                if (nexttime > 0) {
-                    tb.set("dist_ntime", nexttime);
-                }
-            })
+                        if (nexttime > 0) {
+                            tb.set("dist_ntime", nexttime);
+                        }
+                    })
                     .where("msg_id=? AND (state=0 OR state=1)", msg_id)
                     .update();
 

@@ -1,6 +1,6 @@
 package org.noear.solonjt.executor.s.ruby;
 
-import org.noear.snack.core.utils.NodeUtil;
+import org.noear.snack.ONode;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.IJtExecutor;
@@ -146,7 +146,7 @@ public class RubyJtExecutor implements IJtExecutor {
                 if (tmp instanceof Number || tmp instanceof String || tmp instanceof Boolean){
                     return tmp.toString();
                 }else{
-                    return NodeUtil.fromObj(tmp).toJson();
+                    return ONode.loadObj(tmp).toJson();
                 }
             }else{
                 return tmp;

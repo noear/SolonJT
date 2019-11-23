@@ -58,7 +58,7 @@ public class DbApi {
             return new ArrayList<>();
         }
 
-        return db().table("a_file").where("1=1").expre((tb) -> {
+        return db().table("a_file").where("1=1").build((tb) -> {
             if (TextUtils.isEmpty(tag) == false) {
                 tb.and("tag=?", tag);
             }
@@ -178,7 +178,7 @@ public class DbApi {
         if (db().table("a_config").where("`name`=?", name).exists()) {
             is_ok = db().table("a_config")
                     .set("value", value)
-                    .expre((tb) -> {
+                    .build((tb) -> {
                         if (label != null) {
                             tb.set("label", label);
                         }
@@ -190,7 +190,7 @@ public class DbApi {
             is_ok = db().table("a_config")
                     .set("name", name)
                     .set("value", value)
-                    .expre((tb) -> {
+                    .build((tb) -> {
                         if (label != null) {
                             tb.set("label", label);
                         }
@@ -209,7 +209,7 @@ public class DbApi {
         if (db().table("a_config").where("`name`=?", name).exists()) {
             is_ok = db().table("a_config")
                     .set("note", note)
-                    .expre((tb) -> {
+                    .build((tb) -> {
                         if (label != null) {
                             tb.set("label", label);
                         }
@@ -223,7 +223,7 @@ public class DbApi {
                     .set("note", note)
                     .set("create_fulltime", "$NOW()")
                     .set("update_fulltime", "$NOW()")
-                    .expre((tb) -> {
+                    .build((tb) -> {
                         if (label != null) {
                             tb.set("label", label);
                         }

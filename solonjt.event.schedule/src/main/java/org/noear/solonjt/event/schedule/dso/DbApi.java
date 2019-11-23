@@ -51,7 +51,7 @@ public class DbApi {
                 .set("plan_state", state)
                 .set("plan_count", task.plan_count)
                 .set("plan_last_time", task.plan_last_time)
-                .expre((tb) -> {
+                .build((tb) -> {
                     if (task.plan_last_timespan > 0) {
                         tb.set("plan_last_timespan", task.plan_last_timespan);
                     }
