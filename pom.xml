@@ -10,8 +10,8 @@
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
-    <description>Java project for solon</description>
-    <url>https://github.com/noear/solon</url>
+    <description>Java project for solonjt</description>
+    <url>https://github.com/noear/solonjt</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -46,9 +46,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git@github.com:noear/solon.git</connection>
-        <developerConnection>scm:git:git@github.com:noear/solon.git</developerConnection>
-        <url>https://github.com/noear/solon</url>
+        <connection>scm:git:git@github.com:noear/solonjt.git</connection>
+        <developerConnection>scm:git:git@github.com:noear/solonjt.git</developerConnection>
+        <url>https://github.com/noear/solonjt</url>
     </scm>
 
 
@@ -228,10 +228,10 @@
         <module>solonjt.queue.redis</module>
 
         <module>thinkjt.extend.flexmark</module>
-        <module>thinkjt.extend.sited</module>
         <module>thinkjt.extend.jsoup</module>
 
-        <module>thinkjt</module>
+<!--        <module>thinkjt.extend.sited</module>-->
+<!--        <module>thinkjt</module>-->
     </modules>
 
 </project>
