@@ -4,9 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.noear</groupId>
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>solonjt-parent</artifactId>
+        <version>1.0.3.4</version>
+    </parent>
+
     <artifactId>thinkjt</artifactId>
-    <version>1.0.3.3</version>
     <packaging>jar</packaging>
 
     <name>jt</name>
@@ -24,63 +28,61 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3</artifactId>
-            <version>3.2.3.3</version>
         </dependency>
 
         <!-- JSON 框架 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>snack3</artifactId>
-            <version>3.1.5.5</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.boot.jlhttp</artifactId>
-            <version>1.0.3.31</version>
+            <version>${solon.ver}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.extend.sessionstate.local</artifactId>
-            <version>1.0.3.31</version>
+            <version>${solon.ver}</version>
         </dependency>
 
         <!-- SolonJT 引擎 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt</artifactId>
-            <version>1.0.3.3</version>
+            <version>${solonjt.ver}</version>
         </dependency>
         <!-- SolonJT freemarker 模板引擎 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.executor.m.freemarker</artifactId>
-            <version>1.0.3.2</version>
+            <version>${solonjt.ver}</version>
         </dependency>
         <!-- SolonJT javascript 脚本引擎 -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.executor.s.javascript</artifactId>
-            <version>1.0.3.2</version>
+            <version>${solonjt.ver}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.event.schedule</artifactId>
-            <version>1.0.3.2</version>
+            <version>${solonjt.ver}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solonjt.event.message</artifactId>
-            <version>1.0.3.2</version>
+            <version>${solonjt.ver}</version>
         </dependency>
 
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>thinkjt.extend.jsoup</artifactId>
-            <version>1.0.3.2</version>
+            <version>${solonjt.ver}</version>
         </dependency>
 
         <dependency>

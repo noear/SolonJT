@@ -4,71 +4,39 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.noear</groupId>
+    <parent>
+        <groupId>org.noear</groupId>
+        <artifactId>solonjt-parent</artifactId>
+        <version>1.0.3.4</version>
+    </parent>
+
     <artifactId>solonjt.utils</artifactId>
-    <version>1.0.3.3</version>
     <packaging>jar</packaging>
-
-
-    <name>${project.groupId}:${project.artifactId}</name>
-    <description>java project for ${project.artifactId}</description>
-    <url>https://github.com/noear/solonjt</url>
-    <licenses>
-        <license>
-            <name>The Apache Software License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <name>noear</name>
-            <email>noear@live.cn</email>
-            <organization>noear.org</organization>
-            <organizationUrl>http://www.noear.org</organizationUrl>
-        </developer>
-    </developers>
-    <scm>
-        <connection>scm:git:git@github.com:noear/solonjt.git</connection>
-        <developerConnection>scm:git:git@github.com:noear/solonjt.git</developerConnection>
-        <url>https://github.com/noear/solonjt</url>
-    </scm>
-
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
-            <version>1.0.3.31</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>weed3</artifactId>
-            <version>3.2.3.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>snack3</artifactId>
-            <version>3.1.5.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
-            <version>0.4.8</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>3.11.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
