@@ -21,8 +21,8 @@
         <solonjt.ver>1.0.3.4</solonjt.ver>
         <solon.ver>1.0.3.31</solon.ver>
 
-        <snack3.ver>3.1.5.5</snack3.ver>
-        <weed3.ver>3.2.3.3</weed3.ver>
+        <snack3.ver>3.1.5.9</snack3.ver>
+        <weed3.ver>3.2.3.4</weed3.ver>
 
         <okhttp.ver>3.11.0</okhttp.ver>
 
@@ -229,9 +229,10 @@
 
         <module>thinkjt.extend.flexmark</module>
         <module>thinkjt.extend.jsoup</module>
+        <module>thinkjt.extend.hanlp</module>
 
-<!--        <module>thinkjt.extend.sited</module>-->
-<!--        <module>thinkjt</module>-->
+        <module>thinkjt.extend.sited</module>
+        <module>thinkjt</module>
     </modules>
 
 </project>
