@@ -29,6 +29,8 @@ public class LogUtil {
     public static boolean log(String tag, String tag1,String tag2, String tag3, String tag4,int level,String summary,String content) {
         Map<String, Object> map = new HashMap<>();
 
+        map.put("level", level);
+
         if (tag != null) {
             map.put("tag", tag);
         }
