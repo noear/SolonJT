@@ -1,8 +1,9 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solonjt.dso.IJtLock;
 import org.noear.weed.cache.LocalCache;
 
-class DefaultJtLock implements IJtLock {
+public class DefaultJtLock implements IJtLock {
     private LocalCache _cache = new LocalCache("lock",3);
     private String _lock = "";
     @Override

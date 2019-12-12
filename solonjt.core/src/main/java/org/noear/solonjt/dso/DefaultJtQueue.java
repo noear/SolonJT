@@ -1,5 +1,7 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solonjt.dso.IJtQueue;
+
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
