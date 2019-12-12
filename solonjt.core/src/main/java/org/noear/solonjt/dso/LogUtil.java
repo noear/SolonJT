@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LogUtil {
-    public static boolean log(Map<String,Object> data)  {
-         JtFun.g.tryCall("log",data);
-         return true;
+    public static boolean log(Map<String,Object> data) {
+        JtBridge.log(data);
+        return true;
     }
 
     public static boolean log(String tag, int level,String summary,String content) {
@@ -59,7 +59,7 @@ public class LogUtil {
         
         map.put("from", JtBridge.executorAdapter().nodeId());
 
-        JtFun.g.tryCall("log", map);
+        JtBridge.log(map);
         return true;
     }
 }

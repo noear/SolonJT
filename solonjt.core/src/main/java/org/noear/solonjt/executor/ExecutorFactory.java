@@ -20,7 +20,7 @@ public class ExecutorFactory {
 
     /** 记录日志 */
     public static void errorLog(AFileModel file,String msg, Throwable err){
-        JtBridge.executorAdapter().errorLog(file,msg,err);
+        JtBridge.executorAdapter().logError(file,msg,err);
     }
 
     /** 获取文件 */

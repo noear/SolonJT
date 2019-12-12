@@ -5,6 +5,8 @@ import org.noear.solonjt.executor.IJtExecutorAdapter;
 import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.model.AFileModel;
 
+import java.util.Map;
+
 /**
  * 执行工厂适配器
  * */
@@ -16,7 +18,12 @@ public class JtAdapter implements IJtExecutorAdapter,IJtConfigAdapter {
     }
 
     @Override
-    public void errorLog(AFileModel file, String msg, Throwable err) {
+    public void log(Map<String, Object> data) {
+        DbApi.log(data);
+    }
+
+    @Override
+    public void logError(AFileModel file, String msg, Throwable err) {
         LogUtil.log("_file", file.tag, file.path, 0, "", msg);
     }
 

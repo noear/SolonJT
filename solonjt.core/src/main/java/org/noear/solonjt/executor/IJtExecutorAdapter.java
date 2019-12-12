@@ -2,12 +2,16 @@ package org.noear.solonjt.executor;
 
 import org.noear.solonjt.model.AFileModel;
 
+import java.util.Map;
+
 /**
  * 执行器适配器
  * */
 public interface IJtExecutorAdapter {
+    void log(Map<String,Object> data);
     //记录异常
-    void errorLog(AFileModel file, String msg, Throwable err);
+    void logError(AFileModel file, String msg, Throwable err);
+
     //获取文件
     AFileModel fileGet(String path) throws Exception;
 

@@ -55,6 +55,10 @@ public class JtBridge {
         return executorAdapter().fileGet(path);
     }
 
+    public static void log(Map<String,Object> data){
+        executorAdapter().log(data);
+    }
+
     /**
      * 获取节点I
      * */
