@@ -238,8 +238,8 @@
         <module>thinkjt.extend.jsoup</module>
         <module>thinkjt.extend.hanlp</module>
 
-<!--        <module>thinkjt.extend.sited</module>-->
-<!--        <module>thinkjt</module>-->
+        <module>thinkjt.extend.sited</module>
+        <module>thinkjt</module>
     </modules>
 
 </project>

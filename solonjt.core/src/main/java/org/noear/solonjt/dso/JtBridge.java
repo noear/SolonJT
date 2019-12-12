@@ -2,6 +2,7 @@ package org.noear.solonjt.dso;
 
 import org.noear.solon.ext.Fun1;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
+import org.noear.solonjt.model.AFileModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +50,14 @@ public class JtBridge {
         return _executorAdapter;
     }
 
+    //获取文件
+    public static AFileModel fileGet(String path) throws Exception{
+        return executorAdapter().fileGet(path);
+    }
+
+    /**
+     * 获取节点I
+     * */
     public static String nodeId(){
         return executorAdapter().nodeId();
     }
