@@ -6,7 +6,7 @@ import org.noear.solonjt.event.http.AppHandler;
 import org.noear.solonjt.event.http.FrmInterceptor;
 import org.noear.solonjt.event.http.ImgHandler;
 import org.noear.solonjt.event.http.SufHandler;
-import org.noear.solonjt.executor.TaskFactory;
+import org.noear.solonjt.task.TaskFactory;
 import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.IOUtils;
 import org.noear.solonjt.utils.TextUtils;

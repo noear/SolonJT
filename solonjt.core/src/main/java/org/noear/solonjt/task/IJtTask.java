@@ -1,4 +1,4 @@
-package org.noear.solonjt.executor;
+package org.noear.solonjt.task;
 
 public interface IJtTask {
     String getName();

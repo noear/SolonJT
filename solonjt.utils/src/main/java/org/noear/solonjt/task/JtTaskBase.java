@@ -1,14 +1,15 @@
-package org.noear.solonjt.executor;
+package org.noear.solonjt.task;
 
 import org.noear.snack.ONode;
 import org.noear.solon.XUtil;
 import org.noear.solonjt.dso.CfgUtil;
 import org.noear.solonjt.dso.JtBridge;
+import org.noear.solonjt.task.IJtTask;
 import org.noear.solonjt.utils.TextUtils;
 
 import java.util.concurrent.*;
 
-public abstract class JtTaskBase implements IJtTask{
+public abstract class JtTaskBase implements IJtTask {
     protected JtTaskBase(String name, int interval) {
         _name = name;
         _interval = interval;

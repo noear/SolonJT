@@ -6,7 +6,7 @@ import org.noear.solon.core.XContextUtil;
 import org.noear.solonjt.dso.JtLock;
 import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.executor.ExecutorFactory;
-import org.noear.solonjt.executor.JtTaskBase;
+import org.noear.solonjt.task.JtTaskBase;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.event.schedule.dso.DbApi;
 import org.noear.solonjt.utils.Datetime;

@@ -1,7 +1,7 @@
 package org.noear.solonjt.dso;
 
-import org.noear.solonjt.executor.IJtTask;
-import org.noear.solonjt.executor.IJtTaskRunner;
+import org.noear.solonjt.task.IJtTask;
+import org.noear.solonjt.task.IJtTaskRunner;
 
 import java.util.Date;
 

@@ -1,9 +1,7 @@
-package org.noear.solonjt.executor;
+package org.noear.solonjt.task;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class TaskFactory {
     private static Map<String, IJtTask> _taskMap = new HashMap<>();

@@ -3,7 +3,7 @@ package org.noear.solonjt.event.message;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XPlugin;
 import org.noear.solonjt.dso.JtFun;
-import org.noear.solonjt.executor.TaskFactory;
+import org.noear.solonjt.task.TaskFactory;
 import org.noear.solonjt.event.message.controller.MessageTask;
 import org.noear.solonjt.event.message.dso.DbMsgApi;
 import org.noear.weed.DbContext;
