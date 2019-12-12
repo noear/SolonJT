@@ -1,7 +1,7 @@
 package org.noear.solonjt.executor;
 
 import org.noear.solon.core.XContext;
-import org.noear.solonjt.dso.JtConstants;
+import org.noear.solonjt.dso.JtBridge;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.StringUtils;
@@ -20,12 +20,12 @@ public class ExecutorFactory {
 
     /** 记录日志 */
     public static void errorLog(AFileModel file,String msg, Throwable err){
-        JtConstants.executorAdapter().errorLog(file,msg,err);
+        JtBridge.executorAdapter().errorLog(file,msg,err);
     }
 
     /** 获取文件 */
     public static AFileModel fileGet(String path) throws Exception{
-        return JtConstants.executorAdapter().fileGet(path);
+        return JtBridge.executorAdapter().fileGet(path);
     }
 
     /** 执行器清单 */
@@ -50,7 +50,7 @@ public class ExecutorFactory {
             return;
         }
 
-        if(language.equals(JtConstants.executorAdapter().defaultExecutor())){
+        if(language.equals(JtBridge.executorAdapter().defaultExecutor())){
             _def =engine;
         }
 

@@ -1,13 +1,11 @@
 package org.noear.solonjt.executor;
 
 import org.noear.snack.ONode;
-import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
 import org.noear.solonjt.dso.CfgUtil;
+import org.noear.solonjt.dso.JtBridge;
 import org.noear.solonjt.utils.TextUtils;
 
-import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.*;
 
 public abstract class JtTaskBase implements IJtTask{
@@ -28,7 +26,7 @@ public abstract class JtTaskBase implements IJtTask{
     private String _node_id;
     protected String node_id(){
         if(_node_id == null){
-            _node_id = CfgUtil.nodeId();
+            _node_id = JtBridge.nodeId();
         }
 
         return _node_id;

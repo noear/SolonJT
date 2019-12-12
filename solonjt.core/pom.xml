@@ -10,15 +10,10 @@
         <version>1.0.3.6</version>
     </parent>
 
-    <artifactId>solonjt.utils</artifactId>
+    <artifactId>solonjt.core</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solonjt.core</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon</artifactId>
@@ -32,11 +27,6 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>snack3</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>

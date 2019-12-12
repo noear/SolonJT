@@ -27,7 +27,7 @@ public class RedisJtQueue implements IJtQueue {
         Properties prop = PropUtils.getProp(prop_str);
 
         if (prop != null && prop.size() >= 5) {
-            JtConstants.queueFactorySet((name) -> new RedisJtQueue(name, prop));
+            JtBridge.queueFactorySet((name) -> new RedisJtQueue(name, prop));
         }else{
             LogUtil.log("RedisJtQueue", 0, "初始化失败，参数有问题", prop_str);
         }

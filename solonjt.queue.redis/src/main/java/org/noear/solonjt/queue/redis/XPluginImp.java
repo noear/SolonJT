@@ -2,7 +2,7 @@ package org.noear.solonjt.queue.redis;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.XPlugin;
-import org.noear.solonjt.dso.JtConstants;
+import org.noear.solonjt.dso.JtBridge;
 
 import java.util.Properties;
 
@@ -12,7 +12,7 @@ public class XPluginImp implements XPlugin {
         Properties prop = app.prop().getProp("solonjt.queue.redis");
 
         if (prop != null && prop.size() >= 5) {
-            JtConstants.queueFactorySet((name) -> new RedisJtQueue(name, prop));
+            JtBridge.queueFactorySet((name) -> new RedisJtQueue(name, prop));
         }
     }
 }

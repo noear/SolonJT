@@ -2,7 +2,7 @@ package org.noear.solonjt.lock.redis;
 
 import org.noear.solon.XApp;
 import org.noear.solon.core.XPlugin;
-import org.noear.solonjt.dso.JtConstants;
+import org.noear.solonjt.dso.JtBridge;
 
 import java.util.Properties;
 
@@ -12,7 +12,7 @@ public class XPluginImp implements XPlugin {
         Properties prop = app.prop().getProp("solonjt.lock.redis");
 
         if (prop != null && prop.size() >= 5) {
-            JtConstants.lockSet(new RedisJtLock(prop));
+            JtBridge.lockSet(new RedisJtLock(prop));
         }
     }
 }

@@ -28,8 +28,9 @@ public class SolonJT {
         InitXfunUtil.init();
 
         //3.初始化执行器工厂
-        JtExecutorAdapter jtAdapter = new JtExecutorAdapter();
-        JtConstants.adapterSet(jtAdapter);
+        JtAdapter jtAdapter = new JtAdapter();
+        JtBridgeEx.executorAdapterSet(jtAdapter);
+        JtBridgeEx.executorAdapterSet(jtAdapter);
 
         //4.启动服务
         XApp app = XApp.start(source, xarg, (x) -> {

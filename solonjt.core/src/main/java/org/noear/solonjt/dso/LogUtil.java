@@ -57,7 +57,7 @@ public class LogUtil {
             map.put("content", content);
         }
         
-        map.put("from", CfgUtil.nodeId());
+        map.put("from", JtBridge.executorAdapter().nodeId());
 
         JtFun.g.tryCall("log", map);
         return true;

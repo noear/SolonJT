@@ -6,7 +6,7 @@ import org.noear.solonjt.executor.IJtExecutorAdapter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JtConstants {
+public class JtBridge {
     private static IJtExecutorAdapter _executorAdapter;
     private static IJtLock _lock = new DefaultJtLock();
     private static Fun1<String, IJtQueue> _queueFactory = (name) -> new DefaultJtQueue(name);
@@ -19,6 +19,7 @@ public class JtConstants {
         _queueFactory = queueFactory;
     }
 
+
     /**
      * 设置锁服务
      */
@@ -27,25 +28,31 @@ public class JtConstants {
     }
 
     /**
-     * 设置数据适配器
-     */
-    public static void adapterSet(IJtExecutorAdapter executorAdapter) {
-        _executorAdapter = executorAdapter;
-    }
-
-    /**
-     * 锁服务
+     * 获取锁服务
      */
     public static IJtLock lock() {
         return _lock;
     }
 
+
     /**
-     * 适配器
+     * 设置执行适配器
+     */
+    public static void executorAdapterSet(IJtExecutorAdapter executorAdapter) {
+        _executorAdapter = executorAdapter;
+    }
+
+    /**
+     * 获取执行适配器
      */
     public static IJtExecutorAdapter executorAdapter() {
         return _executorAdapter;
     }
+
+    public static String nodeId(){
+        return executorAdapter().nodeId();
+    }
+
 
     /*
      * 新队列

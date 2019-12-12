@@ -2,7 +2,7 @@ package org.noear.solonjt.lock.redis;
 
 import org.noear.solonjt.dso.CfgUtil;
 import org.noear.solonjt.dso.IJtLock;
-import org.noear.solonjt.dso.JtConstants;
+import org.noear.solonjt.dso.JtBridge;
 import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.utils.PropUtils;
 
@@ -28,7 +28,7 @@ public class RedisJtLock implements IJtLock {
         Properties prop = PropUtils.getProp(prop_str);
 
         if (prop != null && prop.size() >= 5) {
-            JtConstants.lockSet(new RedisJtLock(prop));
+            JtBridge.lockSet(new RedisJtLock(prop));
         } else {
             LogUtil.log("RedisJtLock", 0, "初始化失败，参数有问题", prop_str);
         }

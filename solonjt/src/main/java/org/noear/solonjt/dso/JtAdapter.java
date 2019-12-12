@@ -1,5 +1,6 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solon.core.Aop;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
 import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.model.AFileModel;
@@ -7,11 +8,11 @@ import org.noear.solonjt.model.AFileModel;
 /**
  * 执行工厂适配器
  * */
-public class JtExecutorAdapter implements IJtExecutorAdapter {
+public class JtAdapter implements IJtExecutorAdapter,IJtConfigAdapter {
 
     private String _defaultExecutor = "freemarker";
 
-    public JtExecutorAdapter() {
+    public JtAdapter() {
     }
 
     @Override
@@ -24,9 +25,14 @@ public class JtExecutorAdapter implements IJtExecutorAdapter {
         return AFileUtil.get(path);
     }
 
+    private static String _nodeId;
     @Override
-    public AConfigModel cfgGet(String name) throws Exception {
-        return DbApi.cfgGetMod(name);
+    public String nodeId(){
+        if(_nodeId == null) {
+            _nodeId = Aop.prop().get("solonjt.node", "");
+        }
+
+        return _nodeId;
     }
 
     @Override
@@ -36,5 +42,12 @@ public class JtExecutorAdapter implements IJtExecutorAdapter {
 
     public void defaultExecutorSet(String defaultExecutor) {
         _defaultExecutor = defaultExecutor;
+    }
+
+
+
+    @Override
+    public AConfigModel cfgGet(String name) throws Exception {
+        return DbApi.cfgGetMod(name);
     }
 }

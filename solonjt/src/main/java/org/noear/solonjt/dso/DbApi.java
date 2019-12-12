@@ -311,7 +311,7 @@ public class DbApi {
         if(data.containsKey("from")) {
             map.put("from", data.get("from"));
         }else{
-            map.put("from", CfgUtil.nodeId());
+            map.put("from", JtBridge.nodeId());
         }
 
         map.put("level", data.get("level"));
