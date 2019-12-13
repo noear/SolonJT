@@ -10,7 +10,7 @@
         <version>1.0.3.6</version>
     </parent>
 
-    <artifactId>solonjt.core</artifactId>
+    <artifactId>solonjt.base</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

@@ -27,7 +27,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.core.itask</artifactId>
+            <artifactId>solonjt.base.itask</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -22,7 +22,7 @@
         <solon.ver>1.0.3.34</solon.ver>
 
         <snack3.ver>3.1.5.12</snack3.ver>
-        <weed3.ver>3.2.3.7</weed3.ver>
+        <weed3.ver>3.2.3.8</weed3.ver>
 
         <okhttp.ver>3.11.0</okhttp.ver>
 
@@ -62,13 +62,13 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>solonjt.core</artifactId>
+                <artifactId>solonjt.base</artifactId>
                 <version>${solonjt.ver}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>solonjt.core.itask</artifactId>
+                <artifactId>solonjt.base.itask</artifactId>
                 <version>${solonjt.ver}</version>
             </dependency>
 
@@ -211,8 +211,8 @@
 
     <modules>
 
-        <module>solonjt.core</module>
-        <module>solonjt.core.itask</module>
+        <module>solonjt.base</module>
+        <module>solonjt.base.itask</module>
         <module>solonjt</module>
 
         <module>solonjt.executor.s.python</module>

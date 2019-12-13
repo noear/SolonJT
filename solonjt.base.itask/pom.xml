@@ -10,13 +10,13 @@
         <version>1.0.3.6</version>
     </parent>
 
-    <artifactId>solonjt.core.itask</artifactId>
+    <artifactId>solonjt.base.itask</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.core</artifactId>
+            <artifactId>solonjt.base</artifactId>
         </dependency>
 
         <dependency>

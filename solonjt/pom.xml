@@ -22,7 +22,12 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.core</artifactId>
+            <artifactId>solonjt.base</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solonjt.base.itask</artifactId>
         </dependency>
 
         <!-- ORM 框架 -->
