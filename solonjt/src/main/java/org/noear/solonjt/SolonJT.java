@@ -30,7 +30,7 @@ public class SolonJT {
         //3.初始化执行器工厂
         JtAdapter jtAdapter = new JtAdapter();
         JtBridge.executorAdapterSet(jtAdapter);
-        JtBridge.executorAdapterSet(jtAdapter);
+        JtBridge.configAdapterSet(jtAdapter);
 
         //4.启动服务
         XApp app = XApp.start(source, xarg, (x) -> {
