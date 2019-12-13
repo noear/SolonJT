@@ -33,9 +33,10 @@ public class JtAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
     }
 
     private static String _nodeId;
+
     @Override
-    public String nodeId(){
-        if(_nodeId == null) {
+    public String nodeId() {
+        if (_nodeId == null) {
             _nodeId = Aop.prop().get("solonjt.node", "");
         }
 
@@ -52,14 +53,13 @@ public class JtAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
     }
 
 
-
     @Override
     public String cfgGet(String name, String def) throws Exception {
         return DbApi.cfgGet(name, def);
     }
 
     @Override
-    public boolean cfgSet(String name, String value, String label) throws Exception {
-        return DbApi.cfgSet(name,value,label);
+    public boolean cfgSet(String name, String value) throws Exception {
+        return DbApi.cfgSet(name, value, null);
     }
 }
