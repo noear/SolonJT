@@ -29,8 +29,8 @@ public class SolonJT {
 
         //3.初始化执行器工厂
         JtAdapter jtAdapter = new JtAdapter();
-        JtBridgeEx.executorAdapterSet(jtAdapter);
-        JtBridgeEx.executorAdapterSet(jtAdapter);
+        JtBridge.executorAdapterSet(jtAdapter);
+        JtBridge.executorAdapterSet(jtAdapter);
 
         //4.启动服务
         XApp app = XApp.start(source, xarg, (x) -> {
@@ -42,12 +42,12 @@ public class SolonJT {
 
             x.sharedAdd("XFun", JtFun.g);
             x.sharedAdd("XBus", JtMsg.g);
-            x.sharedAdd("XUtil", JtUtil.g);
+            x.sharedAdd("XUtil", JtUtilEx.g2);
             x.sharedAdd("XLock", JtLock.g);
 
             x.sharedAdd("JtFun", JtFun.g);
             x.sharedAdd("JtMsg", JtMsg.g);
-            x.sharedAdd("JtUtil", JtUtil.g);
+            x.sharedAdd("JtUtil", JtUtilEx.g2);
             x.sharedAdd("JtLock", JtLock.g);
         });
 

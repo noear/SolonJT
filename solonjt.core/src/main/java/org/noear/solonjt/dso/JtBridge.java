@@ -1,6 +1,7 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.ext.Fun1;
+import org.noear.solonjt.executor.IJtConfigAdapter;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
 import org.noear.solonjt.model.AFileModel;
 
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JtBridge {
+    private static IJtConfigAdapter _configAdapter;
     private static IJtExecutorAdapter _executorAdapter;
     private static IJtLock _lock = new DefaultJtLock();
     private static Fun1<String, IJtQueue> _queueFactory = (name) -> new DefaultJtQueue(name);
@@ -64,6 +66,29 @@ public class JtBridge {
      * */
     public static String nodeId(){
         return executorAdapter().nodeId();
+    }
+
+
+    /**
+     * 设置执行适配器
+     */
+    public static void configAdapterSet(IJtConfigAdapter configAdapter) {
+        _configAdapter = configAdapter;
+    }
+
+    /**
+     * 获取执行适配器
+     */
+    public static IJtConfigAdapter configAdapter() {
+        return _configAdapter;
+    }
+
+    public static String cfgGet(String name) throws Exception{
+        return configAdapter().cfgGet(name, "");
+    }
+
+    public static boolean cfgSet(String name, String value) throws Exception {
+       return configAdapter().cfgSet(name, value, null);
     }
 
 

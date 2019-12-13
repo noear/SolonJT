@@ -1,8 +1,6 @@
 package org.noear.solonjt.dso;
 
 import org.noear.snack.core.exts.ThData;
-import org.noear.solon.core.Aop;
-import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.utils.PropUtils;
 import org.noear.solonjt.utils.TextUtils;
 
@@ -15,12 +13,7 @@ public class CfgUtil {
 
     //获取配置值
     public static String cfgGetValue(String name) throws Exception {
-        AConfigModel tmp = JtBridgeEx.configAdapter().cfgGet(name);
-        if (tmp == null) {
-            return null;
-        } else {
-            return tmp.value;
-        }
+        return JtBridge.cfgGet(name);
     }
 
     public static Properties cfgGetProp(String name) throws Exception{

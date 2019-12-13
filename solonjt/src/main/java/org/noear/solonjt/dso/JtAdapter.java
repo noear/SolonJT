@@ -1,8 +1,8 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.core.Aop;
+import org.noear.solonjt.executor.IJtConfigAdapter;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
-import org.noear.solonjt.model.AConfigModel;
 import org.noear.solonjt.model.AFileModel;
 
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * 执行工厂适配器
  * */
-public class JtAdapter implements IJtExecutorAdapter,IJtConfigAdapter {
+public class JtAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     private String _defaultExecutor = "freemarker";
 
@@ -54,7 +54,12 @@ public class JtAdapter implements IJtExecutorAdapter,IJtConfigAdapter {
 
 
     @Override
-    public AConfigModel cfgGet(String name) throws Exception {
-        return DbApi.cfgGetMod(name);
+    public String cfgGet(String name, String def) throws Exception {
+        return DbApi.cfgGet(name, def);
+    }
+
+    @Override
+    public boolean cfgSet(String name, String value, String label) throws Exception {
+        return DbApi.cfgSet(name,value,label);
     }
 }
