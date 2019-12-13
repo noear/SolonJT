@@ -4,7 +4,7 @@ import org.noear.solon.annotation.XNote;
 
 /** 引擎锁管理器 */
 public final class JtLock implements IJtLock {
-    public static JtLock g = new JtLock();
+    public final static JtLock g = new JtLock();
 
     @XNote("尝试获取锁")
     @Override
