@@ -1,15 +1,9 @@
 package org.noear.solonjt.dso;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.noear.solonjt.utils.StringUtils;
-import org.noear.solonjt.utils.TextUtils;
-import org.noear.solon.XUtil;
 import org.noear.solon.core.XMap;
+import org.noear.solonjt.utils.DbBuilder;
 import org.noear.weed.DbContext;
 import org.noear.weed.cache.LocalCache;
-
-import java.util.Map;
-
 
 /*
  * 数据库处理工具

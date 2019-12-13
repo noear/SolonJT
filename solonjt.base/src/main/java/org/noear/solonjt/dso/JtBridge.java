@@ -88,7 +88,7 @@ public class JtBridge {
     }
 
     public static boolean cfgSet(String name, String value) throws Exception {
-       return configAdapter().cfgSet(name, value, null);
+       return configAdapter().cfgSet(name, value);
     }
 
 
