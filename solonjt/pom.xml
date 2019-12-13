@@ -22,7 +22,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.utils</artifactId>
+            <artifactId>solonjt.core</artifactId>
         </dependency>
 
         <!-- ORM 框架 -->

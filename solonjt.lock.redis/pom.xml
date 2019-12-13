@@ -23,7 +23,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solonjt.utils</artifactId>
+            <artifactId>solonjt.core</artifactId>
             <scope>provided</scope>
         </dependency>
 

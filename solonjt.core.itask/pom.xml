@@ -10,7 +10,7 @@
         <version>1.0.3.6</version>
     </parent>
 
-    <artifactId>solonjt.utils</artifactId>
+    <artifactId>solonjt.core.itask</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
