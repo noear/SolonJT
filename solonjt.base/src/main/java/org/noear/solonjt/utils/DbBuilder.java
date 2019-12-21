@@ -112,9 +112,7 @@ public class DbBuilder {
                 source.setDriverClassName(driverClassName);
             }
 
-            return new DbContext(schema, source)
-                    .fieldFormatSet("`%`")
-                    .objectFormatSet("`%`");
+            return new DbContext(schema, source);
         } else {
             return new DbContext(schema, url, username, password);
         }
