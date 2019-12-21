@@ -68,7 +68,7 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
-                <artifactId>solonjt.base.itask</artifactId>
+                <artifactId>solonjt.base.jttask</artifactId>
                 <version>${solonjt.ver}</version>
             </dependency>
 
@@ -212,7 +212,7 @@
     <modules>
 
         <module>solonjt.base</module>
-        <module>solonjt.base.itask</module>
+        <module>solonjt.base.jttask</module>
         <module>solonjt</module>
 
         <module>solonjt.executor.s.python</module>
