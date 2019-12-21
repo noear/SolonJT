@@ -36,7 +36,7 @@ public class InitUtil {
             return;
         }
 
-        db().exec("CREATE TABLE IF NOT EXISTS `a_config` (\n" +
+        db().exec("CREATE TABLE `a_config` (\n" +
                 "  `cfg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配置ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
                 "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标记',\n" +
@@ -54,9 +54,9 @@ public class InitUtil {
                 "  UNIQUE KEY `IX_key` (`name`) USING BTREE,\n" +
                 "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
                 "  KEY `IX_label` (`label`) USING BTREE\n" +
-                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-配置表';");
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-配置表';\n");
 
-        db().exec("CREATE TABLE IF NOT EXISTS `a_file` (\n" +
+        db().exec("CREATE TABLE `a_file` (\n" +
                 "  `file_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文件ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组村签',\n" +
                 "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标记',\n" +
@@ -86,7 +86,7 @@ public class InitUtil {
                 "  KEY `IX_label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-文件表';");
 
-        db().exec("CREATE TABLE IF NOT EXISTS `a_image` (\n" +
+        db().exec("CREATE TABLE `a_image` (\n" +
                 "  `img_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '图片ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
                 "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标签',\n" +
@@ -104,7 +104,7 @@ public class InitUtil {
                 "  KEY `IX_label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-图片表';");
 
-        db().exec("CREATE TABLE IF NOT EXISTS `a_log` (\n" +
+        db().exec("CREATE TABLE `a_log` (\n" +
                 "  `log_id` bigint(20) NOT NULL AUTO_INCREMENT,\n" +
                 "  `level` int(11) NOT NULL DEFAULT '0' COMMENT '等级',\n" +
                 "  `tag` varchar(100) NOT NULL DEFAULT '' COMMENT '标签',\n" +
@@ -116,6 +116,7 @@ public class InitUtil {
                 "  `content` longtext COMMENT '内容',\n" +
                 "  `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '记录日期',\n" +
                 "  `log_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录完整时间',\n" +
+                "  `from` varchar(100) DEFAULT NULL COMMENT '来源',\n" +
                 "  PRIMARY KEY (`log_id`),\n" +
                 "  KEY `IX_date` (`log_date`) USING BTREE,\n" +
                 "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
@@ -126,10 +127,10 @@ public class InitUtil {
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-日志表';");
 
 
-        db().exec("CREATE TABLE IF NOT EXISTS `a_menu` (\n" +
+        db().exec("CREATE TABLE `a_menu` (\n" +
                 "  `menu_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',\n" +
                 "  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',\n" +
-                "  `tag` varchar(40) NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
+                "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
                 "  `label` varchar(100) DEFAULT '' COMMENT '分类：主菜单、顶部菜单、底部菜单等',\n" +
                 "  `txt` varchar(100) DEFAULT NULL COMMENT '文本内容',\n" +
                 "  `url` varchar(512) DEFAULT NULL COMMENT '链接的url',\n" +
@@ -141,6 +142,7 @@ public class InitUtil {
                 "  `rel_table` varchar(40) DEFAULT NULL COMMENT '该菜单是否和其他表关联',\n" +
                 "  `rel_id` bigint(20) unsigned DEFAULT NULL COMMENT '关联的具体数据id',\n" +
                 "  `is_disabled` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否禁用',\n" +
+                "  `is_exclude` tinyint(1) NOT NULL DEFAULT '0' COMMENT '排除导入',\n" +
                 "  `create_fulltime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',\n" +
                 "  `update_fulltime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',\n" +
                 "  PRIMARY KEY (`menu_id`),\n" +
@@ -149,7 +151,7 @@ public class InitUtil {
                 "  KEY `IX_label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-菜单表';");
 
-        db().exec("CREATE TABLE IF NOT EXISTS `a_message` (\n" +
+        db().exec("CREATE TABLE `a_message` (\n" +
                 "  `msg_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息ID',\n" +
                 "  `topic` varchar(100) NOT NULL DEFAULT '' COMMENT '主题',\n" +
                 "  `topic_source` varchar(100) DEFAULT NULL COMMENT '原始主题',\n" +
@@ -167,7 +169,7 @@ public class InitUtil {
                 "  KEY `IX_log_date` (`log_date`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-消息表';");
 
-        db().exec("CREATE TABLE IF NOT EXISTS `a_message_distribution` (\n" +
+        db().exec("CREATE TABLE `a_message_distribution` (\n" +
                 "  `dist_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '分发ID',\n" +
                 "  `msg_id` bigint(20) NOT NULL COMMENT '待分发的消息ID',\n" +
                 "  `file_id` int(11) NOT NULL DEFAULT '0',\n" +
@@ -182,7 +184,7 @@ public class InitUtil {
                 "  KEY `IX_date` (`log_date`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-消息派发表';");
 
-        db().exec("CREATE TABLE IF NOT EXISTS `a_plugin` (\n" +
+        db().exec("CREATE TABLE `a_plugin` (\n" +
                 "  `plugin_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '插件ID',\n" +
                 "  `plugin_tag` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '插件标签',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n" +
@@ -206,7 +208,7 @@ public class InitUtil {
                 "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
                 "  KEY `IX_category` (`category`) USING BTREE,\n" +
                 "  KEY `IX_label` (`label`) USING BTREE\n" +
-                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-插件表';");
+                ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-插件表';\n");
 
 
         System.out.println("Complete table structure");
