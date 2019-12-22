@@ -19,10 +19,10 @@
         <java.version>1.8</java.version>
 
         <solonjt.ver>1.0.3.6</solonjt.ver>
-        <solon.ver>1.0.3.40</solon.ver>
+        <solon.ver>1.0.3.43</solon.ver>
 
         <snack3.ver>3.1.5.15</snack3.ver>
-        <weed3.ver>3.2.4.4-SNAPSHOT</weed3.ver>
+        <weed3.ver>3.2.5.2</weed3.ver>
 
         <okhttp.ver>3.11.0</okhttp.ver>
 

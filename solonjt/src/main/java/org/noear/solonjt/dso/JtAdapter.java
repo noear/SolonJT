@@ -1,5 +1,6 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solon.XApp;
 import org.noear.solon.core.Aop;
 import org.noear.solonjt.executor.IJtConfigAdapter;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
@@ -37,7 +38,7 @@ public class JtAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
     @Override
     public String nodeId() {
         if (_nodeId == null) {
-            _nodeId = Aop.prop().get("solonjt.node", "");
+            _nodeId = XApp.cfg().get("solonjt.node", "");
         }
 
         return _nodeId;
