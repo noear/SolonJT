@@ -1,5 +1,6 @@
 package org.noear.solonjt.utils;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.noear.solon.XUtil;
 import org.noear.weed.DbContext;
 
@@ -101,20 +102,20 @@ public class DbBuilder {
             }
         }
 
-        if ("mysql".equals(type)) {
-            com.zaxxer.hikari.HikariDataSource source = new com.zaxxer.hikari.HikariDataSource();
-            source.setJdbcUrl(url);
-            source.setUsername(username);
-            source.setPassword(password);
+
+        HikariDataSource source = new HikariDataSource();
+        source.setJdbcUrl(url);
+        source.setUsername(username);
+        source.setPassword(password);
+
+        if (TextUtils.isEmpty(schema) == false) {
             source.setSchema(schema);
-
-            if (TextUtils.isEmpty(driverClassName) == false) {
-                source.setDriverClassName(driverClassName);
-            }
-
-            return new DbContext(schema, source);
-        } else {
-            return new DbContext(schema, url, username, password);
         }
+
+        if (TextUtils.isEmpty(driverClassName) == false) {
+            source.setDriverClassName(driverClassName);
+        }
+
+        return new DbContext(schema, source);
     }
 }

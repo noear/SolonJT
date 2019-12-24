@@ -21,7 +21,7 @@ public class DbMsgApi {
 
     public static AFileModel fileGet(String path) throws Exception {
         return db().table("a_file")
-                .where("`path`=?", path)
+                .where("path=?", path)
                 .select("*")
                 .getItem(AFileModel.class);
     }
