@@ -8,7 +8,7 @@
 
 # 我的意图？
 * 通过统一的接口嵌入，促成各种FaaS语言的统一编程模型
-> orm接口，http client接口，lock接口，queue接口，mvc接口，job接口，message接口，函数总线
+  >orm接口，http client接口，lock接口，queue接口，mvc接口，job接口，message接口，函数总线
 
 * 可互为扩展中心的机制，形成一个自由的插件网
 
