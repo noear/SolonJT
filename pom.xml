@@ -240,6 +240,8 @@
 
         <module>thinkjt.extend.sited</module>
         <module>thinkjt</module>
+
+        <module>localjt</module>
     </modules>
 
 </project>

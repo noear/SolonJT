@@ -1,12 +1,23 @@
 package org.noear.solonjt.utils;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
 import org.noear.weed.DbContext;
 
 import java.util.Map;
 
 public class DbBuilder {
+    private static Boolean _useConnectionPool;
+    //是否使用连接池
+    public static boolean useConnectionPool() {
+        if(_useConnectionPool == null){
+            _useConnectionPool = ("0".equals(XApp.cfg().get("solonjt.connection.pool")) == false);
+        }
+
+        return _useConnectionPool;
+    }
+
     public static DbContext getDb(Map<String, String> map) {
         String url = map.get("url");
         String server = map.get("server");
@@ -103,19 +114,23 @@ public class DbBuilder {
         }
 
 
-        HikariDataSource source = new HikariDataSource();
-        source.setJdbcUrl(url);
-        source.setUsername(username);
-        source.setPassword(password);
+        if (useConnectionPool()) {
+            HikariDataSource source = new HikariDataSource();
+            source.setJdbcUrl(url);
+            source.setUsername(username);
+            source.setPassword(password);
 
-        if (TextUtils.isEmpty(schema) == false) {
-            source.setSchema(schema);
+            if (TextUtils.isEmpty(schema) == false) {
+                source.setSchema(schema);
+            }
+
+            if (TextUtils.isEmpty(driverClassName) == false) {
+                source.setDriverClassName(driverClassName);
+            }
+
+            return new DbContext(schema, source);
+        } else {
+            return new DbContext(schema, url, username, password);
         }
-
-        if (TextUtils.isEmpty(driverClassName) == false) {
-            source.setDriverClassName(driverClassName);
-        }
-
-        return new DbContext(schema, source);
     }
 }

@@ -1,5 +1,6 @@
 package org.noear.solonjt;
 
+import org.noear.solon.XApp;
 import org.noear.solonjt.dso.DbApi;
 
 public class Config {
