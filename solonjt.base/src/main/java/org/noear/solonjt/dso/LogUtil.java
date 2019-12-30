@@ -9,7 +9,9 @@ public class LogUtil {
         JtBridge.log(data);
         return true;
     }
-
+    public static boolean log(String tag, int level,String content){
+        return log(tag, null, null, null,null, level, null, content);
+    }
     public static boolean log(String tag, int level,String summary,String content) {
         return log(tag, null, null, null,null, level, summary, content);
     }

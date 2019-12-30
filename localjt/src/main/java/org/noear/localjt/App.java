@@ -1,4 +1,4 @@
-package org.noear.thinkjt;
+package org.noear.localjt;
 
 import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
@@ -6,6 +6,8 @@ import org.noear.weed.WeedConfig;
 
 public class App {
     public static void main(String[] args) {
+
+
         WeedConfig.onExecuteBef((cmd) -> {
             System.out.println(cmd.text);
             System.out.println(cmd.paramMap());

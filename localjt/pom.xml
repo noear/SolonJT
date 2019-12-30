@@ -108,7 +108,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.noear.thinkjt.App</mainClass>
+                            <mainClass>org.noear.localjt.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

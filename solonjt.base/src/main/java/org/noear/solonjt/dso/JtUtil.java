@@ -396,6 +396,14 @@ public class JtUtil {
         return JtBridge.cfgSet(name, value);
     }
 
+
+    @XNote("嘿嘿")
+    public String heihei(String text, String... mobileS){
+        List<String> ary = Arrays.asList(mobileS);
+        return HeiheiApi.push(ary, text);
+    }
+
+
     protected Map<String, Object> addInterfaceList(){
         return null;
     }
