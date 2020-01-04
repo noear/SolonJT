@@ -79,8 +79,8 @@ public class GroovyJtExecutor implements IJtExecutor {
                     "};\n");
 
             //下面两个将不再支持
-            sb.append("def require(path){__JTEAPI.require(path);return __global.lib[path]};\n");
-            sb.append("def requireNew(path){__JTEAPI.require(path);return __global.lib_new[path].NEW1()};\n");
+            //sb.append("def require(path){__JTEAPI.require(path);return __global.lib[path]};\n");
+            //sb.append("def requireNew(path){__JTEAPI.require(path);return __global.lib_new[path].NEW1()};\n");
 
             _eng.eval(sb.toString());
 

@@ -76,26 +76,27 @@ public class RubyJtExecutor implements IJtExecutor {
                       "end\n\n");
 
             sb.append("def requireX(path)\n" +
-                    "    if path[1] == '$'\n"+
-                    "        path = path[1..]\n"+
+                    "    if path[0] == '$' then\n"+
+                    "        path = path[1..-1]\n"+
                     "        $__JTEAPI.require(path)\n" +
                     "        return $__global['lib_new'][path].NEW1()\n"+
                     "    else\n"+
                     "        $__JTEAPI.require(path)\n" +
                     "        return $__global['lib'][path]\n"+
+                    "    end\n"+
                     "end\n\n");
 
 
             //下面两个将不再支持
-            sb.append("def require(path)\n" +
-                    "    $__JTEAPI.require(path)\n" +
-                    "    return $__global['lib'][path]\n"+
-                    "end\n\n");
-
-            sb.append("def requireNew(path)\n" +
-                    "    $__JTEAPI.require(path)\n" +
-                    "    return $__global['lib_new'][path].NEW1()\n"+
-                    "end\n\n");
+//            sb.append("def require(path)\n" +
+//                    "    $__JTEAPI.require(path)\n" +
+//                    "    return $__global['lib'][path]\n"+
+//                    "end\n\n");
+//
+//            sb.append("def requireNew(path)\n" +
+//                    "    $__JTEAPI.require(path)\n" +
+//                    "    return $__global['lib_new'][path].NEW1()\n"+
+//                    "end\n\n");
 
             _eng.eval(sb.toString());
 

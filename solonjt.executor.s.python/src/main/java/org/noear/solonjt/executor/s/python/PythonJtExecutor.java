@@ -72,7 +72,7 @@ public class PythonJtExecutor implements IJtExecutor {
 
             sb.append("def requireX(path):\n" +
                     "    if path.startswith('$'):\n"+
-                    "        path = path.subString(1)\n"+
+                    "        path = path[1:]\n"+
                     "        __JTEAPI.require(path)\n" +
                     "        return __global['lib_new'][path]()\n"+
                     "    else:\n"+
@@ -81,13 +81,13 @@ public class PythonJtExecutor implements IJtExecutor {
 
 
             //下面两个将不再支持
-            sb.append("def require(path):\n" +
-                    "    __JTEAPI.require(path)\n" +
-                    "    return __global['lib'][path]\n\n");
-
-            sb.append("def requireNew(path):\n" +
-                    "    __JTEAPI.require(path)\n" +
-                    "    return __global['lib_new'][path]()\n\n");
+//            sb.append("def require(path):\n" +
+//                    "    __JTEAPI.require(path)\n" +
+//                    "    return __global['lib'][path]\n\n");
+//
+//            sb.append("def requireNew(path):\n" +
+//                    "    __JTEAPI.require(path)\n" +
+//                    "    return __global['lib_new'][path]()\n\n");
 
             _eng.eval(sb.toString());
 

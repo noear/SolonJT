@@ -75,9 +75,8 @@ public class LuaJtExecutor implements IJtExecutor {
                       "end\n\n");
 
             sb.append("function requireX(path)\n" +
-                    "    if(string.startswith(path,'$'))\n"+
-                    "    then\n"+
-                    "        path = string.sub(path,1)\n"+
+                    "    if string.sub(path,1,1) == '$' then\n"+
+                    "        path = string.sub(path,2)\n"+
                     "        __JTEAPI:require(path)\n" +
                     "        return __global['lib_new'][path]()\n"+
                     "    else\n"+
@@ -88,15 +87,15 @@ public class LuaJtExecutor implements IJtExecutor {
 
 
             //下面两个将不再支持
-            sb.append("function require(path)\n" +
-                    "    __JTEAPI:require(path)\n" +
-                    "    return __global['lib'][path]\n"+
-                    "end\n\n");
-
-            sb.append("function requireNew(path)\n" +
-                    "    __JTEAPI:require(path)\n" +
-                    "    return __global['lib_new'][path]()\n"+
-                    "end\n\n");
+//            sb.append("function require(path)\n" +
+//                    "    __JTEAPI:require(path)\n" +
+//                    "    return __global['lib'][path]\n"+
+//                    "end\n\n");
+//
+//            sb.append("function requireNew(path)\n" +
+//                    "    __JTEAPI:require(path)\n" +
+//                    "    return __global['lib_new'][path]()\n"+
+//                    "end\n\n");
 
             _eng.eval(sb.toString());
 

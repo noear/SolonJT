@@ -93,8 +93,8 @@ public class GraaljsJtExecutor implements IJtExecutor {
                     "};\n");
 
             //下面两个将不再支持
-            sb.append("function require(path){__JTEAPI.require(path);return __global.lib[path]};\n");
-            sb.append("function requireNew(path){__JTEAPI.require(path);return __global.lib_new[path]()};\n");
+            //sb.append("function require(path){__JTEAPI.require(path);return __global.lib[path]};\n");
+            //sb.append("function requireNew(path){__JTEAPI.require(path);return __global.lib_new[path]()};\n");
 
             //为JSON.stringify 添加java的对象处理
 
