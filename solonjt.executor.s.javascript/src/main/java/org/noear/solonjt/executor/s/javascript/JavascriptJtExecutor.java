@@ -55,27 +55,37 @@ public class JavascriptJtExecutor implements IJtExecutor {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("var __global={lib:{},lib_new:{}};");
+            sb.append("var __global={lib:{},lib_new:{}};\n");
 
-            sb.append("Date.prototype.toJSON =function(){ return this.getTime()};");
+            sb.append("Date.prototype.toJSON =function(){ return this.getTime()};\n");
 
-            sb.append("var XContext = Java.type('org.noear.solon.core.XContext');");
-            sb.append("var ONode = Java.type('org.noear.snack.ONode');");
+            sb.append("var XContext = Java.type('org.noear.solon.core.XContext');\n");
+            sb.append("var ONode = Java.type('org.noear.snack.ONode');\n");
 
-            sb.append("var Datetime = Java.type('org.noear.solonjt.utils.Datetime');");
-            sb.append("var Timecount = Java.type('org.noear.solonjt.utils.Timecount');");
-            sb.append("var Timespan = Java.type('org.noear.solonjt.utils.Timespan');");
+            sb.append("var Datetime = Java.type('org.noear.solonjt.utils.Datetime');\n");
+            sb.append("var Timecount = Java.type('org.noear.solonjt.utils.Timecount');\n");
+            sb.append("var Timespan = Java.type('org.noear.solonjt.utils.Timespan');\n");
 
-            sb.append("function modelAndView(tml,mod){return __JTEAPI.modelAndView(tml,mod);};");
+            sb.append("function modelAndView(tml,mod){return __JTEAPI.modelAndView(tml,mod);};\n");
+            sb.append("function requireX(path){" +
+                    "  if(path.startsWith('$')){" +
+                    "       path=path.substr(1);" +
+                    "       __JTEAPI.require(path);" +
+                    "       return __global.lib_new[path]()}" +
+                    "  else{" +
+                    "       __JTEAPI.require(path);" +
+                    "       return __global.lib[path]}" +
+                    "};\n");
 
-            sb.append("function require(path){__JTEAPI.require(path);return __global.lib[path]};");
-            sb.append("function requireNew(path){__JTEAPI.require(path);return __global.lib_new[path]()};");
+            //下面两个将不再支持
+            sb.append("function require(path){__JTEAPI.require(path);return __global.lib[path]};\n");
+            sb.append("function requireNew(path){__JTEAPI.require(path);return __global.lib_new[path]()};\n");
 
             //为JSON.stringify 添加java的对象处理
 
-            sb.append("function stringify_java(k,v){if(v){if(v.getTicks){return v.getTicks()}if(v.getTime){return v.getTime()}if(v.putAll){var obj={};v.forEach(function(k2,v2){obj[k2]=v2});return obj}if(v.addAll){var ary=[];v.forEach(function(v2){ary.push(v2)});return ary}}return v};");
+            sb.append("function stringify_java(k,v){if(v){if(v.getTicks){return v.getTicks()}if(v.getTime){return v.getTime()}if(v.putAll){var obj={};v.forEach(function(k2,v2){obj[k2]=v2});return obj}if(v.addAll){var ary=[];v.forEach(function(v2){ary.push(v2)});return ary}}return v};\n");
 
-            sb.append("function API_RUN(api){var rst=api(XContext.current());if(rst){if(typeof(rst)=='object'){return JSON.stringify(rst,stringify_java)}else{return rst}}else{return null}};");
+            sb.append("function API_RUN(api){var rst=api(XContext.current());if(rst){if(typeof(rst)=='object'){return JSON.stringify(rst,stringify_java)}else{return rst}}else{return null}};\n");
 
             _eng.eval(sb.toString());
 

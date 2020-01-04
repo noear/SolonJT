@@ -64,12 +64,23 @@ public class GroovyJtExecutor implements IJtExecutor {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("__global=['lib':[:],'lib_new':[:]];").append("\r\n");
+            sb.append("__global=['lib':[:],'lib_new':[:]];\n");
 
-            sb.append("def modelAndView(tml,mod){return __JTEAPI.modelAndView(tml,mod);};").append("\n");
+            sb.append("def modelAndView(tml,mod){return __JTEAPI.modelAndView(tml,mod);};\n");
 
-            sb.append("def require(path){__JTEAPI.require(path);return __global.lib[path]}").append("\n");
-            sb.append("def requireNew(path){__JTEAPI.require(path);return __global.lib_new[path].NEW1()}").append("\n");
+            sb.append("def requireX(path){" +
+                    "  if(path.startsWith('$')){" +
+                    "       path=path.substring(1);" +
+                    "       __JTEAPI.require(path);" +
+                    "       return __global.lib_new[path].NEW1()}" +
+                    "  else{" +
+                    "       __JTEAPI.require(path);" +
+                    "       return __global.lib[path]}" +
+                    "};\n");
+
+            //下面两个将不再支持
+            sb.append("def require(path){__JTEAPI.require(path);return __global.lib[path]};\n");
+            sb.append("def requireNew(path){__JTEAPI.require(path);return __global.lib_new[path].NEW1()};\n");
 
             _eng.eval(sb.toString());
 

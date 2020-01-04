@@ -74,7 +74,20 @@ public class LuaJtExecutor implements IJtExecutor {
                       "    return __JTEAPI:modelAndView(tml,mod)\n" +
                       "end\n\n");
 
+            sb.append("function requireX(path)\n" +
+                    "    if(string.startswith(path,'$'))\n"+
+                    "    then\n"+
+                    "        path = string.sub(path,1)\n"+
+                    "        __JTEAPI:require(path)\n" +
+                    "        return __global['lib_new'][path]()\n"+
+                    "    else\n"+
+                    "        __JTEAPI:require(path)\n" +
+                    "        return __global['lib'][path]\n"+
+                    "    end\n"+
+                    "end\n\n");
 
+
+            //下面两个将不再支持
             sb.append("function require(path)\n" +
                     "    __JTEAPI:require(path)\n" +
                     "    return __global['lib'][path]\n"+
