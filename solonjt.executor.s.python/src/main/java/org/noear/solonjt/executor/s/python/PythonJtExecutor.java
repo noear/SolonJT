@@ -64,7 +64,7 @@ public class PythonJtExecutor implements IJtExecutor {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("__global = {'lib':{}}\n\n");
+            sb.append("__global = {'lib':{},'lib_new':{}}\n\n");
 
             sb.append("def modelAndView(tml,mod):\n" +
                     "    return __JTEAPI.modelAndView(tml,mod)\n\n");
@@ -72,6 +72,10 @@ public class PythonJtExecutor implements IJtExecutor {
             sb.append("def require(path):\n" +
                     "    __JTEAPI.require(path)\n" +
                     "    return __global['lib'][path]\n\n");
+
+            sb.append("def requireNew(path):\n" +
+                    "    __JTEAPI.require(path)\n" +
+                    "    return __global['lib_new'][path]()\n\n");
 
             _eng.eval(sb.toString());
 
@@ -173,6 +177,14 @@ public class PythonJtExecutor implements IJtExecutor {
                     .append("API_")
                     .append(name)
                     .append("()");
+
+            sb.append("\n\n");
+
+            sb.append("__global['lib_new']['")
+                    .append(file.path)
+                    .append("']=")
+                    .append("API_")
+                    .append(name);
 
         } else {
             sb.append("def API_").append(name).append("(ctx):\n");

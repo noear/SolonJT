@@ -68,7 +68,7 @@ public class LuaJtExecutor implements IJtExecutor {
 //            sb.append("ONode = luajava.bindClass('org.noear.snack.ONode')\n");
 
             sb.append("\n");
-            sb.append("__global = {lib={}}\n\n");
+            sb.append("__global = {lib={},lib_new={}}\n\n");
 
             sb.append("function modelAndView(tml,mod)\n" +
                       "    return __JTEAPI:modelAndView(tml,mod)\n" +
@@ -78,6 +78,11 @@ public class LuaJtExecutor implements IJtExecutor {
             sb.append("function require(path)\n" +
                     "    __JTEAPI:require(path)\n" +
                     "    return __global['lib'][path]\n"+
+                    "end\n\n");
+
+            sb.append("function requireNew(path)\n" +
+                    "    __JTEAPI:require(path)\n" +
+                    "    return __global['lib_new'][path]()\n"+
                     "end\n\n");
 
             _eng.eval(sb.toString());
@@ -180,6 +185,15 @@ public class LuaJtExecutor implements IJtExecutor {
                     .append("API_")
                     .append(name)
                     .append("();");
+
+            sb.append("\n");
+
+            sb.append("__global['lib_new']['")
+                    .append(file.path)
+                    .append("']=")
+                    .append("API_")
+                    .append(name)
+                    .append(";");
         }
 
         return sb.toString();

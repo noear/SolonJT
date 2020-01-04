@@ -64,11 +64,12 @@ public class GroovyJtExecutor implements IJtExecutor {
         try {
             StringBuilder sb = new StringBuilder();
 
-            sb.append("__global=['lib':[:]];").append("\r\n");
+            sb.append("__global=['lib':[:],'lib_new':[:]];").append("\r\n");
 
             sb.append("def modelAndView(tml,mod){return __JTEAPI.modelAndView(tml,mod);};").append("\n");
 
             sb.append("def require(path){__JTEAPI.require(path);return __global.lib[path]}").append("\n");
+            sb.append("def requireNew(path){__JTEAPI.require(path);return __global.lib_new[path].NEW1()}").append("\n");
 
             _eng.eval(sb.toString());
 
@@ -163,12 +164,31 @@ public class GroovyJtExecutor implements IJtExecutor {
 
             sb.append("\n");
 
+            sb.append("class API_").append(name).append("_NEW{");
+            sb.append("\n");
+            sb.append("  def NEW1(){");
+            sb.append("\n");
+            sb.append("    return new API_").append(name).append("();");
+            sb.append("\n");
+            sb.append("  };");
+            sb.append("\n};");
+
+
+            sb.append("\n");
+
             sb.append("__global.lib.put('")
                     .append(file.path)
                     .append("',")
                     .append("new API_")
                     .append(name)
-                    .append("());");
+                    .append("());\n");
+
+            sb.append("__global.lib_new.put('")
+                    .append(file.path)
+                    .append("',")
+                    .append("new API_")
+                    .append(name)
+                    .append("_NEW());\n");
 
         } else {
             sb.append("def API_").append(name).append("(ctx){");

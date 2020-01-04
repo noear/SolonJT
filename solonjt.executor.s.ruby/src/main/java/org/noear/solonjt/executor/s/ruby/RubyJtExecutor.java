@@ -69,7 +69,7 @@ public class RubyJtExecutor implements IJtExecutor {
 
             sb.append("$__JTEAPI=JTEAPI_CLZ.new\n\n");
 
-            sb.append("$__global={'lib'=>{}}\n\n");
+            sb.append("$__global={'lib'=>{},'lib_new'=>{}}\n\n");
 
             sb.append("def modelAndView(tml,mod)\n" +
                       "    return $__JTEAPI.modelAndView(tml,mod)\n" +
@@ -79,6 +79,11 @@ public class RubyJtExecutor implements IJtExecutor {
             sb.append("def require(path)\n" +
                     "    $__JTEAPI.require(path)\n" +
                     "    return $__global['lib'][path]\n"+
+                    "end\n\n");
+
+            sb.append("def requireNew(path)\n" +
+                    "    $__JTEAPI.require(path)\n" +
+                    "    return $__global['lib_new'][path].NEW1()\n"+
                     "end\n\n");
 
             _eng.eval(sb.toString());
@@ -170,11 +175,18 @@ public class RubyJtExecutor implements IJtExecutor {
 
         if (name.endsWith("__lib")) {
             sb.append("class API_").append(name).append("\n");
-
             for (int i = 0, len = lines.length; i < len; i++) {
                 sb.append("    ").append(lines[i]).append("\n");
             }
             sb.append("end\n\n");
+
+            sb.append("class API_").append(name).append("_NEW\n");
+            sb.append("  def NEW1\n");
+            sb.append("    return ").append("API_").append(name).append(".new\n");
+            sb.append("  end\n");
+            sb.append("end\n\n");
+
+
 
             sb.append("$__global['lib']['")
                     .append(file.path)
@@ -182,6 +194,13 @@ public class RubyJtExecutor implements IJtExecutor {
                     .append("API_")
                     .append(name)
                     .append(".new\n");
+
+            sb.append("$__global['lib_new']['")
+                    .append(file.path)
+                    .append("']=")
+                    .append("API_")
+                    .append(name)
+                    .append("_NEW.new\n");
 
         } else {
             sb.append("def API_").append(name).append("(ctx)\n");
