@@ -42,6 +42,7 @@ public class SolonJT {
 
             x.sharedAdd("XFun", JtFun.g);
             x.sharedAdd("XBus", JtMsg.g);
+            x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtilEx.g2);
             x.sharedAdd("XLock", JtLock.g);
         });
