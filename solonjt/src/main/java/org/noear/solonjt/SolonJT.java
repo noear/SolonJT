@@ -41,7 +41,7 @@ public class SolonJT {
             }
 
             x.sharedAdd("XFun", JtFun.g);
-            x.sharedAdd("XBus", JtMsg.g);
+            x.sharedAdd("XBus", JtMsg.g);//为兼容旧版本
             x.sharedAdd("XMsg", JtMsg.g);
             x.sharedAdd("XUtil", JtUtilEx.g2);
             x.sharedAdd("XLock", JtLock.g);
