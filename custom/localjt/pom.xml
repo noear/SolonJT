@@ -14,7 +14,7 @@
     <artifactId>localjt</artifactId>
     <packaging>jar</packaging>
 
-    <name>localjt</name>
+    <name>ljt</name>
     <description>java project for ${project.artifactId}</description>
 
     <properties>

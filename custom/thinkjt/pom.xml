@@ -14,7 +14,7 @@
     <artifactId>thinkjt</artifactId>
     <packaging>jar</packaging>
 
-    <name>jt</name>
+    <name>tjt</name>
     <description>java project for ${project.artifactId}</description>
 
     <properties>

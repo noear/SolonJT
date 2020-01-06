@@ -9,7 +9,7 @@
     <version>1.0.3.8</version>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>root</name>
     <description>Java project for solonjt</description>
     <url>https://github.com/noear/solonjt</url>
 
