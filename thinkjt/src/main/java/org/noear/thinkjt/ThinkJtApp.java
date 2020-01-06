@@ -3,7 +3,7 @@ package org.noear.thinkjt;
 import org.noear.solonjt.SolonJT;
 import org.noear.weed.WeedConfig;
 
-public class App {
+public class ThinkJtApp {
     public static void main(String[] args) {
         WeedConfig.onExecuteBef((cmd)->{
             System.out.println(cmd.text);
@@ -12,6 +12,6 @@ public class App {
         });
 
 
-        SolonJT.start(App.class, args);
+        SolonJT.start(ThinkJtApp.class, args);
     }
 }

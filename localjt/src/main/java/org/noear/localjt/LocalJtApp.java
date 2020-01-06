@@ -4,7 +4,7 @@ import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
 import org.noear.weed.WeedConfig;
 
-public class App {
+public class LocalJtApp {
     public static void main(String[] args) {
 
 
@@ -15,7 +15,7 @@ public class App {
         });
 
 
-        SolonJT.start(App.class, args);
+        SolonJT.start(LocalJtApp.class, args);
 
         XMap xarg = XMap.from(args);
         int port = xarg.getInt("server.port");

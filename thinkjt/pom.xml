@@ -143,7 +143,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.noear.thinkjt.App</mainClass>
+                            <mainClass>org.noear.thinkjt.ThinkJtApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

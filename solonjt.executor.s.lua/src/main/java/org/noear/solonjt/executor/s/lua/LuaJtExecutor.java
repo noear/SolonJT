@@ -85,6 +85,10 @@ public class LuaJtExecutor implements IJtExecutor {
                     "    end\n"+
                     "end\n\n");
 
+            sb.append("function funX(f)\n" +
+                    "    return luajava.createProxy('org.noear.solonjt.dso.JtFunHandler', {call=f})\n" +
+                    "end\n\n");
+
 
             //下面两个将不再支持
 //            sb.append("function require(path)\n" +

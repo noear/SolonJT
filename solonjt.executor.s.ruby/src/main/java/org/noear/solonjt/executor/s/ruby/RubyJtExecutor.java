@@ -72,18 +72,18 @@ public class RubyJtExecutor implements IJtExecutor {
             sb.append("$__global={'lib'=>{},'lib_new'=>{}}\n\n");
 
             sb.append("def modelAndView(tml,mod)\n" +
-                      "    return $__JTEAPI.modelAndView(tml,mod)\n" +
-                      "end\n\n");
+                    "    return $__JTEAPI.modelAndView(tml,mod)\n" +
+                    "end\n\n");
 
             sb.append("def requireX(path)\n" +
-                    "    if path[0] == '$' then\n"+
-                    "        path = path[1..-1]\n"+
+                    "    if path[0] == '$' then\n" +
+                    "        path = path[1..-1]\n" +
                     "        $__JTEAPI.require(path)\n" +
-                    "        return $__global['lib_new'][path].NEW1()\n"+
-                    "    else\n"+
+                    "        return $__global['lib_new'][path].NEW1()\n" +
+                    "    else\n" +
                     "        $__JTEAPI.require(path)\n" +
-                    "        return $__global['lib'][path]\n"+
-                    "    end\n"+
+                    "        return $__global['lib'][path]\n" +
+                    "    end\n" +
                     "end\n\n");
 
 
@@ -225,8 +225,4 @@ public class RubyJtExecutor implements IJtExecutor {
 
         return sb.toString();
     }
-
-
-
-
 }
