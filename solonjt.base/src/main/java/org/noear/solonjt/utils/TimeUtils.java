@@ -29,9 +29,9 @@ public class TimeUtils {
         Datetime now = Datetime.Now();
 
         if(now.getYear() == date2.getYear()){
-            return date2.toString("MM月dd日 HH:mm");
+            return date2.toString("MM月dd日");
         }else{
-            return date2.toString("yyyy-MM-dd HH:mm");
+            return date2.toString("yyyy-MM-dd");
         }
     }
 }
