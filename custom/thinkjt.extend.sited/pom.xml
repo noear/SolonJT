@@ -8,9 +8,10 @@
         <groupId>org.noear</groupId>
         <artifactId>solonjt-parent</artifactId>
         <version>1.0.3.8</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>thinkjt.extend.hanlp</artifactId>
+    <artifactId>thinkjt.extend.sited</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -19,11 +20,15 @@
             <artifactId>solon</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.hankcs</groupId>
-            <artifactId>hanlp</artifactId>
-            <version>portable-1.7.5</version>
+            <groupId>org.noear</groupId>
+            <artifactId>weed3</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>snack3</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

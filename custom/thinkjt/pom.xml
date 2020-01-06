@@ -8,6 +8,7 @@
         <groupId>org.noear</groupId>
         <artifactId>solonjt-parent</artifactId>
         <version>1.0.3.8</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>thinkjt</artifactId>

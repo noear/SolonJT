@@ -8,9 +8,10 @@
         <groupId>org.noear</groupId>
         <artifactId>solonjt-parent</artifactId>
         <version>1.0.3.8</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>thinkjt.extend.sited</artifactId>
+    <artifactId>thinkjt.extend.flexmark</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -19,16 +20,24 @@
             <artifactId>solon</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!--markdown to html-->
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>weed3</artifactId>
-            <scope>provided</scope>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark</artifactId>
+            <version>${flexmark.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>snack3</artifactId>
-            <scope>provided</scope>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-util</artifactId>
+            <version>${flexmark.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.vladsch.flexmark</groupId>
+            <artifactId>flexmark-ext-tables</artifactId>
+            <version>${flexmark.version}</version>
+        </dependency>
+        <!--markdown to html end-->
     </dependencies>
 
 

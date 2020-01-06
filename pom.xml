@@ -234,14 +234,14 @@
         <module>solonjt.lock.redis</module>
         <module>solonjt.queue.redis</module>
 
-        <module>thinkjt.extend.flexmark</module>
-        <module>thinkjt.extend.jsoup</module>
-        <module>thinkjt.extend.hanlp</module>
+        <module>custom/thinkjt.extend.flexmark</module>
+        <module>custom/thinkjt.extend.jsoup</module>
+        <module>custom/thinkjt.extend.hanlp</module>
 
-        <module>thinkjt.extend.sited</module>
-        <module>thinkjt</module>
+        <module>custom/thinkjt.extend.sited</module>
+        <module>custom/thinkjt</module>
 
-        <module>localjt</module>
+        <module>custom/localjt</module>
     </modules>
 
 </project>

@@ -8,9 +8,10 @@
         <groupId>org.noear</groupId>
         <artifactId>solonjt-parent</artifactId>
         <version>1.0.3.8</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>thinkjt.extend.flexmark</artifactId>
+    <artifactId>thinkjt.extend.hanlp</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -20,23 +21,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--markdown to html-->
         <dependency>
-            <groupId>com.vladsch.flexmark</groupId>
-            <artifactId>flexmark</artifactId>
-            <version>${flexmark.version}</version>
+            <groupId>com.hankcs</groupId>
+            <artifactId>hanlp</artifactId>
+            <version>portable-1.7.5</version>
         </dependency>
-        <dependency>
-            <groupId>com.vladsch.flexmark</groupId>
-            <artifactId>flexmark-util</artifactId>
-            <version>${flexmark.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vladsch.flexmark</groupId>
-            <artifactId>flexmark-ext-tables</artifactId>
-            <version>${flexmark.version}</version>
-        </dependency>
-        <!--markdown to html end-->
     </dependencies>
 
 
