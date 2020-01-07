@@ -3,16 +3,12 @@ package org.noear.solonjt.dso;
 import org.noear.solon.XApp;
 import org.noear.solonjt.Config;
 import org.noear.solonjt.utils.*;
-import org.noear.snack.ONode;
 import org.noear.solon.core.XMap;
 import org.noear.weed.DbContext;
-import org.noear.weed.wrap.DbType;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 初始化工具类（提供引擎初始化支持）
@@ -257,29 +253,25 @@ public class InitUtil {
     }
     private static void do_initCore(XApp app) throws Exception {
 
-        if (db().table("a_plugin").exists()) {
-            return;
+        if (PluginUtil.install("_core.noear")) {
+            //
+            // 第一次安装时，做一些初始化
+            //
+            db().table("a_config")
+                    .set("value", "Iv1H81dI2ZNzDS2n")
+                    .where("name=?", "_frm_admin_pwd")
+                    .update();
+
+            db().table("a_config")
+                    .set("value", "0")
+                    .where("name=?", "_frm_enable_dev")
+                    .update();
+
+            db().table("a_file")
+                    .set("link_to", "")
+                    .where("path='/'")
+                    .update();
         }
-
-        PluginUtil.setup("_core.noear");
-
-        //
-        // 第一次安装时，做一些初始化
-        //
-        db().table("a_config")
-                .set("value", "Iv1H81dI2ZNzDS2n")
-                .where("name=?", "_frm_admin_pwd")
-                .update();
-
-        db().table("a_config")
-                .set("value", "0")
-                .where("name=?", "_frm_enable_dev")
-                .update();
-
-        db().table("a_file")
-                .set("link_to", "")
-                .where("path='/'")
-                .update();
 
         System.out.println("Complete _core loading");
     }

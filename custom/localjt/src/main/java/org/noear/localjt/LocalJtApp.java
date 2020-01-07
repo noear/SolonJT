@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 
 import org.noear.solon.XApp;
 import org.noear.solonjt.SolonJT;
+import org.noear.solonjt.dso.PluginUtil;
+import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 
 
@@ -51,6 +53,14 @@ public class LocalJtApp  extends Application {
         app.onError((ctx, err) -> {
             err.printStackTrace();
         });
+
+        String install = app.prop().argx().get("install");
+        if (TextUtils.isEmpty(install) == false) {
+            String[] ss = install.split(",");
+            for (String packageTag : ss) {
+                PluginUtil.install(packageTag);
+            }
+        }
 
         url = "http://localhost:" + app.port() + "/.admin/?_L0n5=1CE24B1CF36B0C5B94AACE6263DBD947FFA53531";
 

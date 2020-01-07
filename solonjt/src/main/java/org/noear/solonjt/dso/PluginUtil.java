@@ -1,8 +1,8 @@
 package org.noear.solonjt.dso;
 
+import com.sun.javafx.tools.ant.CSSToBinTask;
 import org.noear.snack.ONode;
 import org.noear.solon.XApp;
-import org.noear.solon.XUtil;
 import org.noear.solonjt.Config;
 import org.noear.solonjt.utils.Base64Utils;
 import org.noear.solonjt.utils.HttpUtils;
@@ -12,8 +12,6 @@ import org.noear.weed.DataList;
 import org.noear.weed.DbContext;
 import org.noear.weed.wrap.DbType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,15 +20,44 @@ public class PluginUtil {
         return DbUtil.db();
     }
 
-    public static void setup(String packageTag) throws Exception{
+    /**
+     * 安装
+     * */
+    public static boolean install(String packageTag) {
+        try {
+            return installDo(packageTag, true);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * 重装
+     * */
+    public static  boolean reinstall(String packageTag) {
+        try {
+            return installDo(packageTag, false);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private static boolean installDo(String packageTag, boolean onlyInstall) throws Exception{
         String center = XApp.cfg().get(Config.code_center);
         if (TextUtils.isEmpty(center)) {
             center = XApp.cfg().argx().get("center");
         }
 
         if (TextUtils.isEmpty(center)) {
-            return;
+            return false;
         }
+
+        if(onlyInstall) {
+            if (db().table("a_plugin").whereEq("plugin_tag", packageTag).exists()) {
+                return false;
+            }
+        }
+
 
 
         String url = null;
@@ -45,17 +72,15 @@ public class PluginUtil {
         String json = new HttpUtils(url).get();
         ONode data = ONode.load(json);
         if (data.get("code").getInt() != 1) {
-            return;
+            return false;
         }
 
-        Map<String,Object> map_cls = new HashMap<>();
-        List<String> ary_cls = new ArrayList<>();
 
         ONode body = data.get("data").get("body");
         ONode meta = data.get("data").get("meta");
 
         String plugin_tag = meta.get("plugin_tag").getString();
-        String tag = plugin_tag.split(".")[0];
+        String tag = plugin_tag.split("\\.")[0];
 
 
         String p_config = body.get("config").getString();
@@ -232,5 +257,7 @@ public class PluginUtil {
 
         //重启(清空所有缓存)//不然勾子，可能会有缓存
         JtUtilEx.g2.restart();
+
+        return true;
     }
 }
