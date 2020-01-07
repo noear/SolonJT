@@ -28,15 +28,7 @@ public class InitUtil {
     }
 
     private static void do_initDbTable(String sql) throws Exception {
-//        if (db().dbType() == DbType.H2) {
-//            sql = sql.replace("ENGINE=InnoDB ", "")
-//                     .replace("USING BTREE","")
-//                     .replace("USING HASH","")
-//                     .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "");
-//            db().exe(sql);
-//        } else {
-            db().exe(sql);
-//        }
+        db().exe(sql);
     }
 
     private static void do_initDb() throws Exception {
