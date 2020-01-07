@@ -24,35 +24,15 @@ public class LocalJtApp  extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setMinWidth(800);
+        stage.setMinWidth(1000);
         stage.setMinHeight(500);
 
         Scene scene = new Scene(new Group());
 
-        final WebView webBrowser = new WebView();
-        final WebEngine webEngine = webBrowser.getEngine();
+        WebViewBuilder builder = new WebViewBuilder();
+        builder.setUrl(url);
 
-        webBrowser.autosize();
-
-//        webEngine.setJavaScriptEnabled(true);
-//        webEngine.setOnAlert(event -> {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setHeaderText("Alert!");
-//            alert.setContentText(event.toString());
-//            alert.showAndWait();
-//        });
-
-
-        webEngine.getLoadWorker().stateProperty()
-                .addListener((ov, oldState, newState) -> {
-                    if (newState == Worker.State.SUCCEEDED) {
-                        stage.setTitle(webEngine.getLocation());
-                    }
-                });
-
-        webEngine.load(url);
-
-        scene.setRoot(webBrowser);
+        scene.setRoot(builder.build());
 
         stage.setScene(scene);
         stage.setTitle("LocalJt");
