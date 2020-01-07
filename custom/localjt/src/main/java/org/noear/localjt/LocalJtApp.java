@@ -3,7 +3,6 @@ package org.noear.localjt;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Worker;
 import javafx.concurrent.Worker.State;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,9 +11,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import org.h2.jdbc.JdbcClob;
 import org.noear.solon.XApp;
-import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
 import org.noear.weed.WeedConfig;
 

@@ -14,7 +14,7 @@ public class DbH2AdapterEx extends DbH2Adapter {
             return code.replace("ENGINE=InnoDB ", "")
                     .replace("USING BTREE", "")
                     .replace("USING HASH", "")
-                    .replace("([*]40)", "")
+                    .replaceAll("`\\(\\d+\\)\\)", "`)")
                     .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "");
 
         }
