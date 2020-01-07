@@ -27,13 +27,17 @@ public class InitUtil {
         try{
              do_initDb();
         }catch (Throwable ex){
-            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
     }
 
     private static void do_initDbTable(String sql) throws Exception {
         if (db().dbType() == DbType.H2) {
-            db().exe(sql.replace("ENGINE=InnoDB ", ""));
+            sql = sql.replace("ENGINE=InnoDB ", "")
+                     .replace("USING BTREE","")
+                     .replace("USING HASH","")
+                     .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "");
+            db().exe(sql);
         } else {
             db().exe(sql);
         }
@@ -45,7 +49,8 @@ public class InitUtil {
             return;
         }
 
-        do_initDbTable("CREATE TABLE `a_config` (\n" +
+
+        do_initDbTable(" CREATE TABLE IF NOT EXISTS `a_config` (\n" +
                 "  `cfg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '配置ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
                 "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标记',\n" +
@@ -60,12 +65,12 @@ public class InitUtil {
                 "  `create_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',\n" +
                 "  `update_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',\n" +
                 "  PRIMARY KEY (`cfg_id`),\n" +
-                "  UNIQUE KEY `IX_key` (`name`) USING BTREE,\n" +
-                "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
-                "  KEY `IX_label` (`label`) USING BTREE\n" +
+                "  UNIQUE KEY `IX_a_config_key` (`name`) USING BTREE,\n" +
+                "  KEY `IX_a_config_tag` (`tag`) USING BTREE,\n" +
+                "  KEY `IX_a_config_label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-配置表'");
 
-        do_initDbTable("CREATE TABLE `a_file` (\n" +
+        do_initDbTable(" CREATE TABLE IF NOT EXISTS `a_file` (\n" +
                 "  `file_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文件ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组村签',\n" +
                 "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标记',\n" +
@@ -90,12 +95,12 @@ public class InitUtil {
                 "  `create_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',\n" +
                 "  `update_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',\n" +
                 "  PRIMARY KEY (`file_id`),\n" +
-                "  UNIQUE KEY `IX_key` (`path`) USING HASH,\n" +
-                "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
-                "  KEY `IX_label` (`label`) USING BTREE\n" +
+                "  UNIQUE KEY `IX_a_file_key` (`path`) USING HASH,\n" +
+                "  KEY `IX_a_file_tag` (`tag`) USING BTREE,\n" +
+                "  KEY `IX_a_file_label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-文件表'");
 
-        do_initDbTable("CREATE TABLE `a_image` (\n" +
+        do_initDbTable(" CREATE TABLE IF NOT EXISTS `a_image` (\n" +
                 "  `img_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '图片ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
                 "  `label` varchar(100) NOT NULL DEFAULT '' COMMENT '标签',\n" +
@@ -108,12 +113,12 @@ public class InitUtil {
                 "  `create_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',\n" +
                 "  `update_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',\n" +
                 "  PRIMARY KEY (`img_id`),\n" +
-                "  UNIQUE KEY `IX_key` (`path`) USING BTREE,\n" +
-                "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
-                "  KEY `IX_label` (`label`) USING BTREE\n" +
+                "  UNIQUE KEY `IX_a_image_key` (`path`) USING BTREE,\n" +
+                "  KEY `IX_a_image_tag` (`tag`) USING BTREE,\n" +
+                "  KEY `IX_a_image_label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-图片表'");
 
-        do_initDbTable("CREATE TABLE `a_log` (\n" +
+        do_initDbTable("CREATE TABLE IF NOT EXISTS `a_log` (\n" +
                 "  `log_id` bigint(20) NOT NULL AUTO_INCREMENT,\n" +
                 "  `level` int(11) NOT NULL DEFAULT '0' COMMENT '等级',\n" +
                 "  `tag` varchar(100) NOT NULL DEFAULT '' COMMENT '标签',\n" +
@@ -127,16 +132,16 @@ public class InitUtil {
                 "  `log_fulltime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录完整时间',\n" +
                 "  `from` varchar(100) DEFAULT NULL COMMENT '来源',\n" +
                 "  PRIMARY KEY (`log_id`),\n" +
-                "  KEY `IX_date` (`log_date`) USING BTREE,\n" +
-                "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
-                "  KEY `IX_tag1` (`tag1`) USING BTREE,\n" +
-                "  KEY `IX_tag2` (`tag2`) USING BTREE,\n" +
-                "  KEY `IX_tag3` (`tag3`) USING BTREE,\n" +
-                "  KEY `IX_tag4` (`tag4`) USING BTREE\n" +
+                "  KEY `IX_a_log_date` (`log_date`) USING BTREE,\n" +
+                "  KEY `IX_a_log_tag` (`tag`) USING BTREE,\n" +
+                "  KEY `IX_a_log_tag1` (`tag1`) USING BTREE,\n" +
+                "  KEY `IX_a_log_tag2` (`tag2`) USING BTREE,\n" +
+                "  KEY `IX_a_log_tag3` (`tag3`) USING BTREE,\n" +
+                "  KEY `IX_a_log_tag4` (`tag4`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-日志表'");
 
 
-        do_initDbTable("CREATE TABLE `a_menu` (\n" +
+        do_initDbTable("CREATE TABLE IF NOT EXISTS `a_menu` (\n" +
                 "  `menu_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',\n" +
                 "  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分组标签',\n" +
@@ -155,12 +160,12 @@ public class InitUtil {
                 "  `create_fulltime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',\n" +
                 "  `update_fulltime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',\n" +
                 "  PRIMARY KEY (`menu_id`),\n" +
-                "  KEY `IX_order_number` (`order_number`) USING BTREE,\n" +
-                "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
-                "  KEY `IX_label` (`label`) USING BTREE\n" +
+                "  KEY `IX_a_menu_order_number` (`order_number`) USING BTREE,\n" +
+                "  KEY `IX_a_menu_tag` (`tag`) USING BTREE,\n" +
+                "  KEY `IX_a_menu_label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-菜单表'");
 
-        do_initDbTable("CREATE TABLE `a_message` (\n" +
+        do_initDbTable("CREATE TABLE IF NOT EXISTS `a_message` (\n" +
                 "  `msg_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息ID',\n" +
                 "  `topic` varchar(100) NOT NULL DEFAULT '' COMMENT '主题',\n" +
                 "  `topic_source` varchar(100) DEFAULT NULL COMMENT '原始主题',\n" +
@@ -171,14 +176,14 @@ public class InitUtil {
                 "  `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '记录日期（yyyyMMdd）',\n" +
                 "  `log_fulltime` datetime NOT NULL COMMENT '记录时间',\n" +
                 "  PRIMARY KEY (`msg_id`),\n" +
-                "  KEY `IX_topic` (`topic`) USING BTREE,\n" +
-                "  KEY `IX_state` (`state`) USING BTREE,\n" +
-                "  KEY `IX_dist_ntime` (`dist_ntime`),\n" +
-                "  KEY `IX_dist_count` (`dist_count`),\n" +
-                "  KEY `IX_log_date` (`log_date`)\n" +
+                "  KEY `IX_a_message_topic` (`topic`) USING BTREE,\n" +
+                "  KEY `IX_a_message_state` (`state`) USING BTREE,\n" +
+                "  KEY `IX_a_message_dist_ntime` (`dist_ntime`),\n" +
+                "  KEY `IX_a_message_dist_count` (`dist_count`),\n" +
+                "  KEY `IX_a_message_log_date` (`log_date`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-消息表'");
 
-        do_initDbTable("CREATE TABLE `a_message_distribution` (\n" +
+        do_initDbTable("CREATE TABLE IF NOT EXISTS `a_message_distribution` (\n" +
                 "  `dist_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '分发ID',\n" +
                 "  `msg_id` bigint(20) NOT NULL COMMENT '待分发的消息ID',\n" +
                 "  `file_id` int(11) NOT NULL DEFAULT '0',\n" +
@@ -189,11 +194,11 @@ public class InitUtil {
                 "  `log_date` int(11) NOT NULL DEFAULT '0' COMMENT '分发日期（yyyyMMdd）',\n" +
                 "  `log_fulltime` datetime NOT NULL COMMENT '分发时间',\n" +
                 "  PRIMARY KEY (`dist_id`),\n" +
-                "  UNIQUE KEY `IX_key` (`msg_id`,`file_id`) USING BTREE,\n" +
-                "  KEY `IX_date` (`log_date`)\n" +
+                "  UNIQUE KEY `IX_a_message_distribution_key` (`msg_id`,`file_id`) USING BTREE,\n" +
+                "  KEY `IX_a_message_distribution_date` (`log_date`)\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-消息派发表'");
 
-        do_initDbTable("CREATE TABLE `a_plugin` (\n" +
+        do_initDbTable("CREATE TABLE IF NOT EXISTS `a_plugin` (\n" +
                 "  `plugin_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '插件ID',\n" +
                 "  `plugin_tag` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '插件标签',\n" +
                 "  `tag` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',\n" +
@@ -213,10 +218,10 @@ public class InitUtil {
                 "  `create_fulltime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',\n" +
                 "  `update_fulltime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',\n" +
                 "  PRIMARY KEY (`plugin_id`),\n" +
-                "  UNIQUE KEY `IX_key` (`plugin_tag`) USING HASH,\n" +
-                "  KEY `IX_tag` (`tag`) USING BTREE,\n" +
-                "  KEY `IX_category` (`category`) USING BTREE,\n" +
-                "  KEY `IX_label` (`label`) USING BTREE\n" +
+                "  UNIQUE KEY `IX_a_plugin_key` (`plugin_tag`) USING HASH,\n" +
+                "  KEY `IX_a_plugin_tag` (`tag`) USING BTREE,\n" +
+                "  KEY `IX_a_plugin_category` (`category`) USING BTREE,\n" +
+                "  KEY `IX_a_plugin_label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-插件表'");
 
 

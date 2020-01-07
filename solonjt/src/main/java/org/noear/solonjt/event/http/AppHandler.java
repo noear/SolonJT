@@ -28,7 +28,11 @@ public class AppHandler implements XHandler {
 
     @Override
     public void handle(XContext ctx) throws Exception {
-        do_handle(ctx.path(),ctx);
+        try {
+            do_handle(ctx.path(), ctx);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     private void do_handle(String path,XContext ctx) throws Exception {

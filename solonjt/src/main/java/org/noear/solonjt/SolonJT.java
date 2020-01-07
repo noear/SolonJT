@@ -7,7 +7,7 @@ import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.xml.XmlSqlLoader;
 
 public class SolonJT {
-    public static void start(Class<?> source, String[] args) {
+    public static XApp start(Class<?> source, String[] args) {
 
         XmlSqlLoader.tryLoad();
 
@@ -62,5 +62,7 @@ public class SolonJT {
 
             AppUtil.runAsWork(app);
         }
+
+        return app;
     }
 }
