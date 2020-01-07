@@ -69,6 +69,18 @@
         </dependency>
 
         <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solonjt.event.schedule</artifactId>
+            <version>${solonjt.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solonjt.event.message</artifactId>
+            <version>${solonjt.ver}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>RELEASE</version>
