@@ -4,14 +4,16 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
 import org.noear.weed.DbContext;
+import org.noear.weed.wrap.DbType;
 
 import java.util.Map;
 
 public class DbBuilder {
     private static Boolean _useConnectionPool;
+
     //是否使用连接池
     public static boolean useConnectionPool() {
-        if(_useConnectionPool == null){
+        if (_useConnectionPool == null) {
             _useConnectionPool = ("0".equals(XApp.cfg().get("solonjt.connection.pool")) == false);
         }
 
@@ -20,6 +22,14 @@ public class DbBuilder {
 
     public static DbContext getDb(Map<String, String> map) {
         String url = map.get("url");
+        if(TextUtils.isEmpty(url) == false) {
+            if (url.indexOf("~/") >= 0) {
+                String path = XApp.cfg().argx().get("extend");
+                url = url.replace("~/", path);
+            }
+        }
+
+
         String server = map.get("server");
 
         String schema = map.get("schema");
@@ -113,6 +123,7 @@ public class DbBuilder {
             }
         }
 
+        DbContext db = null;
 
         if (useConnectionPool()) {
             HikariDataSource source = new HikariDataSource();
@@ -128,9 +139,15 @@ public class DbBuilder {
                 source.setDriverClassName(driverClassName);
             }
 
-            return new DbContext(schema, source);
+            db = new DbContext(schema, source);
         } else {
-            return new DbContext(schema, url, username, password);
+            db = new DbContext(schema, url, username, password);
         }
+
+        if (db.dbType() == DbType.H2) {
+            db.dbAdapterSet(DbH2AdapterEx.g);
+        }
+
+        return db;
     }
 }

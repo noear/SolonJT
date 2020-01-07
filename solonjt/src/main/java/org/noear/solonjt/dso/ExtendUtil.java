@@ -15,6 +15,10 @@ public class ExtendUtil {
         _file = new File(_path);
     }
 
+    public static String path(){
+        return _path;
+    }
+
     /** 扫描扩展文件夹（如果是目录的话，只处理一级） */
     public static List<Map<String,Object>> scan() {
         List<Map<String,Object>> list = new ArrayList<>();

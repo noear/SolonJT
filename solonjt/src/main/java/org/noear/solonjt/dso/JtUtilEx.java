@@ -21,6 +21,9 @@ import java.util.*;
 public class JtUtilEx extends JtUtil {
     public static final JtUtilEx g2 = new JtUtilEx();
 
+
+
+    @XNote("获取菜单")
     public List<Map<String, Object>> menuGet(String label, int pid) throws Exception {
         return DbApi.menuGet(label, pid);
     }

@@ -32,15 +32,15 @@ public class InitUtil {
     }
 
     private static void do_initDbTable(String sql) throws Exception {
-        if (db().dbType() == DbType.H2) {
-            sql = sql.replace("ENGINE=InnoDB ", "")
-                     .replace("USING BTREE","")
-                     .replace("USING HASH","")
-                     .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "");
+//        if (db().dbType() == DbType.H2) {
+//            sql = sql.replace("ENGINE=InnoDB ", "")
+//                     .replace("USING BTREE","")
+//                     .replace("USING HASH","")
+//                     .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "");
+//            db().exe(sql);
+//        } else {
             db().exe(sql);
-        } else {
-            db().exe(sql);
-        }
+//        }
     }
 
     private static void do_initDb() throws Exception {
@@ -297,6 +297,13 @@ public class InitUtil {
         for (Map<String, Object> m : d_config) {
             m.remove("cfg_id");
             db().table("a_config").setMap(m).insert();
+        }
+
+        if(db().dbType() == DbType.H2){
+            db().table("a_config")
+                    .set("value","LocalJt")
+                    .whereEq("name","_frm_admin_title")
+                    .update();
         }
 
         //2.2.文件表
