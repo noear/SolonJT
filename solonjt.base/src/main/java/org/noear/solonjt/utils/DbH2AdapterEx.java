@@ -8,9 +8,7 @@ public class DbH2AdapterEx extends DbH2Adapter {
 
     @Override
     public String preReview(String code) {
-        if (code.indexOf("CREATE TABLE") < 0) {
-            return code;
-        } else {
+        if (code.indexOf("CREATE TABLE") >= 0) {
             return code.replace("ENGINE=InnoDB ", "")
                     .replace("USING BTREE", "")
                     .replace("USING HASH", "")
@@ -18,5 +16,11 @@ public class DbH2AdapterEx extends DbH2Adapter {
                     .replace("CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ", "");
 
         }
+
+        if(code.indexOf("information_schema.")>=0){
+            return  code.toUpperCase();
+        }
+
+        return code;
     }
 }
