@@ -2,6 +2,7 @@ package org.noear.solonjt.dso;
 
 import org.noear.solon.core.*;
 import org.noear.solonjt.model.AFileModel;
+import org.noear.solonjt.utils.TextUtils;
 
 import java.util.Date;
 
@@ -37,14 +38,23 @@ public class AFileStaticHandler {
 
         int idx = path.lastIndexOf(".");
         if (idx > 0) {
-            String mime = file.content_type;
+            context.headerSet(CACHE_CONTROL, "max-age=6000");
+            context.headerSet(LAST_MODIFIED, file.update_fulltime.toString());
 
-            if (mime != null) {
-                context.headerSet(CACHE_CONTROL, "max-age=6000");
-                context.headerSet(LAST_MODIFIED, file.update_fulltime.toString());
-                context.contentType(mime);
-                context.charset("utf-8");
+            context.charset("utf-8");
+        }
+
+        if(TextUtils.isEmpty(file.content_type)) {
+            if(file.content.indexOf(">") > 0) {
+                context.contentType("text/html");
             }
+
+            if(file.content.indexOf("{") == 0) {
+                context.contentType("text/json");
+            }
+
+        }else{
+            context.contentType(file.content_type);
         }
 
         context.status(200);
