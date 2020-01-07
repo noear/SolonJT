@@ -1,6 +1,5 @@
 package org.noear.solonjt.dso;
 
-import com.sun.javafx.tools.ant.CSSToBinTask;
 import org.noear.snack.ONode;
 import org.noear.solon.XApp;
 import org.noear.solonjt.Config;
