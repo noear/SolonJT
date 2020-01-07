@@ -263,6 +263,24 @@ public class InitUtil {
 
         PluginUtil.setup("_core.noear");
 
+        //
+        // 第一次安装时，做一些初始化
+        //
+        db().table("a_config")
+                .set("value", "Iv1H81dI2ZNzDS2n")
+                .where("name=?", "_frm_admin_pwd")
+                .update();
+
+        db().table("a_config")
+                .set("value", "0")
+                .where("name=?", "_frm_enable_dev")
+                .update();
+
+        db().table("a_file")
+                .set("link_to", "")
+                .where("path='/'")
+                .update();
+
         System.out.println("Complete _core loading");
     }
 
