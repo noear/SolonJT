@@ -16,8 +16,6 @@ public class WebViewBuilder {
         final WebView webView = new WebView();
         final WebEngine webEngine = webView.getEngine();
 
-
-        webView.setContextMenuEnabled(true);
         webView.autosize();
 
         webEngine.setOnAlert((event)->{
