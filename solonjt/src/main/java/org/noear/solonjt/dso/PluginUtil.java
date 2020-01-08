@@ -20,7 +20,7 @@ public class PluginUtil {
     }
 
     /**
-     * 安装
+     * 安装插件
      * */
     public static boolean install(String packageTag) {
         try {
@@ -31,7 +31,7 @@ public class PluginUtil {
     }
 
     /**
-     * 重装
+     * 重装插件
      * */
     public static  boolean reinstall(String packageTag) {
         try {
@@ -41,7 +41,69 @@ public class PluginUtil {
         }
     }
 
+    public static void uninstall(String packageTag){
+        if(TextUtils.isEmpty(packageTag)){
+            return;
+        }
+
+        String tag = packageTag.split("\\.")[0];
+
+        try {
+
+            //1.删除引擎相关
+            db().exe("DELETE FROM a_config WHERE tag=?", tag);
+            db().exe("DELETE FROM a_file WHERE tag=?", tag);
+            db().exe("DELETE FROM a_image WHERE tag=?", tag);
+
+            db().exe("UPDATE a_plugin SET is_installed=0 WHERE plugin_tag=? ", packageTag);
+            db().exe("DELETE FROM a_plugin WHERE plugin_tag=? AND url='' ", packageTag);
+
+            List<String> dtmp = db().sql("SHOW TABLES").getArray(0);
+
+            //2.删除业务相关
+            for(String stb: dtmp){
+                if(stb==tag || stb.startsWith(tag+'_')){
+                    db().exe("DROP TABLE "+stb);
+                }
+            }
+
+            //3.重启(清空所有缓存)
+            JtUtilEx.g2.restart();
+
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    /**
+     * 添加插件
+     * */
+    public static void add(String adds){
+        if (TextUtils.isEmpty(adds) == false) {
+            String[] ss = adds.split(",");
+            for (String packageTag : ss) {
+                PluginUtil.install(packageTag);
+            }
+        }
+    }
+
+    /**
+     * 删除插件
+     * */
+    public static void rem(String rems){
+        if (TextUtils.isEmpty(rems) == false) {
+            String[] ss = rems.split(",");
+            for (String packageTag : ss) {
+                PluginUtil.uninstall(packageTag);
+            }
+        }
+    }
+
     private static boolean installDo(String packageTag, boolean onlyInstall) throws Exception{
+        if(TextUtils.isEmpty(packageTag)){
+            return false;
+        }
+
         String center = XApp.cfg().get(Config.code_center);
         if (TextUtils.isEmpty(center)) {
             center = XApp.cfg().argx().get("center");
