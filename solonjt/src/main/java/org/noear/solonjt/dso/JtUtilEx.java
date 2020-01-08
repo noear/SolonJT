@@ -5,6 +5,7 @@ import org.noear.solonjt.Config;
 import org.noear.solonjt.event.http.FrmInterceptor;
 import org.noear.solonjt.event.http.SufHandler;
 import org.noear.solonjt.executor.ExecutorFactory;
+import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.*;
 import org.noear.solon.annotation.XNote;
@@ -169,6 +170,11 @@ public class JtUtilEx extends JtUtil {
         } else {
             return Base64Utils.decode(data);
         }
+    }
+
+    @XNote("获取文件内容")
+    public String fileGet(String path) throws Exception{
+        return DbApi.fileGet(path).content;
     }
 
     /**

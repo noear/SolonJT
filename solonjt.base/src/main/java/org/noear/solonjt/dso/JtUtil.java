@@ -11,6 +11,7 @@ import org.noear.weed.DbContext;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
@@ -154,6 +155,11 @@ public class JtUtil {
         return new XFile();
     }
 
+    @XNote("创建一个URI")
+    public URI newUri(String str){
+        return URI.create(str);
+    }
+
     @XNote("执行 HTTP 请求")
     public HttpUtils http(String url) {
         return new HttpUtils(url);
@@ -170,6 +176,7 @@ public class JtUtil {
         }
         return str;
     }
+
 
     @XNote("编码url")
     public String urlEncode(String str) throws Exception{
