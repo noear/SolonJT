@@ -2,6 +2,7 @@ package org.noear.localjt;
 
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import org.noear.localjt.widget.JsDialog;
 
 public class WebViewBuilder {
 
@@ -19,7 +20,11 @@ public class WebViewBuilder {
         webView.setContextMenuEnabled(true);
         webView.autosize();
 
+        webEngine.setOnAlert((event)->{
+            JsDialog.alert(event.getData());
+        });
 
+        webEngine.setConfirmHandler((txt)-> JsDialog.confirm(txt));
 
 
         webEngine.load(url);
@@ -44,4 +49,6 @@ public class WebViewBuilder {
 
         return webView;
     }
+
+
 }
