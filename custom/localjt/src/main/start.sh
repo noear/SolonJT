@@ -1,1 +1,1 @@
-java -jar jtl.jar
+java -jar jtl.jar -add=postboy.noear -title=Postboy -home=/postboy/

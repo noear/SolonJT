@@ -54,6 +54,8 @@ public class LocalJtApp  extends Application {
 
         //添加插件
         PluginUtil.add(argx.get("add"));
+        //添加插件
+        PluginUtil.udp(argx.get("upd"));
         //移徐插件
         PluginUtil.rem(argx.get("rem"));
 
@@ -62,6 +64,8 @@ public class LocalJtApp  extends Application {
 
         if (TextUtils.isEmpty(home)) {
             home = "http://localhost:" + app.port() + "/.admin/?_L0n5=1CE24B1CF36B0C5B94AACE6263DBD947FFA53531";
+        }else{
+            home = "http://localhost:" + app.port() + home;
         }
 
         //标题

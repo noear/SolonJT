@@ -88,6 +88,18 @@ public class PluginUtil {
     }
 
     /**
+     * 添加插件
+     * */
+    public static void udp(String adds){
+        if (TextUtils.isEmpty(adds) == false) {
+            String[] ss = adds.split(",");
+            for (String packageTag : ss) {
+                PluginUtil.reinstall(packageTag);
+            }
+        }
+    }
+
+    /**
      * 删除插件
      * */
     public static void rem(String rems){
