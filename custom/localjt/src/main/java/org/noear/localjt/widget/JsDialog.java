@@ -1,13 +1,11 @@
 package org.noear.localjt.widget;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.web.PromptData;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -50,10 +48,10 @@ public class JsDialog {
     }
 
     public static String prompt(PromptData pd) {
-        TextInputDialog dialog = new TextInputDialog(pd.getDefaultValue());
+        TextInputDialogX dialog = new TextInputDialogX(pd.getDefaultValue());
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("输入框");
-        dialog.setHeaderText(null);
+        dialog.setWidth(371);
         dialog.setContentText(pd.getMessage());
 
         // Traditional way to get the response value.
