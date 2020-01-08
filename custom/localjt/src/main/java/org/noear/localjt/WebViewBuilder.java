@@ -32,24 +32,6 @@ public class WebViewBuilder {
 
         webEngine.load(url);
 
-
-        //        webEngine.setJavaScriptEnabled(true);
-//        webEngine.setOnAlert(event -> {
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//            alert.setHeaderText("Alert!");
-//            alert.setContentText(event.toString());
-//            alert.showAndWait();
-//        });
-
-
-//        webEngine.getLoadWorker().stateProperty()
-//                .addListener((ov, oldState, newState) -> {
-//                    if (newState == Worker.State.SUCCEEDED) {
-//                        stage.setTitle(webEngine.getLocation());
-//                    }
-//                });
-
-
         return webView;
     }
 
