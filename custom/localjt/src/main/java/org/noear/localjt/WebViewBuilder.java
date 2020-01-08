@@ -1,7 +1,10 @@
 package org.noear.localjt;
 
+import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.noear.localjt.widget.JsDialog;
 
 public class WebViewBuilder {
@@ -26,6 +29,9 @@ public class WebViewBuilder {
 
         webEngine.setConfirmHandler((txt)-> JsDialog.confirm(txt));
 
+        webEngine.setPromptHandler((param -> JsDialog.prompt(param)));
+
+//        webEngine.setCreatePopupHandler(param -> JsDialog.popup());
 
         webEngine.load(url);
 

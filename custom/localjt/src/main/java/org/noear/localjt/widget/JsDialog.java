@@ -1,40 +1,77 @@
 package org.noear.localjt.widget;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.web.PromptData;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.Optional;
 
 public class JsDialog {
     public static void alert(String content) {
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setTitle("提示");
-        alert.setHeaderText(null);
-        alert.setContentText(content);
+        Alert dialog = new Alert(Alert.AlertType.NONE);
+        dialog.initStyle(StageStyle.UTILITY);
+
+        dialog.setTitle("提示");
+        dialog.setHeaderText(null);
+        dialog.setContentText(content);
 
         ButtonType okBtn = new ButtonType("确定", ButtonBar.ButtonData.OK_DONE);
 
-        alert.getButtonTypes().setAll(okBtn);
+        dialog.getButtonTypes().setAll(okBtn);
 
-        alert.showAndWait();
-        alert.hide();
+        dialog.showAndWait();
+        dialog.hide();
     }
 
     public static boolean confirm(String content) {
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setTitle("确认");
-        alert.setHeaderText(null);
-        alert.setContentText(content);
+        Alert dialog = new Alert(Alert.AlertType.NONE);
+        dialog.initStyle(StageStyle.UTILITY);
+
+        dialog.setTitle("确认");
+        dialog.setHeaderText(null);
+        dialog.setContentText(content);
 
         ButtonType okBtn = new ButtonType("确定", ButtonBar.ButtonData.YES);
         ButtonType cancelBtn = new ButtonType("取消", ButtonBar.ButtonData.NO);
 
-        alert.getButtonTypes().setAll(cancelBtn, okBtn);
+        dialog.getButtonTypes().setAll(cancelBtn, okBtn);
 
-        Optional<ButtonType> rst = alert.showAndWait();
-        alert.hide();
+        Optional<ButtonType> rst = dialog.showAndWait();
+        dialog.hide();
 
         return (rst.get() == okBtn);
+    }
+
+    public static String prompt(PromptData pd) {
+        TextInputDialog dialog = new TextInputDialog(pd.getDefaultValue());
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("输入框");
+        dialog.setHeaderText(null);
+        dialog.setContentText(pd.getMessage());
+
+        // Traditional way to get the response value.
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            return "";
+        }
+    }
+
+    public static WebEngine popup(){
+        Stage stage = new Stage(StageStyle.UTILITY);
+        WebView popupView = new WebView();
+
+        stage.setScene(new Scene(popupView));
+        stage.show();
+
+        return popupView.getEngine();
     }
 }
