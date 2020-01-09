@@ -58,7 +58,7 @@ public class eSiteD {
     }
 
     @XNote("设置插件源码，返回guid")
-    public String sourceSet(String puid,XFile file,String path) throws Exception {
+    public String sourceSet(String puid, XFile file, String path) throws Exception {
         String xml = IOUtil.stream2String(file.content);
         return sourceSet(puid, path, xml);
     }
