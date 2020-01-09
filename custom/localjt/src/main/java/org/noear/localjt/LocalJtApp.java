@@ -25,7 +25,7 @@ public class LocalJtApp  extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        window.getIcons().add(new Image(getResource("LocalJ128.png").openStream()));
+        window.getIcons().add(new Image(getResource("icon.png").openStream()));
         window.setMinWidth(getVisualScreenWidth() * 0.8);
         window.setMinHeight(getVisualScreenHeight() * 0.5);
         window.centerOnScreen();
