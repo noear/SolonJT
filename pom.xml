@@ -240,7 +240,6 @@
 
         <module>custom/thinkjt.extend.sited</module>
         <module>custom/thinkjt</module>
-
         <module>custom/localjt</module>
     </modules>
 

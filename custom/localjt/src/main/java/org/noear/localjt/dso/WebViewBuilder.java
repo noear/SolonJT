@@ -1,4 +1,4 @@
-package org.noear.localjt;
+package org.noear.localjt.dso;
 
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;

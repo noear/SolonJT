@@ -28,16 +28,15 @@ public class SolonJT {
         InitXfunUtil.init();
 
         //3.初始化执行器工厂
-        JtAdapter jtAdapter = new JtAdapter();
-        JtBridge.executorAdapterSet(jtAdapter);
-        JtBridge.configAdapterSet(jtAdapter);
+        JtBridge.executorAdapterSet(JtAdapter.global);
+        JtBridge.configAdapterSet(JtAdapter.global);
 
         //4.启动服务
         XApp app = XApp.start(source, xarg, (x) -> {
 
             String def_exec = x.prop().get("solonjt.executor.default");
             if(TextUtils.isEmpty(def_exec) == false){
-                jtAdapter.defaultExecutorSet(def_exec);
+                JtAdapter.global.defaultExecutorSet(def_exec);
             }
 
             x.sharedAdd("XFun", JtFun.g);

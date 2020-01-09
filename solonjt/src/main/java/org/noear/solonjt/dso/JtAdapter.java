@@ -12,6 +12,7 @@ import java.util.Map;
  * 执行工厂适配器
  * */
 public class JtAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
+    public static JtAdapter global = new JtAdapter();
 
     private String _defaultExecutor = "freemarker";
 
