@@ -302,6 +302,7 @@ public class PluginUtil {
                     .set("ver_code", meta.get("ver_code").getString())
                     .set("description", meta.get("description").getString())
                     .set("thumbnail", meta.get("thumbnail").getString())
+                    .set("category", meta.get("category").getString())
                     .set("is_installed", 1)
                     .upsert("plugin_tag");
         }
