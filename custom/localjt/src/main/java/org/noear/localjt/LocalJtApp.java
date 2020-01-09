@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import javafx.stage.StageStyle;
 import org.noear.solon.XApp;
 import org.noear.solon.XUtil;
 import org.noear.solon.core.XMap;
@@ -25,19 +24,13 @@ public class LocalJtApp  extends Application {
     private static String title;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-//        primaryStage.getIcons().add(new Image(getResource("icon96.png").openStream()));
-        primaryStage.getIcons().add(new Image(getResource("icon64.png").openStream()));
-//        primaryStage.getIcons().add(new Image(getResource("icon48.png").openStream()));
-        primaryStage.getIcons().add(new Image(getResource("icon32.png").openStream()));
-        primaryStage.getIcons().add(new Image(getResource("icon16.png").openStream()));
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.setWidth(0);
-        primaryStage.setHeight(0);
-        primaryStage.setOnCloseRequest(cl -> System.exit(0));
-        primaryStage.show();
+    public void start(Stage window) throws Exception {
+//        window.getIcons().add(new Image(getResource("icon96.png").openStream()));
+        window.getIcons().add(new Image(getResource("icon64.png").openStream()));
+//        window.getIcons().add(new Image(getResource("icon48.png").openStream()));
+        window.getIcons().add(new Image(getResource("icon32.png").openStream()));
+        window.getIcons().add(new Image(getResource("icon16.png").openStream()));
 
-        Stage window = new Stage();
         window.setMinWidth(getVisualScreenWidth() * 0.8);
         window.setMinHeight(getVisualScreenHeight() * 0.5);
         window.centerOnScreen();
