@@ -27,12 +27,12 @@ public class TaskRunner implements IJtTaskRunner {
         while (true) {
             try {
                 Date time_start = new Date();
-                System.out.print(task.getName() + "::time_start::" + time_start.toString() + "\r\n");
+//                System.out.print(task.getName() + "::time_start::" + time_start.toString() + "\r\n");
 
                 task.exec();
 
                 Date time_end = new Date();
-                System.out.print(task.getName() + "::time_end::" + time_end.toString() + "\r\n");
+//                System.out.print(task.getName() + "::time_end::" + time_end.toString() + "\r\n");
 
                 if(task.getInterval() == 0){
                     return;
