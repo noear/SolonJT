@@ -34,10 +34,6 @@ public class JtAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
         return AFileUtil.get(path);
     }
 
-    public AFileModel fileGetByLocal(String path) throws Exception{
-        return null;
-    }
-
     private static String _nodeId;
 
     @Override

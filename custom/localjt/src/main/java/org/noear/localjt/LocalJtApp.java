@@ -7,12 +7,10 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import org.noear.localjt.dso.JtLocalAdapter;
 import org.noear.localjt.dso.WebViewBuilder;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
-import org.noear.solonjt.dso.JtAdapter;
 import org.noear.solonjt.dso.PluginUtil;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.WeedConfig;
@@ -68,9 +66,6 @@ public class LocalJtApp  extends Application {
         WeedConfig.onException((cmd, err) -> {
             err.printStackTrace();
         });
-
-        JtAdapter.global = new JtLocalAdapter();
-
 
         XApp app = SolonJT.start(LocalJtApp.class, args);
 

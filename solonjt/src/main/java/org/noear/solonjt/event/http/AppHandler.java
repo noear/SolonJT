@@ -43,14 +43,11 @@ public class AppHandler implements XHandler {
 
         //::先用路由工具做检测，防止数据库被恶意刷暴
         if (RouteHelper.has(path)) {
-            file = JtAdapter.global.fileGet(path);
+            file = AFileUtil.get(path);
             name = path.replace("/", "__");
         } else if (RouteHelper.has(path2)) {
-            file = JtAdapter.global.fileGet(path2);
+            file = AFileUtil.get(path2);
             name = path2.replace("/", "__");
-        } else{
-            file = JtAdapter.global.fileGetByLocal(path);
-            name = path.replace("/", "__");
         }
 
         //文件不存在，则404
