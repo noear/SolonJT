@@ -25,6 +25,7 @@ public class LocalJtApp  extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
+        window.getIcons().add(new Image(getResource("icon96.png").openStream()));
         window.getIcons().add(new Image(getResource("icon64.png").openStream()));
         window.getIcons().add(new Image(getResource("icon48.png").openStream()));
         window.getIcons().add(new Image(getResource("icon32.png").openStream()));
