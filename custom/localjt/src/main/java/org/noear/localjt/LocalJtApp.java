@@ -3,15 +3,19 @@ package org.noear.localjt;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import org.noear.solon.XApp;
+import org.noear.solon.XUtil;
 import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
 import org.noear.solonjt.dso.PluginUtil;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.WeedConfig;
+
+import java.net.URL;
 
 
 public class LocalJtApp  extends Application {
@@ -21,7 +25,7 @@ public class LocalJtApp  extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        window.getIcons().clear();
+        window.getIcons().add(new Image(getResource("LocalJ128.png").openStream()));
         window.setMinWidth(getVisualScreenWidth() * 0.8);
         window.setMinHeight(getVisualScreenHeight() * 0.5);
         window.centerOnScreen();
@@ -36,6 +40,20 @@ public class LocalJtApp  extends Application {
         window.setScene(scene);
         window.setTitle(title);
         window.show();
+    }
+
+    public static URL getResource(String name) {
+        URL url = LocalJtApp.class.getResource(name);
+        if (url == null) {
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            if (loader != null) {
+                url = loader.getResource(name);
+            } else {
+                url = ClassLoader.getSystemResource(name);
+            }
+        }
+
+        return url;
     }
 
     public static void main(String[] args) {
