@@ -28,7 +28,7 @@ public class JtLocalAdapter extends JtAdapter {
     public AFileModel fileGetByLocal(String path) throws Exception {
         AFileModel tmp = localMap.get(path);
         if (tmp == null) {
-            tmp = fileGetByLocal(path);
+            tmp = fileGetByLocalDo(path);
             localMap.put(path, tmp);
         }
 
