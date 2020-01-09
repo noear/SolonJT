@@ -51,6 +51,7 @@ public class JtLocalAdapter extends JtAdapter {
         File file = new File(extend + path);
         if(file.exists()){
             AFileModel af = new AFileModel();
+            af.file_id = -1;
             af.path = path;
             af.content = stream2String(new FileInputStream(file));
 
