@@ -8,7 +8,7 @@ import org.noear.weed.IDataItem;
 
 public class DbSiteDApi {
 
-    public static void saveSiteD(int puid, DdSource source, String path) throws Exception{
+    public static void saveSiteD(int puid, DdSource source, String path, int is_ok) throws Exception {
         DbContext db = DbUtil.db();
 
         boolean exists = db.table("sited").where("guid=?", source.guid).exists();
@@ -16,7 +16,7 @@ public class DbSiteDApi {
         int btype = source.main.btype();
         if (btype == 0) btype = dtype;
 
-        int is_private = (source.isPrivate()?1:0);
+        int is_private = (source.isPrivate() ? 1 : 0);
 
 
         if (exists) {
@@ -26,14 +26,17 @@ public class DbSiteDApi {
                     .set("title", source.title)
                     .set("exp", source.expr)
                     .set("url", source.url)
-                    .set("file",path)
-                    .set("is_ok", 1)
+                    .set("file", path)
                     .set("is_vip", source.meta.attrs.getInt("vip", 0))
-                    .set("is_private",is_private)
+                    .set("is_private", is_private)
                     .set("intro", source.intro)
                     .set("dtype", dtype)
                     .set("btype", btype)
                     .set("update_time", "$NOW()");
+
+            if (is_ok > 0) {
+                d.set("is_ok", 1);
+            }
 
             if (TextUtils.isEmpty(source.logo) == false) {
                 d.set("logo", source.logo);
@@ -42,8 +45,7 @@ public class DbSiteDApi {
             db.table("sited").where("guid=?", source.guid).update(d);
 
 
-        }
-        else {
+        } else {
             IDataItem d = new DataItem()
                     .set("guid", source.guid)
                     .set("puid", puid)
@@ -51,7 +53,6 @@ public class DbSiteDApi {
                     .set("ver", source.ver)
                     .set("author", source.author)
                     .set("title", source.title)
-                    .set("is_ok", 1)
                     .set("is_vip", source.meta.attrs.getInt("vip", 0))
                     .set("exp", source.expr)
                     .set("url", source.url)
@@ -60,6 +61,10 @@ public class DbSiteDApi {
                     .set("dtype", dtype)
                     .set("btype", btype)
                     .set("update_time", "$NOW()");
+
+            if (is_ok > 0) {
+                d.set("is_ok", 1);
+            }
 
             if (TextUtils.isEmpty(source.logo) == false) {
                 d.set("logo", source.logo);
