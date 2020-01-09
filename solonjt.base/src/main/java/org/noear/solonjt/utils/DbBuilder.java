@@ -144,10 +144,6 @@ public class DbBuilder {
             db = new DbContext(schema, url, username, password);
         }
 
-        if (db.dbType() == DbType.H2) {
-            db.dbAdapterSet(DbH2AdapterEx.g);
-        }
-
         return db;
     }
 }
