@@ -136,9 +136,9 @@ public class PluginUtil {
         String url = null;
 
         if(center.indexOf("://")>0){
-            url =  center + "/.plugin/pull.jsx?plugin_tag=" + packageTag;
+            url =  center + "/.plugin/pull.jsx?_fapk=1&plugin_tag=" + packageTag;
         }else {
-            url = "http://" + center + "/.plugin/pull.jsx?plugin_tag=" + packageTag;
+            url = "http://" + center + "/.plugin/pull.jsx?_fapk=1&plugin_tag=" + packageTag;
         }
 
 
