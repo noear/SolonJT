@@ -49,8 +49,16 @@ public class AConfigM {
         }
     }
 
-    public XMap getXmap(){
-        return XMap.from(value.split("\\n"));
+    public XMap getXmap() {
+        XMap map = new XMap();
+        for (String s : value.split("\\n")) {
+            String[] kv = s.split("=");
+            if (kv.length == 2) {
+                map.put(kv[0].trim(), kv[1].trim());
+            }
+        }
+
+        return map;
     }
 
     /**
@@ -143,7 +151,7 @@ public class AConfigM {
             db.dataSourceSet(source);
             db.schemaSet(schema);
         } else {
-            db.propSet(getProp());
+            db.propSet(prop);
         }
 
         return db;

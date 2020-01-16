@@ -294,7 +294,7 @@ public class PluginUtil {
             db().table("a_plugin").set("is_installed", 0).whereEq("tag", tag).update();
             db().table("a_plugin")
                     .set("plugin_tag", meta.get("plugin_tag").getString())
-                    .set("tag", meta.get("tag").getString())
+                    .set("tag", tag)
                     .set("name", meta.get("name").getString())
                     .set("author", meta.get("author").getString())
                     .set("contacts", meta.get("contacts").getString())

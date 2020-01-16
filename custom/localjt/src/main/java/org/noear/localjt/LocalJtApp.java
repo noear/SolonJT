@@ -15,6 +15,7 @@ import org.noear.solonjt.dso.PluginUtil;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 
+import java.io.*;
 import java.net.URL;
 
 
@@ -25,12 +26,9 @@ public class LocalJtApp  extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
-        window.getIcons().add(new Image(getResource("icon144.png").openStream()));
-        window.getIcons().add(new Image(getResource("icon96.png").openStream()));
-        window.getIcons().add(new Image(getResource("icon64.png").openStream()));
-//        window.getIcons().add(new Image(getResource("icon48.png").openStream()));
-        window.getIcons().add(new Image(getResource("icon32.png").openStream()));
-        window.getIcons().add(new Image(getResource("icon16.png").openStream()));
+        window.getIcons().add(new Image(getImage("icon96.png")));
+        window.getIcons().add(new Image(getImage("icon64.png")));
+        window.getIcons().add(new Image(getImage("icon32.png")));
 
         window.setMinWidth(getVisualScreenWidth() * 0.8);
         window.setMinHeight(getVisualScreenHeight() * 0.5);
@@ -48,7 +46,14 @@ public class LocalJtApp  extends Application {
         window.show();
     }
 
-    public static URL getResource(String name) {
+    public static InputStream getImage(String name) throws IOException {
+        String extend = XApp.cfg().argx().get("extend");
+
+        File file = new File(extend + name);
+        if(file.exists()){
+            return new FileInputStream(file);
+        }
+
         URL url = LocalJtApp.class.getResource(name);
         if (url == null) {
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
@@ -59,7 +64,7 @@ public class LocalJtApp  extends Application {
             }
         }
 
-        return url;
+        return url.openStream();
     }
 
     public static void main(String[] args) {
