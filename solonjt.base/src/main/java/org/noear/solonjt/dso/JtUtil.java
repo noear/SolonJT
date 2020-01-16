@@ -6,6 +6,8 @@ import org.noear.solon.annotation.XNote;
 import org.noear.solon.core.XContext;
 import org.noear.solon.core.XFile;
 import org.noear.solonjt.executor.ExecutorFactory;
+import org.noear.solonjt.model.AConfigM;
+import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.*;
 import org.noear.weed.DbContext;
 
@@ -393,6 +395,12 @@ public class JtUtil {
         }else{
             return tmp;
         }
+    }
+
+    @XNote("配置获取")
+    public AConfigM cfg(String name) throws Exception {
+        String tmp = JtBridge.cfgGet(name);
+        return new AConfigM(tmp);
     }
 
     /**
