@@ -91,14 +91,45 @@ public class HttpUtils {
         return this;
     }
 
+    @XNote("设置数据提交")
     public HttpUtils data(String key, String value){
         tryInitForm();
         _form.put(key,value);
         return this;
     }
 
-    @XNote("设置文件提交")
-    public HttpUtils data(String key, String filename, InputStream inputStream, String contentType) {
+    @XNote("设置表单文件提交")
+    @Deprecated
+    public HttpUtils data(String key, String filename, InputStream inputStream, String contentType){
+        return part(key,filename,inputStream,contentType);
+    }
+
+
+    @XNote("设置表单数据提交")
+    public HttpUtils part(Map<String,Object> data){
+        if (data != null) {
+            tryInitPartBuilder(MultipartBody.FORM);
+
+            data.forEach((k, v) -> {
+                _part_builer.addFormDataPart(k, v.toString());
+            });
+        }
+
+        return this;
+    }
+
+    @XNote("设置表单数据提交")
+    public HttpUtils part(String key, String value) {
+        tryInitPartBuilder(MultipartBody.FORM);
+
+        _part_builer.addFormDataPart(key,value);
+
+        return this;
+    }
+
+
+    @XNote("设置表单文件提交")
+    public HttpUtils part(String key, String filename, InputStream inputStream, String contentType) {
         tryInitPartBuilder(MultipartBody.FORM);
 
         _part_builer.addFormDataPart(key,
@@ -120,7 +151,11 @@ public class HttpUtils {
     }
     @XNote("设置BODY提交")
     public HttpUtils bodyRaw(InputStream raw, String contentType) {
-        _body = new StreamBody(contentType, raw);
+        if(contentType == null) {
+            _body = new StreamBody(null, raw);
+        }else{
+            _body = new StreamBody(contentType, raw);
+        }
 
         return this;
     }
