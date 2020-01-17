@@ -80,9 +80,9 @@ public class HttpUtils {
 
     @XNote("设置数据提交")
     public HttpUtils data(Map<String,Object> data){
-        if (data != null) {
-            tryInitForm();
+        tryInitForm();
 
+        if (data != null) {
             data.forEach((k, v) -> {
                 _form.put(k, v.toString());
             });
@@ -107,9 +107,9 @@ public class HttpUtils {
 
     @XNote("设置表单数据提交")
     public HttpUtils part(Map<String,Object> data){
-        if (data != null) {
-            tryInitPartBuilder(MultipartBody.FORM);
+        tryInitPartBuilder(MultipartBody.FORM);
 
+        if (data != null) {
             data.forEach((k, v) -> {
                 _part_builer.addFormDataPart(k, v.toString());
             });
@@ -121,9 +121,7 @@ public class HttpUtils {
     @XNote("设置表单数据提交")
     public HttpUtils part(String key, String value) {
         tryInitPartBuilder(MultipartBody.FORM);
-
         _part_builer.addFormDataPart(key,value);
-
         return this;
     }
 
@@ -182,8 +180,11 @@ public class HttpUtils {
                     _part_builer.addFormDataPart(k, v);
                 });
             }
+            try {
+                _body = _part_builer.build();
+            }catch (IllegalStateException ex){
 
-            _body = _part_builer.build();
+            }
         } else {
             if (_form != null) {
                 FormBody.Builder fb = new FormBody.Builder(_charset);
@@ -199,12 +200,14 @@ public class HttpUtils {
             _builder.header("Cookie", getRequestCookieString(_cookies));
         }
 
+
+
         switch (mothod.toUpperCase()){
             case "GET":_builder.method("GET",null);break;
-            case "POST":_builder.method("POST",_body);break;
-            case "PUT":_builder.method("PUT", _body);break;
-            case "DELETE":_builder.method("DELETE",_body);break;
-            case "PATCH":_builder.method("PATCH",_body);break;
+            case "POST":_builder.method("POST",bodyDo());break;
+            case "PUT":_builder.method("PUT", bodyDo());break;
+            case "DELETE":_builder.method("DELETE",bodyDo());break;
+            case "PATCH":_builder.method("PATCH",bodyDo());break;
             case "HEAD":_builder.method("HEAD",null);break;
             case "OPTIONS":_builder.method("OPTIONS",null);break;
             case "TRACE":_builder.method("TRACE",null);break;
@@ -213,6 +216,14 @@ public class HttpUtils {
 
         Call call = httpClient.newCall(_builder.build());
         return call.execute();
+    }
+
+    private RequestBody bodyDo(){
+        if(_body ==null){
+            _body = RequestBody.create(null, "");
+        }
+
+        return _body;
     }
 
     @XNote("执行请求，返回字符串")
