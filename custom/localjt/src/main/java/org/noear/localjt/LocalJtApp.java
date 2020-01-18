@@ -21,8 +21,9 @@ import java.net.URL;
 
 public class LocalJtApp  extends Application {
 
-    private static String home;
-    private static String title;
+    public static String home;
+    public static String title;
+    public static String plugin_add;
 
     @Override
     public void start(Stage window) throws Exception {
@@ -82,7 +83,8 @@ public class LocalJtApp  extends Application {
         XMap argx = app.prop().argx();
 
         //添加插件
-        PluginUtil.add(argx.get("add"));
+        plugin_add = argx.get("add");
+        PluginUtil.add(plugin_add);
         //添加插件
         PluginUtil.udp(argx.get("upd"));
         //移徐插件
