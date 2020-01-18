@@ -65,7 +65,7 @@ public class WebViewBuilder {
             String adminUrl = "http://localhost:" + XApp.global().port() + "/.admin/?_L0n5=81057AF6D4931710A5370514A4EE2DB5D2033055";
             shift.setOnAction(e -> {
                 if(shift.getText().indexOf("管理") > 0){
-                    shift.setText("进入插件界面");
+                    shift.setText("进入应用界面");
                     webView.getEngine().load(adminUrl);
                 }else{
                     shift.setText("进入管理界面");
@@ -87,7 +87,7 @@ public class WebViewBuilder {
         if(TextUtils.isEmpty(LocalJtApp.plugin_add) == false) {
 
             if (TextUtils.isEmpty(LocalJtApp.title) == false) {
-                String menuTitle = "更新扩展: " + LocalJtApp.title;
+                String menuTitle = "更新应用: " + LocalJtApp.title;
 
                 MenuItem update = new MenuItem(menuTitle);
                 update.setOnAction(e -> {
