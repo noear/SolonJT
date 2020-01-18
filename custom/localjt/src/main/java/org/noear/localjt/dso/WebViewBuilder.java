@@ -85,13 +85,18 @@ public class WebViewBuilder {
 
 
         if(TextUtils.isEmpty(LocalJtApp.plugin_add) == false) {
-            MenuItem update = new MenuItem("检查更新");
-            update.setOnAction(e -> {
-                PluginUtil.udp(LocalJtApp.plugin_add);
-                webView.getEngine().reload();
-            });
 
-            contextMenu.getItems().add(update);
+            if (TextUtils.isEmpty(LocalJtApp.title) == false) {
+                String menuTitle = "更新扩展: " + LocalJtApp.title;
+
+                MenuItem update = new MenuItem(menuTitle);
+                update.setOnAction(e -> {
+                    PluginUtil.udp(LocalJtApp.plugin_add);
+                    webView.getEngine().reload();
+                });
+
+                contextMenu.getItems().add(update);
+            }
         }
 
 
