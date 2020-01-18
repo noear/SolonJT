@@ -103,11 +103,11 @@ public class WebViewBuilder {
         webView.setOnMousePressed(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
                 if(webView.getEngine().getLocation().indexOf("/.admin/") > 0){
-                    toadmin.setVisible(false);
-                    toaddin.setVisible(true);
+                    toadmin.setDisable(true);
+                    toaddin.setDisable(false);
                 }else{
-                    toadmin.setVisible(true);
-                    toaddin.setVisible(false);
+                    toadmin.setDisable(false);
+                    toaddin.setDisable(true);
                 }
                 contextMenu.show(webView, e.getScreenX(), e.getScreenY());
             } else {
