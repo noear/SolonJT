@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>solonjt-parent</artifactId>
-    <version>1.0.3.8</version>
+    <version>1.0.3.9</version>
     <packaging>pom</packaging>
 
     <name>root</name>
@@ -18,11 +18,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solonjt.ver>1.0.3.8</solonjt.ver>
+        <solonjt.ver>1.0.3.9</solonjt.ver>
         <solon.ver>1.0.4.1</solon.ver>
 
         <snack3.ver>3.1.6</snack3.ver>
-        <weed3.ver>3.2.6.7</weed3.ver>
+        <weed3.ver>3.2.6.8</weed3.ver>
 
         <okhttp.ver>3.11.0</okhttp.ver>
 
