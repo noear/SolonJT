@@ -60,20 +60,19 @@ public class WebViewBuilder {
 
 
         //进入管理界面
-        MenuItem toadmin = new MenuItem("进入管理界面");
-        MenuItem toaddin = new MenuItem("进入插件界面");
         if(LocalJtApp.home.indexOf("/.admin/") < 0) {
+            MenuItem shift = new MenuItem("进入管理界面");
             String adminUrl = "http://localhost:" + XApp.global().port() + "/.admin/?_L0n5=81057AF6D4931710A5370514A4EE2DB5D2033055";
-            toadmin.setOnAction(e -> {
-                webView.getEngine().load(adminUrl);
+            shift.setOnAction(e -> {
+                if(shift.getText().indexOf("管理") > 0){
+                    shift.setText("进入插件界面");
+                    webView.getEngine().load(adminUrl);
+                }else{
+                    shift.setText("进入管理界面");
+                    webView.getEngine().load(LocalJtApp.home);
+                }
             });
-            contextMenu.getItems().add(toadmin);
-
-
-            toaddin.setOnAction(e -> {
-                webView.getEngine().load(LocalJtApp.home);
-            });
-            contextMenu.getItems().add(toaddin);
+            contextMenu.getItems().add(shift);
         }
 
         //使用浏览器打开
@@ -102,13 +101,6 @@ public class WebViewBuilder {
 
         webView.setOnMousePressed(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
-                if(webView.getEngine().getLocation().indexOf("/.admin/") > 0){
-                    toadmin.setDisable(true);
-                    toaddin.setDisable(false);
-                }else{
-                    toadmin.setDisable(false);
-                    toaddin.setDisable(true);
-                }
                 contextMenu.show(webView, e.getScreenX(), e.getScreenY());
             } else {
                 contextMenu.hide();
