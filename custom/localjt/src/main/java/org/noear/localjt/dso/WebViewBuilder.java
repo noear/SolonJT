@@ -58,19 +58,6 @@ public class WebViewBuilder {
         reload.setOnAction(e -> webView.getEngine().reload());
         contextMenu.getItems().add(reload);
 
-        if(TextUtils.isEmpty(LocalJtApp.plugin_add) == false) {
-            String menuTitle = "升级插件";
-            if (TextUtils.isEmpty(LocalJtApp.title) == false) {
-                menuTitle = menuTitle + ": " + LocalJtApp.title;
-            }
-            MenuItem update = new MenuItem(menuTitle);
-            update.setOnAction(e -> {
-                PluginUtil.udp(LocalJtApp.plugin_add);
-                webView.getEngine().reload();
-            });
-
-            contextMenu.getItems().add(update);
-        }
 
         //进入管理界面
         MenuItem toadmin = new MenuItem("进入管理界面");
@@ -95,6 +82,23 @@ public class WebViewBuilder {
             openBrowse(webView.getEngine().getLocation());
         });
         contextMenu.getItems().add(browse);
+
+
+
+        if(TextUtils.isEmpty(LocalJtApp.plugin_add) == false) {
+            String menuTitle = "升级插件";
+            if (TextUtils.isEmpty(LocalJtApp.title) == false) {
+                menuTitle = menuTitle + ": " + LocalJtApp.title;
+            }
+            MenuItem update = new MenuItem(menuTitle);
+            update.setOnAction(e -> {
+                PluginUtil.udp(LocalJtApp.plugin_add);
+                webView.getEngine().reload();
+            });
+
+            contextMenu.getItems().add(update);
+        }
+
 
         webView.setOnMousePressed(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
