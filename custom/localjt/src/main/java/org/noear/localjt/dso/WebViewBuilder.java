@@ -85,11 +85,7 @@ public class WebViewBuilder {
 
 
         if(TextUtils.isEmpty(LocalJtApp.plugin_add) == false) {
-            String menuTitle = "升级插件";
-            if (TextUtils.isEmpty(LocalJtApp.title) == false) {
-                menuTitle = menuTitle + ": " + LocalJtApp.title;
-            }
-            MenuItem update = new MenuItem(menuTitle);
+            MenuItem update = new MenuItem("检查更新");
             update.setOnAction(e -> {
                 PluginUtil.udp(LocalJtApp.plugin_add);
                 webView.getEngine().reload();
