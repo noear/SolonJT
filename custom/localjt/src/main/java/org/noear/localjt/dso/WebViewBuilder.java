@@ -75,7 +75,7 @@ public class WebViewBuilder {
         //进入管理界面
         MenuItem toadmin = new MenuItem("进入管理界面");
         MenuItem toaddin = new MenuItem("进入插件界面");
-        if(TextUtils.isEmpty(LocalJtApp.home) == false) {
+        if(LocalJtApp.home.indexOf("/.admin/") < 0) {
             String adminUrl = "http://localhost:" + XApp.global().port() + "/.admin/?_L0n5=81057AF6D4931710A5370514A4EE2DB5D2033055";
             toadmin.setOnAction(e -> {
                 webView.getEngine().load(adminUrl);
