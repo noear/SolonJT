@@ -2,6 +2,7 @@ package org.noear.solonjt.dso;
 
 import okhttp3.Response;
 import org.noear.solon.XApp;
+import org.noear.solon.XUtil;
 import org.noear.solon.core.ExtendLoader;
 import org.noear.solon.core.XPlugin;
 import org.noear.solonjt.utils.*;
@@ -100,12 +101,6 @@ public class JarUtil {
     }
 
     public static <T> T newClass(String className) {
-        try {
-            Class clz = Class.forName(className);
-            return (T) clz.newInstance();
-        }catch (Exception ex){
-            ex.printStackTrace();
-            return null;
-        }
+        return XUtil.newClass(className);
     }
 }
