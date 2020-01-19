@@ -95,17 +95,20 @@ public class LocalJtApp  extends Application {
 
         if (TextUtils.isEmpty(home)) {
             home = "http://localhost:" + app.port() + "/.admin/?_L0n5=1CE24B1CF36B0C5B94AACE6263DBD947FFA53531";
-        }else{
+        } else {
             home = "http://localhost:" + app.port() + home;
         }
 
         //标题
         title = argx.get("title");
-        if(TextUtils.isEmpty(title)){
+        if (TextUtils.isEmpty(title)) {
             title = "LocalJt";
         }
 
-        launch(args);
+        //要用新线程启动
+        new Thread(() -> {
+            launch(args);
+        }).start();
     }
 
     public static double getVisualScreenWidth() {
