@@ -62,9 +62,7 @@ public class WebShell extends Application {
 
     public static void start(String[] args) {
         //要用新线程启动
-        new Thread(() -> {
-            launch(args);
-        }).start();
+        launch(args);
     }
 
 
