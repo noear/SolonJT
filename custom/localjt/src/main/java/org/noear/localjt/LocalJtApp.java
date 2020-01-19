@@ -1,13 +1,6 @@
 package org.noear.localjt;
 
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-
-import org.noear.localjt.dso.WebViewBuilder;
+import org.noear.localjt.dso.WebShell;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
@@ -15,58 +8,11 @@ import org.noear.solonjt.dso.PluginUtil;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.WeedConfig;
 
-import java.io.*;
-import java.net.URL;
-
-
-public class LocalJtApp  extends Application {
+public class LocalJtApp{
 
     public static String home;
     public static String title;
     public static String plugin_add;
-
-    @Override
-    public void start(Stage window) throws Exception {
-        window.getIcons().add(new Image(getImage("icon96.png")));
-        window.getIcons().add(new Image(getImage("icon64.png")));
-        window.getIcons().add(new Image(getImage("icon32.png")));
-
-        window.setMinWidth(getVisualScreenWidth() * 0.8);
-        window.setMinHeight(getVisualScreenHeight() * 0.5);
-        window.centerOnScreen();
-        window.setOnCloseRequest(cl -> System.exit(0));
-
-        Scene scene = new Scene(new Group());
-        WebViewBuilder builder = new WebViewBuilder();
-        builder.setUrl(home);
-
-        scene.setRoot(builder.build());
-
-        window.setScene(scene);
-        window.setTitle(title);
-        window.show();
-    }
-
-    public static InputStream getImage(String name) throws IOException {
-        String extend = XApp.cfg().argx().get("extend");
-
-        File file = new File(extend + name);
-        if(file.exists()){
-            return new FileInputStream(file);
-        }
-
-        URL url = LocalJtApp.class.getResource(name);
-        if (url == null) {
-            ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            if (loader != null) {
-                url = loader.getResource(name);
-            } else {
-                url = ClassLoader.getSystemResource(name);
-            }
-        }
-
-        return url.openStream();
-    }
 
     public static void main(String[] args) {
 
@@ -105,18 +51,7 @@ public class LocalJtApp  extends Application {
             title = "LocalJt";
         }
 
-        //要用新线程启动
-        new Thread(() -> {
-            launch(args);
-        }).start();
-    }
-
-    public static double getVisualScreenWidth() {
-        return Screen.getPrimary().getVisualBounds().getWidth();
-    }
-
-    public static double getVisualScreenHeight() {
-        return Screen.getPrimary().getVisualBounds().getHeight();
+        WebShell.start(args);
     }
 
 }
