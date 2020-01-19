@@ -1,14 +1,10 @@
 package javafx.scene.control;
 
-import com.sun.javafx.scene.control.skin.resources.ControlResources;
 import javafx.application.Platform;
 import javafx.beans.NamedArg;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.stage.Modality;
 
 public class TextInputDialogX extends Dialog<String> {
 

@@ -1,5 +1,7 @@
 package org.noear.solonjt.executor.s.javascript;
 
+import jdk.nashorn.api.scripting.NashornScriptEngine;
+import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solonjt.executor.IJtExecutor;
@@ -37,6 +39,8 @@ public class JavascriptJtExecutor implements IJtExecutor {
 
     private JavascriptJtExecutor(){
         _loaded_names = Collections.synchronizedSet(new HashSet<>());
+
+        System.setProperty("nashorn.args", "--language=es6");
 
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         _eng = scriptEngineManager.getEngineByName("nashorn");
@@ -92,8 +96,6 @@ public class JavascriptJtExecutor implements IJtExecutor {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-
 
     }
 
