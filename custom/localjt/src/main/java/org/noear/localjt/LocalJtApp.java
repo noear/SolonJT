@@ -15,7 +15,6 @@ public class LocalJtApp{
     public static String plugin_add;
 
     public static void main(String[] args) {
-
         WeedConfig.onException((cmd, err) -> {
             err.printStackTrace();
         });
@@ -51,7 +50,9 @@ public class LocalJtApp{
             title = "LocalJt";
         }
 
-        WebShell.start(args);
-    }
+        new Thread(()->{
+            WebShell.start(args);
+        }).start();
 
+    }
 }
