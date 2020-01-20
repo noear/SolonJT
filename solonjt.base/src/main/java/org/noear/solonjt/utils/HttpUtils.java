@@ -151,11 +151,7 @@ public class HttpUtils {
 
     @XNote("设置BODY提交")
     public HttpUtils bodyRaw(InputStream raw, String contentType) {
-        if (contentType == null) {
-            _body = new StreamBody(null, raw);
-        } else {
-            _body = new StreamBody(contentType, raw);
-        }
+        _body = new StreamBody(contentType, raw);
 
         return this;
     }
