@@ -41,13 +41,20 @@ public class HttpUtils {
     private Map<String, String> _cookies;
     private RequestBody _body;
     private List<KeyValue> _form;
-    private MultipartBody.Builder _part_builer;
+    private boolean _multipart = false;
 
+    private MultipartBody.Builder _part_builer;
     private Request.Builder _builder;
 
     public HttpUtils(String url) {
         _url = url;
         _builder = new Request.Builder().url(url);
+    }
+
+    @XNote("设置multipart")
+    public HttpUtils multipart(boolean multipart) {
+        _multipart = multipart;
+        return this;
     }
 
     @XNote("设置UA")
@@ -81,7 +88,15 @@ public class HttpUtils {
         return this;
     }
 
-    @XNote("设置数据提交")
+    @XNote("添加请求头（可添加多个同名头）")
+    public HttpUtils headerAdd(String name, String value) {
+        if (name != null) {
+            _builder.addHeader(name, value);
+        }
+        return this;
+    }
+
+    @XNote("设置表单数据")
     public HttpUtils data(Map<String, Object> data) {
         tryInitForm();
 
@@ -92,43 +107,16 @@ public class HttpUtils {
         return this;
     }
 
-    @XNote("设置数据提交")
+    @XNote("设置表单数据")
     public HttpUtils data(String key, String value) {
         tryInitForm();
         _form.add(new KeyValue(key, value));
         return this;
     }
 
-    @XNote("设置表单文件提交")
-    @Deprecated
+    @XNote("设置表单文件")
     public HttpUtils data(String key, String filename, InputStream inputStream, String contentType) {
-        return part(key, filename, inputStream, contentType);
-    }
-
-
-    @XNote("设置表单数据提交")
-    public HttpUtils part(Map<String, Object> data) {
-        tryInitPartBuilder(MultipartBody.FORM);
-
-        if (data != null) {
-            data.forEach((k, v) -> {
-                _part_builer.addFormDataPart(k, v.toString());
-            });
-        }
-
-        return this;
-    }
-
-    @XNote("设置表单数据提交")
-    public HttpUtils part(String key, String value) {
-        tryInitPartBuilder(MultipartBody.FORM);
-        _part_builer.addFormDataPart(key, value);
-        return this;
-    }
-
-
-    @XNote("设置表单文件提交")
-    public HttpUtils part(String key, String filename, InputStream inputStream, String contentType) {
+        multipart(true);
         tryInitPartBuilder(MultipartBody.FORM);
 
         _part_builer.addFormDataPart(key,
@@ -138,7 +126,12 @@ public class HttpUtils {
         return this;
     }
 
-    @XNote("设置BODY提交")
+    @XNote("设置BODY txt")
+    public HttpUtils bodyTxt(String txt) {
+        return bodyTxt(txt, null);
+    }
+
+    @XNote("设置BODY txt及内容类型")
     public HttpUtils bodyTxt(String txt, String contentType) {
         if (contentType == null) {
             _body = FormBody.create(null, txt);
@@ -149,7 +142,12 @@ public class HttpUtils {
         return this;
     }
 
-    @XNote("设置BODY提交")
+    @XNote("设置BODY raw")
+    public HttpUtils bodyRaw(InputStream raw){
+        return bodyRaw(raw, null);
+    }
+
+    @XNote("设置BODY raw及内容类型")
     public HttpUtils bodyRaw(InputStream raw, String contentType) {
         _body = new StreamBody(contentType, raw);
 
@@ -172,17 +170,16 @@ public class HttpUtils {
 
     @XNote("执行请求，返回响应对象")
     public Response exec(String mothod) throws Exception {
-        if (_part_builer != null) {
+        if (_multipart) {
+            tryInitPartBuilder(MultipartBody.FORM);
+
             if (_form != null) {
                 _form.forEach((kv) -> {
                     _part_builer.addFormDataPart(kv.key, kv.value);
                 });
             }
-            try {
-                _body = _part_builer.build();
-            } catch (IllegalStateException ex) {
 
-            }
+            _body = _part_builer.build();
         } else {
             if (_form != null) {
                 FormBody.Builder fb = new FormBody.Builder(_charset);
