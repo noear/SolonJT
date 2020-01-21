@@ -7,7 +7,6 @@ import org.noear.solon.core.XContext;
 import org.noear.solon.core.XFile;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AConfigM;
-import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.*;
 import org.noear.weed.DbContext;
 

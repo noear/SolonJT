@@ -83,6 +83,7 @@ public class JarUtil {
 
         //加载jar包
         try {
+            ExtendLoader.unloadJar(file);
             ExtendLoader.loadJar(file);
 
             //尝试加载插件类
