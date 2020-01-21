@@ -179,7 +179,11 @@ public class HttpUtils {
                 });
             }
 
-            _body = _part_builer.build();
+            try {
+                _body = _part_builer.build();
+            }catch (IllegalStateException ex){
+                //这里不要取消（内容为空时，会出错）
+            }
         } else {
             if (_form != null) {
                 FormBody.Builder fb = new FormBody.Builder(_charset);
