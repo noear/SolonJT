@@ -27,15 +27,8 @@ public class ImageUtils {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, imgWidth, imgHeight);
 
-        int fontHeight = 20;
-       /* // 创建字体
-        String fonts[] =
-                GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        Font font = new Font(fonts[0], Font.PLAIN, fontHeight);
-        // 设置字体
-        g.setFont(font);*/
         // 创建字体
-        Font font = new Font("Fixedsys", Font.PLAIN, fontHeight);
+        Font font = new Font("sans-serif", Font.BOLD, 20);
         // 设置字体
         g.setFont(font);
 
