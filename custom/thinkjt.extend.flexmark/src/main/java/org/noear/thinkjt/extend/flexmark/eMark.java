@@ -10,7 +10,8 @@ public class eMark {
 
         String html2 = html
                 .replace("<li>[ ]", "<li class='task-list-item'><input type=\"checkbox\" disabled=\"\">")
-                .replace("<li>[x]","<li class='task-list-item'><input type=\"checkbox\" disabled=\"\" checked=\"\">");
+                .replace("<li>[x]","<li class='task-list-item'><input type=\"checkbox\" disabled=\"\" checked=\"\">")
+                .replace("\n\n", "<br/>");
 
         return  html2;
     }
