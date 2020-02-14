@@ -85,6 +85,12 @@
             <version>${solonjt.ver}</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.noear</groupId>-->
+<!--            <artifactId>thinkjt.extend.flexmark</artifactId>-->
+<!--            <version>${solonjt.ver}</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>
