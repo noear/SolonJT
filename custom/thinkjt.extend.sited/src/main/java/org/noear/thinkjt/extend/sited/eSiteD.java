@@ -89,6 +89,10 @@ public class eSiteD {
 
         sd.guid = puid + "_" + EncryptUtil.md5(sd.url);
 
+        if(sd.isPrivate()){
+            is_ok = 0;
+        }
+
         DbSiteDApi.saveSiteD(puid2, sd, path, is_ok);
 
         return sd.guid;
