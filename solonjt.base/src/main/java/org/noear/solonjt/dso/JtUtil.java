@@ -334,7 +334,22 @@ public class JtUtil {
         return TimeUtils.liveTime(date);
     }
 
+    @XNote("格式化活动字符串")
+    public String liveString(String str, int len, String salt) {
+        if (str == null) {
+            return "";
+        }
 
+        if (str.length() > len) {
+            if (salt == null) {
+                return str.substring(0, len);
+            } else {
+                return str.substring(0, len) + salt;
+            }
+        } else {
+            return str;
+        }
+    }
 
 
     @XNote("是否为数字")
