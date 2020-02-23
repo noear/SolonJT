@@ -1,6 +1,9 @@
 package org.noear.thinkjt;
 
+import org.noear.solon.XApp;
+import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
+import org.noear.solonjt.dso.PluginUtil;
 import org.noear.weed.WeedConfig;
 
 public class ThinkJtApp {
@@ -13,5 +16,7 @@ public class ThinkJtApp {
 
 
         SolonJT.start(ThinkJtApp.class, args);
+
+        PluginUtil.add(XApp.cfg().get("add"));
     }
 }

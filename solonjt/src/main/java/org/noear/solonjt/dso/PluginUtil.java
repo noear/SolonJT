@@ -24,7 +24,7 @@ public class PluginUtil {
      * */
     public static boolean install(String packageTag) {
         try {
-            return installDo(packageTag, true);
+            return do_install(packageTag, true);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -35,7 +35,7 @@ public class PluginUtil {
      * */
     public static  boolean reinstall(String packageTag) {
         try {
-            return installDo(packageTag, false);
+            return do_install(packageTag, false);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -111,17 +111,8 @@ public class PluginUtil {
         }
     }
 
-    private static boolean installDo(String packageTag, boolean onlyInstall) throws Exception{
+    private static boolean do_install(String packageTag, boolean onlyInstall) throws Exception{
         if(TextUtils.isEmpty(packageTag)){
-            return false;
-        }
-
-        String center = XApp.cfg().get(Config.code_center);
-        if (TextUtils.isEmpty(center)) {
-            center = XApp.cfg().argx().get("center");
-        }
-
-        if (TextUtils.isEmpty(center)) {
             return false;
         }
 
@@ -131,6 +122,52 @@ public class PluginUtil {
             }
         }
 
+        boolean is_ok = _installDo(packageTag);
+
+        if(is_ok) {
+            String tag = packageTag.split(".")[0];
+            List<String> depList = dependencyGetDo(tag);
+            for (String dep : depList) {
+                do_install_dependency(tag, dep);
+            }
+
+            JtUtilEx.g2.restart();
+        }
+
+        return is_ok;
+    }
+
+    private static void do_install_dependency(String tag,String packageTag) throws Exception{
+        if(packageTag.startsWith(tag+".") == false){
+            return;
+        }
+
+        if(db().table("a_plugin").where("tag=? AND is_installed=1",tag).exists()){
+            return;
+        }
+
+        _installDo(packageTag);
+    }
+
+    private static List<String> dependencyGetDo(String tag) throws Exception{
+        return db().table("a_config")
+                .where("tag=? AND label=?",tag,"dep.plugin")
+                .select("value")
+                .getDataList()
+                .toArray(0);
+    }
+
+    private static boolean _installDo(String packageTag) throws Exception{
+
+
+        String center = XApp.cfg().get(Config.code_center);
+        if (TextUtils.isEmpty(center)) {
+            center = XApp.cfg().argx().get("center");
+        }
+
+        if (TextUtils.isEmpty(center)) {
+            return false;
+        }
 
 
         String url = null;
