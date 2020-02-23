@@ -129,7 +129,7 @@ public class PluginUtil {
 
             List<String> depList = dependencyGetDo(tag);
             for (String dep : depList) {
-                do_install_dependency(tag, dep);
+                do_install_dependency(dep);
             }
 
             JtUtilEx.g2.restart();
@@ -138,10 +138,8 @@ public class PluginUtil {
         return is_ok;
     }
 
-    private static void do_install_dependency(String tag,String packageTag) throws Exception{
-        if(packageTag.startsWith(tag+".") == false){
-            return;
-        }
+    private static void do_install_dependency(String packageTag) throws Exception{
+        String tag = packageTag.split("\\.")[0];
 
         if(db().table("a_plugin").where("tag=? AND is_installed=1",tag).exists()){
             return;
