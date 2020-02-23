@@ -2,7 +2,9 @@ package org.noear.localjt;
 
 import org.noear.localjt.dso.WebShell;
 import org.noear.solon.XApp;
+import org.noear.solon.annotation.XMapping;
 import org.noear.solon.core.XMap;
+import org.noear.solon.core.XMethod;
 import org.noear.solonjt.SolonJT;
 import org.noear.solonjt.dso.PluginUtil;
 import org.noear.solonjt.utils.TextUtils;
@@ -20,6 +22,8 @@ public class LocalJtApp{
         });
 
         XApp app = SolonJT.start(LocalJtApp.class, args);
+
+        app.sharedAdd("__solonjt_standalone_model",1);
 
         app.onError((ctx, err) -> {
             err.printStackTrace();

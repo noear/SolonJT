@@ -128,16 +128,13 @@ public class AppUtil {
 
     private static void do_runWeb(XApp app) {
         //拉截代理
-        app.before("/**", XMethod.GET, FrmInterceptor.g());
-        app.before("/**", XMethod.POST, FrmInterceptor.g());
-
+        app.before("**", XMethod.HTTP, FrmInterceptor.g());
 
         //资源代理(/img/**)
         app.get(Config.frm_root_img + "**", new ImgHandler());
 
         //文件代理
-        app.all("/", AppHandler.g());
-        app.all("/**", AppHandler.g());
+        app.all("**", AppHandler.g());
 
         //后缀代理（置于所有代理的前面）
         XHandler h1 = app.handlerGet();

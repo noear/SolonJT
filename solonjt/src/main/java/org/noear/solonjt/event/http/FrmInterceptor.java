@@ -1,5 +1,6 @@
 package org.noear.solonjt.event.http;
 
+import org.noear.solon.XApp;
 import org.noear.solonjt.Config;
 import org.noear.solonjt.dso.*;
 import org.noear.solon.core.XContext;
@@ -35,10 +36,14 @@ public class FrmInterceptor implements XHandler {
         reset();
     }
 
+    private static final String _key = "__solonjt_standalone_model";
 
     @Override
     public void handle(XContext ctx) throws Exception {
         String path = ctx.path();
+
+        Object tmp = XApp.global().shared().get(_key);
+        ctx.attrSet(_key, tmp);
 
         _cacheMap.forEach((path2,suf)->{
             if (path.startsWith(suf)) {
