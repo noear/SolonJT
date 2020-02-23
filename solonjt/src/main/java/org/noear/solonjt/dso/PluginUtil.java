@@ -125,7 +125,8 @@ public class PluginUtil {
         boolean is_ok = _installDo(packageTag);
 
         if(is_ok) {
-            String tag = packageTag.split(".")[0];
+            String tag = packageTag.split("\\.")[0];
+
             List<String> depList = dependencyGetDo(tag);
             for (String dep : depList) {
                 do_install_dependency(tag, dep);
