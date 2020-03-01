@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/org.noear/solonjt.svg)](https://mvnrepository.com/search?q=solonjt)
+
 ` QQ交流群：22200020 `
 
 
