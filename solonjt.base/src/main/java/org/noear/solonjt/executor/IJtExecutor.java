@@ -16,7 +16,9 @@ public interface IJtExecutor {
     Object exec(String name, AFileModel file, XContext ctx, Map<String, Object> model, boolean outString) throws Exception;
 
     /** 执行代码 */
-    Object exec(String code, Map<String, Object> model) throws Exception;
+    default Object exec(String code, Map<String, Object> model) throws Exception{
+        return null;
+    }
 
 
     /** 删除代码缓存 */
