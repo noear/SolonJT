@@ -2,6 +2,7 @@ package org.noear.solonjt.dso;
 
 import org.noear.snack.ONode;
 import org.noear.solonjt.Config;
+import org.noear.solonjt.SolonJT;
 import org.noear.solonjt.event.http.AppHandler;
 import org.noear.solonjt.event.http.FrmInterceptor;
 import org.noear.solonjt.event.http.ImgHandler;
@@ -124,10 +125,13 @@ public class AppUtil {
         do_weedTrack();
 
         CallUtil.callLabel(null, "hook.start", false, null);
+
+        //5.加载完成事件
+        SolonJT.onLoad();
     }
 
     private static void do_runWeb(XApp app) {
-        //拉截代理
+        //拦截代理
         app.before("**", XMethod.HTTP, FrmInterceptor.g());
 
         //资源代理(/img/**)

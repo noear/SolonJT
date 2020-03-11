@@ -4,10 +4,28 @@ import org.noear.solonjt.dso.*;
 import org.noear.solon.XApp;
 import org.noear.solon.core.*;
 import org.noear.solonjt.utils.TextUtils;
+import org.noear.weed.ext.Act0;
 import org.noear.weed.xml.XmlSqlLoader;
 
 public class SolonJT {
-    public static XApp start(Class<?> source, String[] args) {
+    private static Act0 _onLoadEvent;
+
+    public static void onLoad(){
+        if(_onLoadEvent != null){
+            try {
+                _onLoadEvent.run();
+            }catch (Throwable ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static XApp start(Class<?> source, String[] args){
+        return start(source,args,null);
+    }
+
+    public static XApp start(Class<?> source, String[] args, Act0 onLoadEvent) {
+        SolonJT._onLoadEvent = onLoadEvent;
 
         XmlSqlLoader.tryLoad();
 
