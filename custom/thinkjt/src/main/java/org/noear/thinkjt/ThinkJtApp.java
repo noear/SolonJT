@@ -15,7 +15,7 @@ public class ThinkJtApp {
 
 
         SolonJT.start(ThinkJtApp.class, args, () -> {
-            PluginUtil.add(XApp.cfg().get("add"));
+            PluginUtil.add(XApp.cfg().argx().get("add"));
         });
     }
 }
