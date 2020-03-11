@@ -6,10 +6,7 @@ import org.noear.solonjt.executor.IJtExecutor;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ThreadData;
 
-import javax.script.Bindings;
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
+import javax.script.*;
 import java.util.*;
 
 /**
@@ -35,6 +32,7 @@ public class JavascriptJtExecutor implements IJtExecutor {
     private final ScriptEngine _eng;
     private final Invocable    _eng_call;
     private final Set<String>  _loaded_names;
+    private final Bindings     _bindings;
 
     private JavascriptJtExecutor(){
         _loaded_names = Collections.synchronizedSet(new HashSet<>());
@@ -44,6 +42,7 @@ public class JavascriptJtExecutor implements IJtExecutor {
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         _eng = scriptEngineManager.getEngineByName("nashorn");
         _eng_call = (Invocable)_eng;
+        _bindings = _eng.getBindings(ScriptContext.ENGINE_SCOPE);
 
         XApp.global().shared().forEach((k, v)->{
             sharedSet(k, v);
@@ -162,6 +161,7 @@ public class JavascriptJtExecutor implements IJtExecutor {
     public Object exec(String code, Map<String, Object> model) throws Exception {
         if(model != null){
             Bindings bindings = _eng.createBindings();
+            bindings.putAll(_bindings);
             bindings.putAll(model);
 
             return _eng.eval(code, bindings);

@@ -40,20 +40,20 @@ public class GraaljsJtExecutor implements IJtExecutor {
     private final ScriptEngine _eng;
     private final Invocable    _eng_call;
     private final Set<String>  _loaded_names;
+    private final Bindings     _bindings;
 
     private GraaljsJtExecutor(){
         _loaded_names = Collections.synchronizedSet(new HashSet<>());
 
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         _eng = scriptEngineManager.getEngineByName("graal.js");
-
-        //添加配置，支持本地java对接
-        Bindings bindings = _eng.getBindings(ScriptContext.ENGINE_SCOPE);
-        bindings.put("polyglot.js.allowAllAccess",true);
-        //bindings.put("polyglot.js.allowHostAccess", true);
-        //bindings.put("polyglot.js.allowHostClassLookup", (Predicate<String>) s -> true);
-
         _eng_call = (Invocable)_eng;
+        //添加配置，支持本地java对接
+        _bindings = _eng.getBindings(ScriptContext.ENGINE_SCOPE);
+        _bindings.put("polyglot.js.allowAllAccess",true);
+        //_bindings.put("polyglot.js.allowHostAccess", true);
+        //_bindings.put("polyglot.js.allowHostClassLookup", (Predicate<String>) s -> true);
+
 
         XApp.global().shared().forEach((k, v)->{
             sharedSet(k, v);
@@ -176,6 +176,7 @@ public class GraaljsJtExecutor implements IJtExecutor {
     public Object exec(String code, Map<String, Object> model) throws Exception {
         if(model != null){
             Bindings bindings = _eng.createBindings();
+            bindings.putAll(_bindings);
             bindings.putAll(model);
 
             return _eng.eval(code, bindings);

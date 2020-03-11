@@ -34,6 +34,7 @@ public class RubyJtExecutor implements IJtExecutor {
     private final ScriptEngine _eng;
     private final Invocable    _eng_call;
     private final Set<String>  _loaded_names;
+    private final Bindings     _bindings;
 
     private RubyJtExecutor() {
         _loaded_names = Collections.synchronizedSet(new HashSet<>());
@@ -43,6 +44,7 @@ public class RubyJtExecutor implements IJtExecutor {
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         _eng = scriptEngineManager.getEngineByName("ruby");
         _eng_call = (Invocable) _eng;
+        _bindings = _eng.getBindings(ScriptContext.ENGINE_SCOPE);
 
         XApp.global().shared().forEach((k, v) -> {
             sharedSet(k, v);
@@ -176,6 +178,7 @@ public class RubyJtExecutor implements IJtExecutor {
     public Object exec(String code, Map<String, Object> model) throws Exception {
         if(model != null){
             Bindings bindings = _eng.createBindings();
+            bindings.putAll(_bindings);
             bindings.putAll(model);
 
             return _eng.eval(code, bindings);

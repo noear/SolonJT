@@ -11,6 +11,7 @@ import org.noear.solonjt.utils.Timecount;
 import org.noear.solonjt.utils.Timespan;
 
 import javax.script.Bindings;
+import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.util.*;
@@ -35,6 +36,7 @@ public class LuaJtExecutor implements IJtExecutor {
 
     private final ScriptEngine _eng;
     private final Set<String>  _loaded_names;
+    private final Bindings     _bindings;
 
     private LuaJtExecutor() {
         _loaded_names = Collections.synchronizedSet(new HashSet<>());
@@ -42,6 +44,7 @@ public class LuaJtExecutor implements IJtExecutor {
 
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         _eng = scriptEngineManager.getEngineByName("luaj");
+        _bindings = _eng.getBindings(ScriptContext.ENGINE_SCOPE);
 
 
         XApp.global().shared().forEach((k, v) -> {
@@ -179,6 +182,7 @@ public class LuaJtExecutor implements IJtExecutor {
     public Object exec(String code, Map<String, Object> model) throws Exception {
         if(model != null){
             Bindings bindings = _eng.createBindings();
+            bindings.putAll(_bindings);
             bindings.putAll(model);
 
             return _eng.eval(code, bindings);

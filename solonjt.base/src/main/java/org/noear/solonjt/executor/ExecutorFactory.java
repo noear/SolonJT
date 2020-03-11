@@ -80,6 +80,18 @@ public class ExecutorFactory {
         });
     }
 
+    /**
+     * 执行一段代码
+     */
+    public static Object exec(String language, String code, Map<String,Object> model) throws Exception {
+        IJtExecutor tmp = _map.get(language);
+        if(tmp != null){
+            return tmp.exec(code,model);
+        }else{
+            return null;
+        }
+    }
+
 
     /**
      * 执行一个文件并输出（jsx 或 ftl）
