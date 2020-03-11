@@ -9,7 +9,7 @@
 * 兼容：jre8, jre9, jre10, jre11
 
 
-# 意图？
+# 想干嘛？
 * 通过统一的接口嵌入，促成各种FaaS语言的统一编程模型
   >orm接口，http client接口，lock接口，queue接口，mvc接口，job接口，消息总线接口，函数总线接口
 
