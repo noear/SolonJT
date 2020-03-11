@@ -30,6 +30,11 @@ public class ExecutorEntity implements IJtExecutor{
     }
 
     @Override
+    public Object exec(String code, Map<String, Object> model) throws Exception {
+        return executor.exec(code, model);
+    }
+
+    @Override
     public void del(String name) {
         executor.del(name);
     }

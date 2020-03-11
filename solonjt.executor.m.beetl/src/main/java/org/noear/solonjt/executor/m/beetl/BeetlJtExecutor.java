@@ -141,4 +141,10 @@ public class BeetlJtExecutor implements IJtExecutor {
             return "";
         }
     }
+
+    @Override
+    public Object exec(String code, Map<String, Object> model) throws Exception {
+
+        return null;
+    }
 }

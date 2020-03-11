@@ -3,13 +3,14 @@ package org.noear.solonjt.executor.s.ruby;
 import org.noear.snack.ONode;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
+import org.noear.solonjt.dso.JtUtil;
 import org.noear.solonjt.executor.IJtExecutor;
 import org.noear.solonjt.model.AFileModel;
+import org.noear.solonjt.utils.EncryptUtils;
+import org.noear.solonjt.utils.TextUtils;
 import org.noear.solonjt.utils.ThreadData;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
+import javax.script.*;
 import java.util.*;
 
 public class RubyJtExecutor implements IJtExecutor {
@@ -171,6 +172,17 @@ public class RubyJtExecutor implements IJtExecutor {
         }
     }
 
+    @Override
+    public Object exec(String code, Map<String, Object> model) throws Exception {
+        if(model != null){
+            Bindings bindings = _eng.createBindings();
+            bindings.putAll(model);
+
+            return _eng.eval(code, bindings);
+        }else{
+            return _eng.eval(code);
+        }
+    }
 
     //////////////////////////////////////////////////////////////////
 

@@ -172,7 +172,17 @@ public class GraaljsJtExecutor implements IJtExecutor {
         }
     }
 
+    @Override
+    public Object exec(String code, Map<String, Object> model) throws Exception {
+        if(model != null){
+            Bindings bindings = _eng.createBindings();
+            bindings.putAll(model);
 
+            return _eng.eval(code, bindings);
+        }else{
+            return _eng.eval(code);
+        }
+    }
 
     //////////////////////////////////////////////////////////////////
 

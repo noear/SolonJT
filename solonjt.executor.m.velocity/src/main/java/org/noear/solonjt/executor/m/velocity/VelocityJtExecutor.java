@@ -10,6 +10,7 @@ import org.noear.solonjt.executor.IJtExecutor;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.TextUtils;
 
+import javax.script.Bindings;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
@@ -147,5 +148,10 @@ public class VelocityJtExecutor implements IJtExecutor {
         }else{
             return "";
         }
+    }
+
+    @Override
+    public Object exec(String code, Map<String, Object> model) throws Exception {
+        return null;
     }
 }

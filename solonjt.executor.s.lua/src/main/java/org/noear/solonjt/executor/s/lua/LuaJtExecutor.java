@@ -10,6 +10,7 @@ import org.noear.solonjt.utils.ThreadData;
 import org.noear.solonjt.utils.Timecount;
 import org.noear.solonjt.utils.Timespan;
 
+import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import java.util.*;
@@ -174,6 +175,17 @@ public class LuaJtExecutor implements IJtExecutor {
         }
     }
 
+    @Override
+    public Object exec(String code, Map<String, Object> model) throws Exception {
+        if(model != null){
+            Bindings bindings = _eng.createBindings();
+            bindings.putAll(model);
+
+            return _eng.eval(code, bindings);
+        }else{
+            return _eng.eval(code);
+        }
+    }
 
     //////////////////////////////////////////////////////////////////
 

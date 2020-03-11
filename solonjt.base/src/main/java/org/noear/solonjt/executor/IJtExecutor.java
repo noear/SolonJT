@@ -12,8 +12,12 @@ public interface IJtExecutor {
     /** 编译 */
     //String compile(String name, AFileModel file);
 
-    /** 执行 */
+    /** 执行文件 */
     Object exec(String name, AFileModel file, XContext ctx, Map<String, Object> model, boolean outString) throws Exception;
+
+    /** 执行代码 */
+    Object exec(String code, Map<String, Object> model) throws Exception;
+
 
     /** 删除代码缓存 */
     void del(String name);
