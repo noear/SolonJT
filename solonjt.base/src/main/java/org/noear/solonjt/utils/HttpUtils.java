@@ -5,7 +5,11 @@ import okhttp3.internal.Util;
 import okio.BufferedSink;
 import okio.Okio;
 import okio.Source;
+import org.noear.snack.ONode;
+import org.noear.solon.XApp;
 import org.noear.solon.annotation.XNote;
+import org.noear.weed.cache.ICacheService;
+import org.noear.weed.cache.ICacheServiceEx;
 import org.noear.weed.ext.Fun0;
 
 import java.io.IOException;
@@ -241,8 +245,33 @@ public class HttpUtils {
         return _body;
     }
 
+    private int _cache=0;
+    @XNote("缓存时间")
+    public HttpUtils cache(int seconds) throws Exception {
+        _cache = seconds;
+        return this;
+    }
+
     @XNote("执行请求，返回字符串")
     public String exec2(String mothod) throws Exception {
+        if (_cache > 0) {
+            ICacheServiceEx c = (ICacheServiceEx) XApp.global().shared().get("cache");
+            if (c != null) {
+                String url_key = _url;
+                if(_form != null) {
+                    url_key = EncryptUtils.md5(_url + ONode.stringify(_form));
+                }
+
+                return c.getBy(_cache, url_key, (uc) -> exec2_do(mothod));
+            } else {
+                return exec2_do(mothod);
+            }
+        } else {
+            return exec2_do(mothod);
+        }
+    }
+
+    private String exec2_do(String mothod) throws Exception {
         Response tmp = exec(mothod);
         int code = tmp.code();
         String text = tmp.body().string();

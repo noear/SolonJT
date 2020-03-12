@@ -6,8 +6,16 @@ public class EncryptUtils {
     private static final char[] _hexDigits = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     /** 生成md5码 */
+    public static String sha1(String cleanData){
+        return sha1(cleanData,"UTF-8");
+    }
+
     public static String sha1(String cleanData, String chaerset) {
         return hashEncode("SHA-1", cleanData,chaerset);
+    }
+
+    public static String md5(String cleanData) {
+        return md5(cleanData,"UTF-8");
     }
 
     public static String md5(String cleanData, String chaerset) {
