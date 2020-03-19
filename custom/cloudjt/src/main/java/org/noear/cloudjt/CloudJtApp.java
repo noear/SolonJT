@@ -1,11 +1,11 @@
-package org.noear.thinkjt;
+package org.noear.cloudjt;
 
 import org.noear.solon.XApp;
 import org.noear.solonjt.SolonJT;
 import org.noear.solonjt.dso.PluginUtil;
 import org.noear.weed.WeedConfig;
 
-public class ThinkJtApp {
+public class CloudJtApp {
     public static void main(String[] args) {
         WeedConfig.onExecuteBef((cmd) -> {
             System.out.println(cmd.text);
@@ -14,7 +14,7 @@ public class ThinkJtApp {
         });
 
 
-        SolonJT.start(ThinkJtApp.class, args, () -> {
+        SolonJT.start(CloudJtApp.class, args, () -> {
             PluginUtil.add(XApp.cfg().argx().get("add"));
         });
     }

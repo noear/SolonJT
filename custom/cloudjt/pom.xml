@@ -11,7 +11,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>thinkjt</artifactId>
+    <artifactId>cloudjt</artifactId>
     <packaging>jar</packaging>
 
     <name>jt</name>

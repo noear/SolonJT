@@ -19,9 +19,9 @@
         <java.version>1.8</java.version>
 
         <solonjt.ver>1.0.4.1</solonjt.ver>
-        <solon.ver>1.0.5</solon.ver>
+        <solon.ver>1.0.5.1</solon.ver>
 
-        <snack3.ver>3.1.6</snack3.ver>
+        <snack3.ver>3.1.6.2</snack3.ver>
         <weed3.ver>3.2.7.2</weed3.ver>
 
         <okhttp.ver>3.11.0</okhttp.ver>
@@ -238,7 +238,7 @@
         <module>custom/thinkjt.extend.hanlp</module>
 
         <module>custom/thinkjt.extend.sited</module>
-        <module>custom/thinkjt</module>
+        <module>custom/cloudjt</module>
         <module>custom/localjt</module>
     </modules>
 
