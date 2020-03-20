@@ -150,7 +150,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.noear.thinkjt.ThinkJtApp</mainClass>
+                            <mainClass>org.noear.cloudjt.CloudJtApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
