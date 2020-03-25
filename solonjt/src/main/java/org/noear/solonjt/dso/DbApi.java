@@ -237,13 +237,27 @@ public class DbApi {
     }
 
     public static List<Map<String, Object>> menuGet(String label, int pid) throws SQLException {
-        return db().table("a_menu")
-                .where("`label`=? AND pid=? AND is_disabled=0", label, pid)
-                .orderBy("order_number ASC")
-                .select("*")
-                .caching(DbUtil.cache)
-                .cacheTag("menu_" + label)
-                .getMapList();
+        if (label.indexOf("%") >= 0) {
+            return db().table("a_menu")
+                    .where("is_disabled=0")
+                    .andLk("label", label)
+                    .andIf(pid > 0, "pid=?", pid)
+                    .orderBy("label ASC, order_number ASC")
+                    .select("*")
+                    .caching(DbUtil.cache)
+                    .cacheTag("menu_" + label)
+                    .getMapList();
+        } else {
+            return db().table("a_menu")
+                    .where("is_disabled=0")
+                    .andEq("label", label)
+                    .andIf(pid > 0, "pid=?", pid)
+                    .orderBy("order_number ASC")
+                    .select("*")
+                    .caching(DbUtil.cache)
+                    .cacheTag("menu_" + label)
+                    .getMapList();
+        }
     }
 
     public static AImageModel imgGet(String path) throws Exception {
