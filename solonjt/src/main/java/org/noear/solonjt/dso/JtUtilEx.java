@@ -29,6 +29,11 @@ public class JtUtilEx extends JtUtil {
         return DbApi.menuGet(label, pid);
     }
 
+    @XNote("获取菜单")
+    public List<Map<String, Object>> menuGet(String label) throws Exception {
+        return DbApi.menuGet(label, -1);
+    }
+
     /**
      * 保存图片
      */
