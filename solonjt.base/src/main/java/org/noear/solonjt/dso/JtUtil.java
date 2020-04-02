@@ -260,6 +260,27 @@ public class JtUtil {
         return EncryptUtils.sha256(str, charset);
     }
 
+
+    @XNote("HMAC 加密")
+    public byte[] hmac(String str, String key, String algorithm){
+        return EncryptUtils.hmac(str,key,algorithm, null);
+    }
+
+    @XNote("HMAC 加密")
+    public byte[] hmac(String str, String key, String algorithm, String charset) {
+        return EncryptUtils.hmac(str, key, algorithm, charset);
+    }
+
+    @XNote("byte[]转为16位字符串编码")
+    public String toX16(byte[] bytes) {
+        return EncryptUtils.toX16(bytes);
+    }
+
+    @XNote("byte[]转为64位字符串编码")
+    public String toX64(byte[] bytes) {
+        return EncryptUtils.toX64(bytes);
+    }
+
     @XNote("AES 加密")
     public String aesEncrypt(String str, String password){
         return EncryptUtils.aesEncrypt(str, password);

@@ -2,6 +2,7 @@ package org.noear.solonjt.utils;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -167,5 +168,42 @@ public class EncryptUtils {
             var9.printStackTrace();
             return null;
         }
+    }
+
+    public static byte[] hmac(String data, String key, String algorithm, String charset) {
+        if(algorithm == null){
+            algorithm = "HmacSHA256";
+        }
+
+        if(TextUtils.isEmpty(charset)){
+            charset = "UTF-8";
+        }
+
+        try {
+            Mac mac = Mac.getInstance(algorithm);
+            SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), algorithm);
+            mac.init(keySpec);
+            return mac.doFinal(data.getBytes(charset));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String toX16(byte[] bytes){
+        int j = bytes.length;
+        char[] str = new char[j * 2];
+        int k = 0;
+
+        for (int i = 0; i < j; ++i) {
+            byte byte0 = bytes[i];
+            str[k++] = _hexDigits[byte0 >>> 4 & 15];
+            str[k++] = _hexDigits[byte0 & 15];
+        }
+
+        return new String(str);
+    }
+
+    public static String toX64(byte[] bytes){
+        return Base64Utils.encodeByte(bytes);
     }
 }
