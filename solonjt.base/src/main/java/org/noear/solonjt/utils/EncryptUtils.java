@@ -1,31 +1,54 @@
 package org.noear.solonjt.utils;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 public class EncryptUtils {
     private static final char[] _hexDigits = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-    /** 生成md5码 */
-    public static String sha1(String cleanData){
-        return sha1(cleanData,"UTF-8");
+    /**
+     * 生成sha1码
+     */
+    public static String sha1(String cleanData) {
+        return sha1(cleanData, "UTF-8");
     }
 
     public static String sha1(String cleanData, String chaerset) {
-        return hashEncode("SHA-1", cleanData,chaerset);
+        return hashEncode("SHA-1", cleanData, chaerset);
     }
 
+    /**
+     * 生成sha256码
+     */
+    public static String sha256(String cleanData) {
+        return sha256(cleanData, "UTF-8");
+    }
+
+    public static String sha256(String cleanData, String chaerset) {
+        return hashEncode("SHA-256", cleanData, chaerset);
+    }
+
+    /**
+     * 生成md5码
+     */
     public static String md5(String cleanData) {
-        return md5(cleanData,"UTF-8");
+        return md5(cleanData, "UTF-8");
     }
 
     public static String md5(String cleanData, String chaerset) {
-        return hashEncode("MD5", cleanData,chaerset);
+        return hashEncode("MD5", cleanData, chaerset);
     }
 
     public static String md5Bytes(byte[] bytes) {
         try {
             return do_hashEncode("MD5", bytes);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
@@ -35,14 +58,14 @@ public class EncryptUtils {
 
         try {
             byte[] btInput = cleanData.getBytes(chaerset);
-            return do_hashEncode(algorithm,btInput);
+            return do_hashEncode(algorithm, btInput);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    private static String do_hashEncode(String algorithm, byte[] btInput) throws Exception{
+    private static String do_hashEncode(String algorithm, byte[] btInput) throws Exception {
         MessageDigest mdInst = MessageDigest.getInstance(algorithm);
         mdInst.update(btInput);
         byte[] md = mdInst.digest();
@@ -59,4 +82,90 @@ public class EncryptUtils {
         return new String(str);
     }
 
+    //
+    // aesEncrypt , aesDecrypt
+    //
+    public static String aesEncrypt(String content, String password) {
+        return aesEncrypt(content, password, null);
+    }
+
+    public static String aesEncrypt(String content, String password, String algorithm) {
+        return aesEncrypt(content, password, algorithm, null);
+    }
+
+    public static String aesEncrypt(String content, String password, String algorithm, String offset) {
+        return aesEncrypt(content, password, algorithm, offset, null);
+    }
+
+    public static String aesEncrypt(String content, String password, String algorithm, String offset, String charset) {
+        try {
+            if (TextUtils.isEmpty(algorithm)) {
+                algorithm = "AES/ECB/PKCS5Padding";
+            }
+
+            if (TextUtils.isEmpty(charset)) {
+                charset = "UTF-8";
+            }
+
+            byte[] pswd = password.getBytes(charset);
+            SecretKeySpec secretKey = new SecretKeySpec(pswd, "AES");
+            Cipher cipher = Cipher.getInstance(algorithm);
+            if (TextUtils.isEmpty(offset)) {
+                cipher.init(1, secretKey);
+            } else {
+                IvParameterSpec iv = new IvParameterSpec(offset.getBytes(charset));
+                cipher.init(2, secretKey, iv);
+            }
+
+            byte[] encrypted = cipher.doFinal(content.getBytes(charset));
+            return Base64Utils.encodeByte(encrypted);//new Base64()).encodeToString(encrypted);
+        } catch (Exception var8) {
+            var8.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String aesDecrypt(String content, String password) {
+        return aesDecrypt(content, password, null);
+    }
+
+    public static String aesDecrypt(String content, String password, String algorithm) {
+        return aesDecrypt(content, password, algorithm, null);
+    }
+
+    public static String aesDecrypt(String content, String password, String algorithm, String offset) {
+        return aesDecrypt(content, password, algorithm, offset, null);
+    }
+
+    public static String aesDecrypt(String content, String password, String algorithm, String offset, String charset) {
+        try {
+            if (TextUtils.isEmpty(algorithm)) {
+                algorithm = "AES/ECB/PKCS5Padding";
+            }
+
+            if (TextUtils.isEmpty(charset)) {
+                charset = "UTF-8";
+            }
+
+            byte[] pswd = password.getBytes(charset);
+            SecretKey secretKey = new SecretKeySpec(pswd, "AES");
+
+            //密码
+            Cipher cipher = Cipher.getInstance(algorithm);
+            if (TextUtils.isEmpty(offset)) {
+                cipher.init(2, secretKey);
+            } else {
+                IvParameterSpec iv = new IvParameterSpec(offset.getBytes(charset));
+                cipher.init(2, secretKey, iv);
+            }
+
+            byte[] encrypted1 = Base64Utils.decodeByte(content); //(new Base64()).decode(content);
+            byte[] original = cipher.doFinal(encrypted1);
+
+            return new String(original, charset);
+        } catch (Exception var9) {
+            var9.printStackTrace();
+            return null;
+        }
+    }
 }
