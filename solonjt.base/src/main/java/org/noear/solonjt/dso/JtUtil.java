@@ -235,7 +235,6 @@ public class JtUtil {
     public String md5(String str) {
         return EncryptUtils.md5(str, "UTF-8");
     }
-
     @XNote("生成md5码")
     public String md5(String str, String charset) {
         return EncryptUtils.md5(str, charset);
@@ -246,12 +245,38 @@ public class JtUtil {
     public String sha1(String str) {
         return EncryptUtils.sha1(str, "UTF-8");//UTF-16LE, utf-8
     }
-
     @XNote("生成sha1码")
     public String sha1(String str, String charset) {
         return EncryptUtils.sha1(str, charset);
     }
 
+
+    @XNote("生成sha256码")
+    public String sha256(String str) {
+        return EncryptUtils.sha256(str, "UTF-8");//UTF-16LE, utf-8
+    }
+    @XNote("生成sha256码")
+    public String sha256(String str, String charset) {
+        return EncryptUtils.sha256(str, charset);
+    }
+
+    @XNote("AES 加密")
+    public String aesEncrypt(String str, String password){
+        return EncryptUtils.aesEncrypt(str, password);
+    }
+    @XNote("AES 加密")
+    public String aesEncrypt(String str, String password, String algorithm, String offset, String charset) {
+        return EncryptUtils.aesEncrypt(str, password, algorithm, offset, charset);
+    }
+
+    @XNote("AES 解密")
+    public String aesDecrypt(String str, String password){
+        return EncryptUtils.aesDecrypt(str, password);
+    }
+    @XNote("AES 解密")
+    public String aesDecrypt(String str, String password, String algorithm, String offset, String charset){
+        return EncryptUtils.aesDecrypt(str, password, algorithm, offset, charset);
+    }
 
     /**
      * base64
