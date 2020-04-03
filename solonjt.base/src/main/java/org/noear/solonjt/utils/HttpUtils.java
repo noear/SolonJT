@@ -275,6 +275,12 @@ public class HttpUtils {
         Response tmp = exec(mothod);
         int code = tmp.code();
         String text = tmp.body().string();
+
+        //如果非空，直接返回
+        if(TextUtils.isEmpty(text) == false){
+            return text;
+        }
+
         if (code >= 200 && code <= 300) {
             return text;
         } else {
