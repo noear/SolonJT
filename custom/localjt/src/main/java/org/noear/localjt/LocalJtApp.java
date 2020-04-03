@@ -52,9 +52,10 @@ public class LocalJtApp{
             title = "LocalJt";
         }
 
-        new Thread(()->{
-            WebShell.start(args);
-        }).start();
-
+        if(argx.getInt("server") == 0) {
+            new Thread(() -> {
+                WebShell.start(args);
+            }).start();
+        }
     }
 }
