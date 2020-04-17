@@ -6,7 +6,7 @@
 
     <groupId>org.noear</groupId>
     <artifactId>solonjt-parent</artifactId>
-    <version>1.0.4.3</version>
+    <version>1.0.4.4</version>
     <packaging>pom</packaging>
 
     <name>root</name>
@@ -18,7 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solonjt.ver>1.0.4.3</solonjt.ver>
+        <solonjt.ver>1.0.4.4</solonjt.ver>
 
         <solon.ver>1.0.5.4</solon.ver>
 
@@ -238,9 +238,9 @@
         <module>custom/thinkjt.extend.jsoup</module>
         <module>custom/thinkjt.extend.hanlp</module>
 
-        <module>custom/thinkjt.extend.sited</module>
-        <module>custom/cloudjt</module>
-        <module>custom/localjt</module>
+<!--        <module>custom/thinkjt.extend.sited</module>-->
+<!--        <module>custom/cloudjt</module>-->
+<!--        <module>custom/localjt</module>-->
     </modules>
 
 </project>
