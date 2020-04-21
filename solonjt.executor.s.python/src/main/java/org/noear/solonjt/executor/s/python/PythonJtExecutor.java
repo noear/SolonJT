@@ -3,12 +3,11 @@ package org.noear.solonjt.executor.s.python;
 import org.noear.snack.ONode;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
+import org.noear.solonjt.dso.CallUtil;
+import org.noear.solonjt.dso.JtUtil;
 import org.noear.solonjt.executor.IJtExecutor;
 import org.noear.solonjt.model.AFileModel;
-import org.noear.solonjt.utils.Datetime;
-import org.noear.solonjt.utils.ThreadData;
-import org.noear.solonjt.utils.Timecount;
-import org.noear.solonjt.utils.Timespan;
+import org.noear.solonjt.utils.*;
 
 import javax.script.*;
 import java.util.*;
@@ -38,6 +37,14 @@ public class PythonJtExecutor implements IJtExecutor {
 
     private PythonJtExecutor() {
         _loaded_names = Collections.synchronizedSet(new HashSet<>());
+
+        RunUtil.runActEx(()->{
+            Properties props = JtUtil.g.cfg("ext_exes_python_init").getProp();
+
+            props.forEach((k,v)->{
+                System.getProperties().put(k,v);
+            });
+        });
 
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         _eng = scriptEngineManager.getEngineByName("python");
