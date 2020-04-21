@@ -38,14 +38,6 @@ public class PythonJtExecutor implements IJtExecutor {
     private PythonJtExecutor() {
         _loaded_names = Collections.synchronizedSet(new HashSet<>());
 
-        RunUtil.runActEx(()->{
-            Properties props = JtUtil.g.cfg("ext_exes_python_init").getProp();
-
-            props.forEach((k,v)->{
-                System.getProperties().put(k,v);
-            });
-        });
-
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         _eng = scriptEngineManager.getEngineByName("python");
         _eng_call = (Invocable) _eng;
