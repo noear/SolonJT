@@ -38,26 +38,14 @@ public class RedisJtLock implements IJtLock {
     public boolean tryLock(String group, String key, int inSeconds, String inMaster) {
         String key2 = group + ".lk." + key;
 
-        return _redisX.open1((ru) -> {
-            if (ru.key(key2).exists() == false) {
-                ru.key(key2).expire(inSeconds).lock(inMaster);
-            }
-
-            return inMaster.equals(ru.key(key2).get());
-        });
+        return _redisX.open1((ru) -> ru.key(key2).expire(inSeconds).lock(inMaster));
     }
 
     @Override
     public boolean tryLock(String group, String key, int inSeconds) {
         String key2 = group + ".lk." + key;
 
-        return _redisX.open1((ru) -> {
-            if (ru.key(key2).exists() == false) {
-                return ru.key(key2).expire(inSeconds).lock("_");
-            }else{
-                return false;
-            }
-        });
+        return _redisX.open1((ru) -> ru.key(key2).expire(inSeconds).lock("_"));
     }
 
     @Override

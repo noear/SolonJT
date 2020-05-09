@@ -226,14 +226,13 @@ class RedisX {
         }
 
         public boolean lock(String val) {
-            if(client.exists(_key)){
-                return false;
-            }else {
-                long rst = client.setnx(_key, val);
-                reset_expire();
+            long rst = client.setnx(_key, val);
 
-                return rst > 0;//成功获得锁
+            if (rst > 0) {
+                reset_expire();
             }
+
+            return rst > 0;//成功获得锁
         }
 
         public boolean lock() {
