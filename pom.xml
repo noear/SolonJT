@@ -238,9 +238,9 @@
         <module>custom/thinkjt.extend.jsoup</module>
         <module>custom/thinkjt.extend.hanlp</module>
 
-<!--        <module>custom/thinkjt.extend.sited</module>-->
-<!--        <module>custom/cloudjt</module>-->
-<!--        <module>custom/localjt</module>-->
+        <module>custom/thinkjt.extend.sited</module>
+        <module>custom/cloudjt</module>
+        <module>custom/localjt</module>
     </modules>
 
 </project>
