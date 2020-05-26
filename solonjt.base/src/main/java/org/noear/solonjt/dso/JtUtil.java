@@ -410,6 +410,11 @@ public class JtUtil {
         return LogUtil.log(data);
     }
 
+    @XNote("日志")
+    public boolean log(String content) throws Exception{
+        return LogUtil.log(null,3,content);
+    }
+
     private String _localAddr;
     @XNote("服务地址")
     public String localAddr() throws Exception{
