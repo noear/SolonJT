@@ -1,7 +1,6 @@
 package org.noear.solonjt.dso;
 
 import org.noear.solon.XApp;
-import org.noear.solon.core.Aop;
 import org.noear.solonjt.executor.IJtConfigAdapter;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
 import org.noear.solonjt.model.AFileModel;
@@ -20,7 +19,7 @@ public class JtAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
     }
 
     @Override
-    public void log(Map<String, Object> data) {
+    public void log(AFileModel file, Map<String, Object> data) {
         DbApi.log(data);
     }
 

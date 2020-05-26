@@ -105,6 +105,8 @@ public class ExecutorFactory {
             return;
         }
 
+        AFileModel.currentSet(file);
+
         ctx.charset("utf-8");
 
 
@@ -151,6 +153,8 @@ public class ExecutorFactory {
 
         //最后是动态的
         if (tmp != null) {
+            AFileModel.currentSet(file);
+
             String path = file.path;
             String name = path.replace("/", "__");
 

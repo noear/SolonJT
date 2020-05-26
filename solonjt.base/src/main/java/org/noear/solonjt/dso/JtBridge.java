@@ -58,7 +58,8 @@ public class JtBridge {
     }
 
     public static void log(Map<String,Object> data){
-        executorAdapter().log(data);
+        AFileModel file = AFileModel.current();
+        executorAdapter().log(file, data);
     }
 
     /**
