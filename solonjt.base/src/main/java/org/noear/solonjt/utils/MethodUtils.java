@@ -72,9 +72,11 @@ public class MethodUtils {
             sb.setLength(0);
 
             if(Modifier.isStatic(m.getModifiers())){
-                sb.append(k0); //静态函数
+                sb.append(k0);
+                methods.add(0,m1); //静态函数，放前面
             }else{
                 sb.append(k);
+                methods.add(m1);
             }
 
 
@@ -102,7 +104,7 @@ public class MethodUtils {
             }
 
             m1.put("code", sb.toString());
-            methods.add(m1);
+
         }
 
         return v1;
