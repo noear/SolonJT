@@ -56,6 +56,8 @@ public class MethodUtils {
             return String.CASE_INSENSITIVE_ORDER.compare(m1.getName(), m2.getName());
         });
 
+        String k0 = k.replace("new ","").replace("()","");
+
         for (Method m : mlist) {
 
             Map<String, Object> m1 = new HashMap<>();
@@ -68,7 +70,15 @@ public class MethodUtils {
             }
 
             sb.setLength(0);
-            sb.append(k).append(".");
+
+            if(Modifier.isStatic(m.getModifiers())){
+                sb.append(k0); //静态函数
+            }else{
+                sb.append(k);
+            }
+
+
+            sb.append(".");
             sb.append(m.getName());
 
             sb.append("(");

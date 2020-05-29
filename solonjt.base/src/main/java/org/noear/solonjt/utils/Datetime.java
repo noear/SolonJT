@@ -86,8 +86,61 @@ public class Datetime implements Serializable,Cloneable,Comparable<Datetime> {
         return doAdd(Calendar.SECOND, + second);
     }
 
+    @XNote("设置豪秒数")
+    public Datetime addMillisecond(int millisecond) {
+        return doAdd(Calendar.MILLISECOND, millisecond);
+    }
+
     private Datetime doAdd(int field, int amount){
         _calendar.add(field, + amount);
+
+        _datetime = _calendar.getTime();
+
+        return this;
+    }
+
+
+    @XNote("设置年数")
+    public Datetime setYear(int year) {
+        return doSet(Calendar.YEAR, year);
+    }
+
+    //添加月
+    @XNote("设置月数")
+    public Datetime setMonth(int month) {
+        return doSet(Calendar.MONTH, month);
+    }
+
+    //添加日
+    @XNote("设置日数")
+    public Datetime setDay(int day){
+        return doSet(Calendar.DAY_OF_MONTH, day);
+    }
+
+    //添加小时
+    @XNote("设置小时数")
+    public Datetime setHour(int hour){
+        return doSet(Calendar.HOUR_OF_DAY, hour);
+    }
+
+    //添加分钟
+    @XNote("设置分钟数")
+    public Datetime setMinute(int minute){
+        return doSet(Calendar.MINUTE, minute);
+    }
+
+    @XNote("设置秒数")
+    public Datetime setSecond(int second) {
+        return doSet(Calendar.SECOND, second);
+    }
+
+    @XNote("设置豪秒数")
+    public Datetime setMillisecond(int millisecond) {
+        return doSet(Calendar.MILLISECOND, millisecond);
+    }
+
+    private Datetime doSet(int field, int value){
+        _calendar.set(field, value);
 
         _datetime = _calendar.getTime();
 
