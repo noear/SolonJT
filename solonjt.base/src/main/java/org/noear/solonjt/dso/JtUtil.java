@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 引擎扩展工具，提供一些基础的操作支持
@@ -484,8 +485,13 @@ public class JtUtil {
     }
 
 
+    protected Map<String, Object> _ridS = new ConcurrentHashMap<>();
+    public void addRID(String key, Object obj) {
+        _ridS.putIfAbsent(key, obj);
+    }
+
     protected Map<String, Object> addInterfaceList(){
-        return null;
+        return _ridS;
     }
 
     /**

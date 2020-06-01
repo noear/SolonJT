@@ -298,8 +298,7 @@ public class JtUtilEx extends JtUtil {
 
     @Override
     protected Map<String, Object> addInterfaceList() {
-        Map<String, Object> tmp = new HashMap<>();
-        tmp.put("XUtil.thumbnailOf(stream)", Thumbnails.Builder.class);
-        return tmp;
+        _ridS.put("XUtil.thumbnailOf(stream)", Thumbnails.Builder.class);
+        return _ridS;
     }
 }
