@@ -486,6 +486,7 @@ public class JtUtil {
 
 
     protected Map<String, Object> _ridS = new ConcurrentHashMap<>();
+    @XNote("添加参考接口字典")
     public void addRID(String key, Object obj) {
         _ridS.putIfAbsent(key, obj);
     }
