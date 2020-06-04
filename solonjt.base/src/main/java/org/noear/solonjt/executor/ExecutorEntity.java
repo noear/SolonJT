@@ -26,7 +26,12 @@ public class ExecutorEntity implements IJtExecutor{
 
     @Override
     public Object exec(String name, AFileModel file, XContext ctx, Map<String, Object> model, boolean outString) throws Exception {
-        return executor.exec(name,file,ctx,model,outString);
+        try {
+            return executor.exec(name, file, ctx, model, outString);
+        }catch (NoSuchMethodException ex){
+            del(name);
+            throw ex;
+        }
     }
 
     @Override
