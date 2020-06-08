@@ -24,7 +24,34 @@ public class TextUtils {
 
     /** 生成随机字符串 */
     public static String codeByRandom(int len) {
-        int TEMPLATE_SIZE = 62;
+        char codeTemplate[] = {
+                'a', 'b', 'c', 'd', 'e', 'f',
+                'g', 'h', 'j', 'k',
+                'm', 'n', 'p', 'q', 'r',
+                's', 't', 'u', 'v', 'w', 'x',
+                'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F',
+                'G', 'H', 'J', 'K', 'L',
+                'M', 'N', 'P', 'Q', 'R',
+                'S', 'T', 'U', 'V', 'W', 'X',
+                'Y', 'Z',
+                '2', '3', '4', '5',
+                '6', '7', '8', '9'
+        };
+
+        int TEMPLATE_SIZE = codeTemplate.length;
+        StringBuilder sb = StringUtils.borrowBuilder();
+        sb.setLength(0);
+
+        Random random = new Random();
+        for (int i = 0; i < len; i++) {
+            sb.append(codeTemplate[random.nextInt(TEMPLATE_SIZE) % TEMPLATE_SIZE]);
+        }
+
+        return StringUtils.releaseBuilder(sb);
+    }
+
+    public static String codeByRandomEx(int len) {
         char codeTemplate[] = {
                 'a', 'b', 'c', 'd', 'e', 'f',
                 'g', 'h', 'i', 'j', 'k', 'l',
@@ -39,6 +66,8 @@ public class TextUtils {
                 '0', '1', '2', '3', '4', '5',
                 '6', '7', '8', '9'
         };
+
+        int TEMPLATE_SIZE = codeTemplate.length;
         StringBuilder sb = StringUtils.borrowBuilder();
         sb.setLength(0);
 
