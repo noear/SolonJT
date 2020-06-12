@@ -1,17 +1,19 @@
 package org.noear.solonjt.model;
 
-import org.noear.solonjt.utils.ThreadData;
-
 import java.util.Date;
 
 public class AFileModel {
-    private static ThreadLocal<AFileModel> _current = new ThreadData<>(null);
+    private static ThreadLocal<AFileModel> _current = new ThreadLocal();
     public static AFileModel current(){
         return _current.get();
     }
 
     public static void currentSet(AFileModel file){
         _current.set(file);
+    }
+
+    public static void currentRemove(){
+        _current.remove();
     }
 
 

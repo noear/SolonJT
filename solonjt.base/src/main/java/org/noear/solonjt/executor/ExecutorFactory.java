@@ -18,18 +18,24 @@ public class ExecutorFactory {
     private static final Map<String, ExecutorEntity> _map = new HashMap<>();
     private static IJtExecutor _def;
 
-    /** 记录日志 */
-    public static void errorLog(AFileModel file,String msg, Throwable err){
-        JtBridge.executorAdapter().logError(file,msg,err);
+    /**
+     * 记录日志
+     */
+    public static void errorLog(AFileModel file, String msg, Throwable err) {
+        JtBridge.executorAdapter().logError(file, msg, err);
     }
 
-    /** 获取文件 */
-    public static AFileModel fileGet(String path) throws Exception{
+    /**
+     * 获取文件
+     */
+    public static AFileModel fileGet(String path) throws Exception {
         return JtBridge.executorAdapter().fileGet(path);
     }
 
-    /** 执行器清单 */
-    public static Set<String> list(){
+    /**
+     * 执行器清单
+     */
+    public static Set<String> list() {
         return _map.keySet();
     }
 
@@ -40,8 +46,8 @@ public class ExecutorFactory {
     /**
      * 注册执行引擎
      */
-    public static void register(IJtExecutor engine){
-        register(engine.language(),engine,0);
+    public static void register(IJtExecutor engine) {
+        register(engine.language(), engine, 0);
     }
 
     public static void register(String language, IJtExecutor engine, int priority) {
@@ -50,15 +56,15 @@ public class ExecutorFactory {
             return;
         }
 
-        if(language.equals(JtBridge.executorAdapter().defaultExecutor())){
-            _def =engine;
+        if (language.equals(JtBridge.executorAdapter().defaultExecutor())) {
+            _def = engine;
         }
 
-        if(ent == null) {
-            ent = new ExecutorEntity().set(language,engine, priority);
+        if (ent == null) {
+            ent = new ExecutorEntity().set(language, engine, priority);
             _map.put(language, ent);
-        }else{
-            ent.set(language,engine, priority);
+        } else {
+            ent.set(language, engine, priority);
         }
     }
 
@@ -83,11 +89,11 @@ public class ExecutorFactory {
     /**
      * 执行一段代码
      */
-    public static Object exec(String language, String code, Map<String,Object> model) throws Exception {
+    public static Object exec(String language, String code, Map<String, Object> model) throws Exception {
         IJtExecutor tmp = _map.get(language);
-        if(tmp != null){
-            return tmp.exec(code,model);
-        }else{
+        if (tmp != null) {
+            return tmp.exec(code, model);
+        } else {
             return null;
         }
     }
@@ -107,41 +113,45 @@ public class ExecutorFactory {
 
         AFileModel.currentSet(file);
 
-        ctx.charset("utf-8");
+        try {
+            ctx.charset("utf-8");
 
 
-        if (TextUtils.isEmpty(file.content_type) == false) {
-            ctx.contentType(file.content_type);
-        }
+            if (TextUtils.isEmpty(file.content_type) == false) {
+                ctx.contentType(file.content_type);
+            }
 
-        if (text != null) {
-            if (TextUtils.isEmpty(call) == false) {
-                /**
-                 * jsonp 的请求支持
-                 * */
-                StringBuilder sb = StringUtils.borrowBuilder();
-                sb.append(call).append("(").append(text).append(");");
-                text = StringUtils.releaseBuilder(sb);
-
-                ctx.contentType("application/x-javascript");
-            } else {
-                if (TextUtils.isEmpty(file.content_type)) {
+            if (text != null) {
+                if (TextUtils.isEmpty(call) == false) {
                     /**
-                     * 如果没有预设content type；则自动检测
+                     * jsonp 的请求支持
                      * */
-                    if (text.startsWith("<")) {
-                        ctx.contentType("text/html");
-                    }
+                    StringBuilder sb = StringUtils.borrowBuilder();
+                    sb.append(call).append("(").append(text).append(");");
+                    text = StringUtils.releaseBuilder(sb);
 
-                    if (text.startsWith("{")) {
-                        ctx.contentType("application/json");
+                    ctx.contentType("application/x-javascript");
+                } else {
+                    if (TextUtils.isEmpty(file.content_type)) {
+                        /**
+                         * 如果没有预设content type；则自动检测
+                         * */
+                        if (text.startsWith("<")) {
+                            ctx.contentType("text/html");
+                        }
+
+                        if (text.startsWith("{")) {
+                            ctx.contentType("application/json");
+                        }
                     }
                 }
             }
-        }
 
-        if (text != null) {
-            ctx.output(text);
+            if (text != null) {
+                ctx.output(text);
+            }
+        } finally {
+            AFileModel.currentRemove();
         }
     }
 
@@ -155,10 +165,14 @@ public class ExecutorFactory {
         if (tmp != null) {
             AFileModel.currentSet(file);
 
-            String path = file.path;
-            String name = path.replace("/", "__");
+            try {
+                String path = file.path;
+                String name = path.replace("/", "__");
 
-            return tmp.exec(name, file, ctx, null, false);
+                return tmp.exec(name, file, ctx, null, false);
+            } finally {
+                AFileModel.currentRemove();
+            }
         }
 
         return null;
