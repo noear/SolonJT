@@ -91,20 +91,23 @@ public class AConfigM {
     /**
      * 获取 db:DbContext
      */
-    private Map<String,DbContext> _dbMap = new ConcurrentHashMap<>();
+    private static Map<String,DbContext> _dbMap = new ConcurrentHashMap<>();
     public DbContext getDb() {
         return getDb(false);
     }
 
     public DbContext getDb(boolean pool) {
-        if(TextUtils.isEmpty(value)){
+        if (TextUtils.isEmpty(value)) {
             return null;
         }
 
         DbContext db = _dbMap.get(value);
-        if(db == null){
+        if (db == null) {
             db = getDbDo(pool);
-            _dbMap.putIfAbsent(value,db);
+            DbContext l = _dbMap.putIfAbsent(value, db);
+            if (l != null) {
+                db = l;
+            }
         }
         return db;
     }
