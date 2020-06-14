@@ -19,12 +19,17 @@ public class CloudJtApp {
         SolonJT.start(CloudJtApp.class, args, () -> {
             String add = XApp.cfg().argx().get("add");
             String home = XApp.cfg().argx().get("home");
+            String root = XApp.cfg().argx().get("root");
             String title = XApp.cfg().argx().get("title");
 
             PluginUtil.add(add);
 
             if (TextUtils.isEmpty(home) == false) {
                 PluginUtil.cfgSet("upassport_jump_def", home);
+            }
+
+            if (TextUtils.isEmpty(root) == false) {
+                PluginUtil.rootSet(root);
             }
 
             if (TextUtils.isEmpty(title) == false) {

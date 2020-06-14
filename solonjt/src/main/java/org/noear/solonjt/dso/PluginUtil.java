@@ -19,10 +19,24 @@ public class PluginUtil {
         return DbUtil.db();
     }
 
+    /**
+     * 修改配置
+     * */
     public static void cfgSet(String key, String val){
         try {
             JtUtil.g.cfgSet(key, val);
         }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 修改根页
+     * */
+    public static void rootSet(String path) {
+        try {
+            db().table("a_file").set("link_to", "@"+path).where("path='/'").update();
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
