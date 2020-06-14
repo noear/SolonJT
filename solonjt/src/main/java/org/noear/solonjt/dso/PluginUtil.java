@@ -45,6 +45,10 @@ public class PluginUtil {
      * 初始化调用
      * */
     public static void initCall(String path) {
+        if (TextUtils.isEmpty(path)) {
+            return;
+        }
+
         try {
             CallUtil.callFile(path, JtUtil.g.empMap());
         } catch (Exception ex) {

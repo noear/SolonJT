@@ -37,6 +37,9 @@ public class LocalJtApp{
         //移徐插件
         PluginUtil.rem(argx.get("rem"));
 
+        //::1.初始化调用
+        PluginUtil.initCall(argx.get("init"));
+
         //主页
         home = argx.get("home");
 
@@ -46,7 +49,7 @@ public class LocalJtApp{
             home = "http://localhost:" + app.port() + home;
         }
 
-        //标题
+        //::2.标题
         title = argx.get("title");
         if (TextUtils.isEmpty(title)) {
             title = "LocalJt";

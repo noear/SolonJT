@@ -25,6 +25,10 @@ public class CloudJtApp {
 
             PluginUtil.add(add);
 
+            //::1.初始化调用
+            PluginUtil.initCall(init);
+
+            //::2.
             if (TextUtils.isEmpty(home) == false) {
                 PluginUtil.initCfg("upassport_jump_def", home);
             }
@@ -32,10 +36,6 @@ public class CloudJtApp {
             if (TextUtils.isEmpty(title) == false) {
                 PluginUtil.initCfg("_frm_admin_title", title + " of solonjt");
                 PluginUtil.initCfg("ucenter__title", title);
-            }
-
-            if (TextUtils.isEmpty(init) == false) {
-                PluginUtil.initCall(init);
             }
         });
     }
