@@ -24,7 +24,7 @@ public class PluginUtil {
      * */
     public static void initRoot(String path) {
         try {
-            db().table("a_file").set("link_to", path).where("path='/'").update();
+            db().table("a_file").set("link_to", path).whereEq("path", "/").update();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
