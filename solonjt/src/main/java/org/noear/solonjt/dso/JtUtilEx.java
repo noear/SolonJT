@@ -22,7 +22,7 @@ public class JtUtilEx extends JtUtil {
     public static final JtUtilEx g2 = new JtUtilEx();
 
     @XNote("设置根路径链接")
-    public static void rootSet(String path) {
+    public void rootSet(String path) {
         PluginUtil.initRoot(path);
     }
 
