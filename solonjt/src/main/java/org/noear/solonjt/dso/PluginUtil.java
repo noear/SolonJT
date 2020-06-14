@@ -20,9 +20,20 @@ public class PluginUtil {
     }
 
     /**
-     * 修改配置
+     * 初始化根页
      * */
-    public static void cfgSet(String key, String val){
+    public static void initRoot(String path) {
+        try {
+            db().table("a_file").set("link_to", path).where("path='/'").update();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 初始化配置
+     * */
+    public static void initCfg(String key, String val){
         try {
             JtUtil.g.cfgSet(key, val);
         }catch (Exception ex){
@@ -31,11 +42,11 @@ public class PluginUtil {
     }
 
     /**
-     * 修改根页
+     * 初始化调用
      * */
-    public static void rootSet(String path) {
+    public static void initCall(String path) {
         try {
-            db().table("a_file").set("link_to", "@"+path).where("path='/'").update();
+            CallUtil.callFile(path, JtUtil.g.empMap());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -2,6 +2,7 @@ package org.noear.cloudjt;
 
 import org.noear.solon.XApp;
 import org.noear.solonjt.SolonJT;
+import org.noear.solonjt.dso.CallUtil;
 import org.noear.solonjt.dso.JtUtil;
 import org.noear.solonjt.dso.PluginUtil;
 import org.noear.solonjt.utils.TextUtils;
@@ -19,21 +20,22 @@ public class CloudJtApp {
         SolonJT.start(CloudJtApp.class, args, () -> {
             String add = XApp.cfg().argx().get("add");
             String home = XApp.cfg().argx().get("home");
-            String root = XApp.cfg().argx().get("root");
             String title = XApp.cfg().argx().get("title");
+            String init = XApp.cfg().argx().get("init");
 
             PluginUtil.add(add);
 
             if (TextUtils.isEmpty(home) == false) {
-                PluginUtil.cfgSet("upassport_jump_def", home);
-            }
-
-            if (TextUtils.isEmpty(root) == false) {
-                PluginUtil.rootSet(root);
+                PluginUtil.initCfg("upassport_jump_def", home);
             }
 
             if (TextUtils.isEmpty(title) == false) {
-                PluginUtil.cfgSet("_frm_admin_title", title + " of solonjt");
+                PluginUtil.initCfg("_frm_admin_title", title + " of solonjt");
+                PluginUtil.initCfg("ucenter__title", title);
+            }
+
+            if (TextUtils.isEmpty(init) == false) {
+                PluginUtil.initCall(init);
             }
         });
     }

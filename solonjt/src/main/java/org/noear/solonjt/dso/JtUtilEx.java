@@ -5,7 +5,6 @@ import org.noear.solonjt.Config;
 import org.noear.solonjt.event.http.FrmInterceptor;
 import org.noear.solonjt.event.http.SufHandler;
 import org.noear.solonjt.executor.ExecutorFactory;
-import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.*;
 import org.noear.solon.annotation.XNote;
@@ -22,7 +21,10 @@ import java.util.*;
 public class JtUtilEx extends JtUtil {
     public static final JtUtilEx g2 = new JtUtilEx();
 
-
+    @XNote("设置根路径")
+    public static void rootSet(String path) {
+        PluginUtil.initRoot(path);
+    }
 
     @XNote("获取菜单")
     public List<Map<String, Object>> menuGet(String label, int pid) throws Exception {
