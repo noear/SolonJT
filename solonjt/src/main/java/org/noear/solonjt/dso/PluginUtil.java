@@ -19,6 +19,14 @@ public class PluginUtil {
         return DbUtil.db();
     }
 
+    public static void cfgSet(String key, String val){
+        try {
+            JtUtil.g.cfgSet(key, val);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * 安装插件
      * */
