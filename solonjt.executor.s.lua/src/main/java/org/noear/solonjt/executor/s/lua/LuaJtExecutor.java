@@ -136,9 +136,8 @@ public class LuaJtExecutor implements IJtExecutor {
         if (isLoaded(name2) == false) {
             synchronized (name2.intern()) {
                 if (isLoaded(name2) == false) {
-                    _loaded_names.add(name2);
-
                     _eng.eval(compilerAsFun(name2, file));
+                    _loaded_names.add(name2);
                 }
             }
         }
