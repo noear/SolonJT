@@ -130,9 +130,13 @@ public class RubyJtExecutor implements IJtExecutor {
     @Override
     public boolean preLoad(String name2, AFileModel file) throws Exception {
         if (isLoaded(name2) == false) {
-            _loaded_names.add(name2);
+            synchronized (name2.intern()) {
+                if (isLoaded(name2) == false) {
+                    _loaded_names.add(name2);
 
-            _eng.eval(compilerAsFun(name2, file));
+                    _eng.eval(compilerAsFun(name2, file));
+                }
+            }
         }
 
         return true;
