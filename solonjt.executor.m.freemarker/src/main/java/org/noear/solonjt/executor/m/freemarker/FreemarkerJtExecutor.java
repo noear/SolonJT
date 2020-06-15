@@ -45,7 +45,7 @@ public class FreemarkerJtExecutor implements IJtExecutor {
 
 
         try {
-            _engine.setSharedVaribles(XApp.global().shared());
+            _engine.setSharedVariables(XApp.global().shared());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
