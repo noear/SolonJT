@@ -131,9 +131,12 @@ public class JavascriptJtExecutor implements IJtExecutor {
 
     @Override
     public  void del(String name) {
-        String name2 = name.replace(".", "_").replace("*","_");
-        _loaded_names.remove(name2);
-        _loaded_names.remove(name2 + "__lib");
+        String name2 = name.replace(".", "_").replace("*", "_");
+
+        synchronized (name2.intern()) {
+            _loaded_names.remove(name2);
+            _loaded_names.remove(name2 + "__lib");
+        }
     }
 
     @Override
