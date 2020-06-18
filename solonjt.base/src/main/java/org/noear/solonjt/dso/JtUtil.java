@@ -477,6 +477,11 @@ public class JtUtil {
         return JtBridge.cfgSet(name, value);
     }
 
+    @XNote("线程睡眠")
+    public void sleep(long millis) throws InterruptedException{
+        Thread.sleep(millis);
+    }
+
 
     @XNote("嘿嘿")
     public String heihei(String text, String... mobileS){
