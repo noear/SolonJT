@@ -2,12 +2,11 @@ package org.noear.solonjt.model;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
+import org.noear.solon.XUtil;
 import org.noear.solon.core.XMap;
-import org.noear.solonjt.utils.RunUtil;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.DbContext;
 
-import java.io.StringReader;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -68,8 +67,7 @@ public class AConfigM {
 
     public Properties getProp() {
         if (_prop == null) {
-            _prop = new Properties();
-            RunUtil.runActEx(() -> _prop.load(new StringReader(value)));
+            _prop = XUtil.getProperties(value);
         }
 
         return _prop;
