@@ -7,7 +7,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.StringReader;
 import java.util.Properties;
 
-public class PropUtils {
+public class ConfigUtils {
     public static Properties getProp(String text) {
         if (TextUtils.isEmpty(text)) {
             return new Properties();

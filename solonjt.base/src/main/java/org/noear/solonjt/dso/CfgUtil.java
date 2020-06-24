@@ -1,7 +1,7 @@
 package org.noear.solonjt.dso;
 
 import org.noear.snack.core.exts.ThData;
-import org.noear.solonjt.utils.PropUtils;
+import org.noear.solonjt.utils.ConfigUtils;
 import org.noear.solonjt.utils.TextUtils;
 
 import java.util.HashMap;
@@ -23,6 +23,6 @@ public class CfgUtil {
             return null;
         }
 
-        return PropUtils.getProp(tmp);
+        return ConfigUtils.getProp(tmp);
     }
 }

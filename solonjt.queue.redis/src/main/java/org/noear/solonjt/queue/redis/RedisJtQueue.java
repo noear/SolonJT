@@ -1,7 +1,7 @@
 package org.noear.solonjt.queue.redis;
 
 import org.noear.solonjt.dso.*;
-import org.noear.solonjt.utils.PropUtils;
+import org.noear.solonjt.utils.ConfigUtils;
 
 import java.util.Properties;
 
@@ -24,7 +24,7 @@ public class RedisJtQueue implements IJtQueue {
             prop_str = CfgUtil.cfgGetValue(cfg.substring(1));
         }
 
-        Properties prop = PropUtils.getProp(prop_str);
+        Properties prop = ConfigUtils.getProp(prop_str);
 
         if (prop != null && prop.size() >= 5) {
             JtBridge.queueFactorySet((name) -> new RedisJtQueue(name, prop));

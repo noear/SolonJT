@@ -4,7 +4,7 @@ import org.noear.solonjt.dso.CfgUtil;
 import org.noear.solonjt.dso.IJtLock;
 import org.noear.solonjt.dso.JtBridge;
 import org.noear.solonjt.dso.LogUtil;
-import org.noear.solonjt.utils.PropUtils;
+import org.noear.solonjt.utils.ConfigUtils;
 
 import java.util.Properties;
 
@@ -25,7 +25,7 @@ public class RedisJtLock implements IJtLock {
             prop_str = CfgUtil.cfgGetValue(cfg.substring(1));
         }
 
-        Properties prop = PropUtils.getProp(prop_str);
+        Properties prop = ConfigUtils.getProp(prop_str);
 
         if (prop != null && prop.size() >= 5) {
             JtBridge.lockSet(new RedisJtLock(prop));

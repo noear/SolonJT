@@ -3,7 +3,7 @@ package org.noear.solonjt.model;
 import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
 import org.noear.solon.core.XMap;
-import org.noear.solonjt.utils.PropUtils;
+import org.noear.solonjt.utils.ConfigUtils;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.DbContext;
 
@@ -67,7 +67,7 @@ public class AConfigM {
 
     public Properties getProp() {
         if (_prop == null) {
-            _prop = PropUtils.getProp(value);
+            _prop = ConfigUtils.getProp(value);
         }
 
         return _prop;
@@ -80,7 +80,7 @@ public class AConfigM {
 
     public ONode getNode() {
         if (_node == null) {
-            _node = PropUtils.getNode(value);
+            _node = ConfigUtils.getNode(value);
         }
 
         return _node;
