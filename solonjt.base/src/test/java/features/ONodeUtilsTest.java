@@ -2,13 +2,13 @@ package features;
 
 import org.junit.Test;
 import org.noear.snack.ONode;
-import org.noear.solonjt.utils.ONodeUtils;
+import org.noear.solonjt.utils.PropUtils;
 
 public class ONodeUtilsTest {
     @Test
     public void test10(){
         String prop = "user.user_id=1\nuser.name=noear";
-        ONode node = ONodeUtils.load(prop);
+        ONode node = PropUtils.getNode(prop);
 
         System.out.println(node.toJson());
 
@@ -18,7 +18,7 @@ public class ONodeUtilsTest {
     @Test
     public void test11(){
         String prop = "user_id=1\nname=noear";
-        ONode node = ONodeUtils.load(prop);
+        ONode node = PropUtils.getNode(prop);
 
         System.out.println(node.toJson());
 
@@ -28,7 +28,7 @@ public class ONodeUtilsTest {
     @Test
     public void test12(){
         String prop = "name[0]=1\nname[1]=2";
-        ONode node = ONodeUtils.load(prop);
+        ONode node = PropUtils.getNode(prop);
 
         System.out.println(node.toJson());
 
@@ -38,7 +38,7 @@ public class ONodeUtilsTest {
     @Test
     public void test13(){
         String prop = "name[1]=2\nname[0]=1";
-        ONode node = ONodeUtils.load(prop);
+        ONode node = PropUtils.getNode(prop);
 
         System.out.println(node.toJson());
 
@@ -56,7 +56,7 @@ public class ONodeUtilsTest {
                 "knowledge.init.knowledgeTitles[1].kdInfos[2]=hi\n" +
                 "knowledge.init.knowledgeTitles[1].kdTitle=无应答\n" +
                 "server.port=9001\n";
-        ONode node = ONodeUtils.load(prop);
+        ONode node = PropUtils.getNode(prop);
 
         System.out.println(node.toJson());
 
@@ -81,7 +81,7 @@ public class ONodeUtilsTest {
                 "      kdTitle: 无应答\n" +
                 "server:\n" +
                 "  port: 9001\n";
-        ONode node = ONodeUtils.load(prop);
+        ONode node = PropUtils.getNode(prop);
 
         System.out.println(node.toJson());
 
