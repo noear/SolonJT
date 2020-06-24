@@ -27,7 +27,7 @@ public class MarkdownUtils {
 
         HtmlRenderer renderer = HtmlRenderer.builder(options).build();
 
-        Document document = parser.parse(markdown.replaceAll("\t","    "));
+        Document document = parser.parse(markdown);
 
         String html = renderer.render(document);
 
