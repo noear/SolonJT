@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.noear.snack.ONode;
 import org.noear.solon.XUtil;
 import org.noear.solon.core.XMap;
+import org.noear.solonjt.utils.ONodeUtils;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.DbContext;
 
@@ -80,7 +81,7 @@ public class AConfigM {
 
     public ONode getNode() {
         if (_node == null) {
-            _node = ONode.load(value);
+            _node = ONodeUtils.load(value);
         }
 
         return _node;

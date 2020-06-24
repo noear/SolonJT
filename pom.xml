@@ -62,6 +62,12 @@
 
             <dependency>
                 <groupId>org.noear</groupId>
+                <artifactId>solon.extend.properties.yaml</artifactId>
+                <version>${solon.ver}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.noear</groupId>
                 <artifactId>solonjt.base</artifactId>
                 <version>${solonjt.ver}</version>
             </dependency>

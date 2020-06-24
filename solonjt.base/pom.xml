@@ -21,6 +21,11 @@
         </dependency>
         <dependency>
             <groupId>org.noear</groupId>
+            <artifactId>solon.extend.properties.yaml</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.noear</groupId>
             <artifactId>weed3</artifactId>
             <scope>provided</scope>
         </dependency>
