@@ -4,7 +4,9 @@ import org.junit.Test;
 import org.noear.snack.ONode;
 import org.noear.solonjt.utils.ConfigUtils;
 
-public class ONodeUtilsTest {
+import java.util.Properties;
+
+public class ConfigUtilsTest {
     @Test
     public void test10(){
         String prop = "user.user_id=1\nuser.name=noear";
@@ -62,6 +64,25 @@ public class ONodeUtilsTest {
 
         assert node.select("app.id").getString().equals("speech");
         assert node.select("knowledge.init.knowledgeTitles[1].kdInfos").count()==3;
+    }
+
+    @Test
+    public void test1x2(){
+        String prop = "server.port=9001\n" +
+                "app.id=speech\n" +
+                "knowledge.init.knowledgeTitles[0].kdTitle=听不清\n" +
+                "knowledge.init.knowledgeTitles[0].keyWords=[你说什么，没听清，听不清楚，再说一遍]\n" +
+                "knowledge.init.knowledgeTitles[0].question=[没听懂，听不清楚]\n" +
+                "knowledge.init.knowledgeTitles[1].kdTitle=无应答\n" +
+                "knowledge.init.knowledgeTitles[1].kdInfos[0]=你好\n" +
+                "knowledge.init.knowledgeTitles[1].kdInfos[1]=hello\n" +
+                "knowledge.init.knowledgeTitles[1].kdInfos[2]=hi";
+        Properties node = ConfigUtils.getProp(prop);
+
+        System.out.println(node);
+
+        assert node.getProperty("app.id").equals("speech");
+        assert node.getProperty("knowledge.init.knowledgeTitles[1].kdInfos[0]").equals("你好");
     }
 
     @Test
