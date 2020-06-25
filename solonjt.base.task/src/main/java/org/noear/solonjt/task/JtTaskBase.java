@@ -2,20 +2,16 @@ package org.noear.solonjt.task;
 
 import org.noear.snack.ONode;
 import org.noear.solon.XUtil;
+import org.noear.solonjt.JtConfig;
 import org.noear.solonjt.dso.CfgUtil;
 import org.noear.solonjt.dso.JtBridge;
-import org.noear.solonjt.task.IJtTask;
 import org.noear.solonjt.utils.TextUtils;
-
-import java.util.concurrent.*;
 
 public abstract class JtTaskBase implements IJtTask {
     protected JtTaskBase(String name, int interval) {
         _name = name;
         _interval = interval;
         _interval_bak = interval;
-
-        poolInit();
     }
 
     protected String _name;
@@ -33,37 +29,11 @@ public abstract class JtTaskBase implements IJtTask {
         return _node_id;
     }
 
-    //线程池
-    protected ThreadPoolExecutor _pool;
-    private void poolInit(){
-//        int corePoolSize = 0;
-//        int maximumPoolSize = 0;
-//        long keepAliveTime = 0;
-//        ONode cfg = node_cfg();
-//        if (cfg != null) {
-//            ONode cfg2 = cfg.get(getName());
-//            if (cfg2 != null) {
-//                corePoolSize = cfg2.get("corePoolSize").getInt();
-//                maximumPoolSize = cfg2.get("maximumPoolSize").getInt();
-//                keepAliveTime = cfg2.get("keepAliveTime").getInt();
-//
-//            }
-//        }
-//
-//        _pool = new ThreadPoolExecutor(
-//                (corePoolSize > 0 ? corePoolSize : 8),
-//                (maximumPoolSize > 0 ? maximumPoolSize : 8),
-//                (keepAliveTime > 0 ? keepAliveTime : 10),
-//                TimeUnit.SECONDS,
-//                new LinkedBlockingQueue<>(),
-//                Executors.defaultThreadFactory(), (c, e) -> {
-//            e.getQueue().add(c);
-//        });
-    }
+
 
     public void poolExecute(Runnable runnable){
-//        _pool.execute(runnable);
-        new Thread(runnable).start();
+        JtConfig.pools.execute(runnable);
+        //new Thread(runnable).start();
     }
 
 
