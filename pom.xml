@@ -242,6 +242,7 @@
         <module>custom/thinkjt.extend.flexmark</module>
         <module>custom/thinkjt.extend.jsoup</module>
         <module>custom/thinkjt.extend.hanlp</module>
+        <module>custom/thinkjt.extend.diff</module>
 
         <module>custom/thinkjt.extend.sited</module>
         <module>custom/cloudjt</module>
