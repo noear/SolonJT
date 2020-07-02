@@ -1,19 +1,20 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solon.core.XContext;
 import org.noear.solonjt.Config;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.model.AConfigM;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.model.AImageModel;
 import org.noear.solonjt.utils.Datetime;
+import org.noear.solonjt.utils.EventPipeline;
 import org.noear.solonjt.utils.TextUtils;
-import org.noear.solon.core.XContext;
+import org.noear.weed.DataItem;
 import org.noear.weed.DbContext;
 import org.noear.weed.DbTableQuery;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -310,36 +311,49 @@ public class DbApi {
         return is_ok;
     }
 
+    /**
+     * 将日志改为管道模式
+     * */
+
+    private static final EventPipeline<DataItem> logPipeline = new EventPipeline<>((list) -> {
+        logAll(list);
+    });
+
+
     public static boolean log(Map<String, Object> data) {
-        Map<String, Object> map = new HashMap<>();
 
+        Datetime datetime = Datetime.Now();
 
-        map.put("tag", data.get("tag"));
-        map.put("tag1", data.get("tag1"));
-        map.put("tag2", data.get("tag2"));
-        map.put("tag3", data.get("tag3"));
-        map.put("tag4", data.get("tag4"));
-        map.put("summary", data.get("summary"));
-        map.put("content", data.get("content"));
+        DataItem dm = new DataItem();
 
-        if(data.containsKey("from")) {
-            map.put("from", data.get("from"));
-        }else{
-            map.put("from", JtBridge.nodeId());
+        dm.set("tag", data.get("tag"));
+        dm.set("tag1", data.get("tag1"));
+        dm.set("tag2", data.get("tag2"));
+        dm.set("tag3", data.get("tag3"));
+        dm.set("tag4", data.get("tag4"));
+        dm.set("summary", data.get("summary"));
+        dm.set("content", data.get("content"));
+
+        if (data.containsKey("from")) {
+            dm.set("from", data.get("from"));
+        } else {
+            dm.set("from", JtBridge.nodeId());
         }
 
-        map.put("level", data.get("level"));
-        map.put("log_date", Datetime.Now().getDate());
-        map.put("log_fulltime", "$NOW()");
+        dm.set("level", data.get("level"));
+        dm.set("log_date", datetime.getDate());
+        dm.set("log_fulltime", datetime.getFulltime());
 
+        logPipeline.add(dm);
+
+        return true;
+    }
+
+    public static void logAll(List<DataItem> list) {
         try {
-            db().table("a_log")
-                    .setMap(map)
-                    .insert();
-            return true;
+            db().table("a_log").insertList(list);
         } catch (Exception ex) {
             ex.printStackTrace();
-            return false;
         }
     }
 }
