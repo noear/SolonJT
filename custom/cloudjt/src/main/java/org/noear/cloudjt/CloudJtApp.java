@@ -8,11 +8,15 @@ import org.noear.weed.WeedConfig;
 
 public class CloudJtApp {
     public static void main(String[] args) {
-        WeedConfig.onExecuteBef((cmd) -> {
-            System.out.println(cmd.text);
-            System.out.println(cmd.paramMap());
-            return true;
+        WeedConfig.onException((cmd, err) -> {
+            err.printStackTrace();
         });
+
+//        WeedConfig.onExecuteBef((cmd) -> {
+//            System.out.println(cmd.text);
+//            System.out.println(cmd.paramMap());
+//            return true;
+//        });
 
 
         SolonJT.start(CloudJtApp.class, args, () -> {

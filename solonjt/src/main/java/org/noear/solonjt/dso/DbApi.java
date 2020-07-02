@@ -326,18 +326,18 @@ public class DbApi {
 
         DataItem dm = new DataItem();
 
-        dm.set("tag", data.get("tag"));
-        dm.set("tag1", data.get("tag1"));
-        dm.set("tag2", data.get("tag2"));
-        dm.set("tag3", data.get("tag3"));
-        dm.set("tag4", data.get("tag4"));
-        dm.set("summary", data.get("summary"));
-        dm.set("content", data.get("content"));
+        dm.setDf("tag", data.get("tag"),"");
+        dm.setDf("tag1", data.get("tag1"),"");
+        dm.setDf("tag2", data.get("tag2"),"");
+        dm.setDf("tag3", data.get("tag3"),"");
+        dm.setDf("tag4", data.get("tag4"),"");
+        dm.setDf("summary", data.get("summary"),"");
+        dm.setDf("content", data.get("content"),"");
 
         if (data.containsKey("from")) {
-            dm.set("from", data.get("from"));
+            dm.setDf("from", data.get("from"),"");
         } else {
-            dm.set("from", JtBridge.nodeId());
+            dm.setDf("from", JtBridge.nodeId(),"");
         }
 
         dm.set("level", data.get("level"));
