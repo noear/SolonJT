@@ -469,6 +469,11 @@ public class JtUtil {
         return new AConfigM(tmp);
     }
 
+    @XNote("转换为配置对象")
+    public AConfigM cfgOf(String value){
+        return new AConfigM(value);
+    }
+
     /**
      * 配置设置
      */
