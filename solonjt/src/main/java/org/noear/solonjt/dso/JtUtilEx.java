@@ -299,7 +299,7 @@ public class JtUtilEx extends JtUtil {
     }
 
     @Override
-    protected Map<String, Object> addInterfaceList() {
+    protected Map<String, Object> ridGet() {
         _ridS.put("XUtil.thumbnailOf(stream)", Thumbnails.Builder.class);
         return _ridS;
     }

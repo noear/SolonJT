@@ -497,11 +497,11 @@ public class JtUtil {
 
     protected Map<String, Object> _ridS = new ConcurrentHashMap<>();
     @XNote("添加参考接口字典")
-    public void addRID(String key, Object obj) {
+    public void ridAdd(String key, Object obj) {
         _ridS.putIfAbsent(key, obj);
     }
 
-    protected Map<String, Object> addInterfaceList(){
+    protected Map<String, Object> ridGet(){
         return _ridS;
     }
 
@@ -526,7 +526,7 @@ public class JtUtil {
         tmp.put("new Timecount()", Timecount.class);
         tmp.put("new Timespan(date)", Timespan.class);
 
-        Map<String, Object> tmp2 = addInterfaceList();
+        Map<String, Object> tmp2 = ridGet();
         if(tmp2 != null){
             tmp.putAll(tmp2);
         }

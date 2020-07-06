@@ -44,7 +44,7 @@ public class MethodUtils {
         }
 
         List<Method> mlist = new ArrayList<>();
-        for (Method m : cls.getDeclaredMethods()) {
+        for (Method m : cls.getMethods()) {
             if (Modifier.isPublic(m.getModifiers()) == false) {
                 continue;
             } else {
