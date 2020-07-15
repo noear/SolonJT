@@ -4,6 +4,7 @@ import org.noear.localjt.dso.WebShell;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
+import org.noear.solonjt.dso.JtUtilEx;
 import org.noear.solonjt.dso.PluginUtil;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.WeedConfig;
@@ -39,6 +40,9 @@ public class LocalJtApp{
 
         //::1.初始化调用
         PluginUtil.initCall(argx.get("init"));
+
+        //::2.重启数据
+        JtUtilEx.g2.restart();
 
         //主页
         home = argx.get("home");

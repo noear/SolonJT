@@ -2,6 +2,7 @@ package org.noear.cloudjt;
 
 import org.noear.solon.XApp;
 import org.noear.solonjt.SolonJT;
+import org.noear.solonjt.dso.JtUtilEx;
 import org.noear.solonjt.dso.PluginUtil;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.WeedConfig;
@@ -26,12 +27,13 @@ public class CloudJtApp {
 
             String init = XApp.cfg().argx().get("init");
 
+            //::0.安装插件
             PluginUtil.add(add);
 
             //::1.初始化调用
             PluginUtil.initCall(init);
 
-            //::2.
+            //::2.初始化配置
             if (TextUtils.isEmpty(home) == false) {
                 PluginUtil.initCfg("upassport_jump_def", home);
             }
@@ -40,6 +42,9 @@ public class CloudJtApp {
                 PluginUtil.initCfg("_frm_admin_title", title + " of solonjt");
                 PluginUtil.initCfg("ucenter__title", title);
             }
+
+            //::3.重启数据
+            JtUtilEx.g2.restart();
         });
     }
 }
