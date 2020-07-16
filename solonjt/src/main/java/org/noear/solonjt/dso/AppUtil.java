@@ -75,10 +75,10 @@ public class AppUtil {
 
                 ctx.outputAsJson(rst.toJson());
 
-                new Thread(() -> {
+                //new Thread(() -> {
                     XApp.global().router().clear();
                     AppUtil.runAsWork(XApp.global());
-                }).start();
+                //}).start();
             } catch (Throwable ex) {
                 ctx.outputAsJson(new ONode()
                         .set("code",0)

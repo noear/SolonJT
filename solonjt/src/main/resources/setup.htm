@@ -105,10 +105,9 @@
                 url:"/setup.jsx",
                 type:"POST",
                 data:vm,
-                complete:function(){
-                    layer.close(load_idx);
-                },
                 success:function(data){
+                    layer.close(load_idx);
+
                     if(data.code==1){
                         layer.msg('操作成功');
                         window.setTimeout(function(){
@@ -117,7 +116,7 @@
                             }else {
                                 self.location = "/.admin/?_L0n5=" + data.token;
                             }
-                        },2000);
+                        },1000);
                     }else{
                         if(data.msg){
                             layer.msg(data.msg);
