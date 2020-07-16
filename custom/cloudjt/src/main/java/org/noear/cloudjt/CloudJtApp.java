@@ -13,13 +13,6 @@ public class CloudJtApp {
             err.printStackTrace();
         });
 
-//        WeedConfig.onExecuteBef((cmd) -> {
-//            System.out.println(cmd.text);
-//            System.out.println(cmd.paramMap());
-//            return true;
-//        });
-
-
         SolonJT.start(CloudJtApp.class, args, () -> {
             String add = XApp.cfg().argx().get("add");
             String home = XApp.cfg().argx().get("home");

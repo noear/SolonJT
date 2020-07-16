@@ -340,7 +340,8 @@ public class DbApi {
             dm.setDf("from", JtBridge.nodeId(),"");
         }
 
-        dm.set("level", data.get("level"));
+        dm.setDf("level", data.get("level"),0);
+
         dm.set("log_date", datetime.getDate());
         dm.set("log_fulltime", datetime.getFulltime());
 
