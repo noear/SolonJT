@@ -124,7 +124,7 @@ public class AppUtil {
         //4.踪跟WEED异常
         do_weedTrack();
 
-        CallUtil.callLabel(null, "hook.start", false, null);
+        //CallUtil.callLabel(null, "hook.start", false, null);
 
         //5.加载完成事件
         SolonJT.onLoad();
