@@ -129,7 +129,7 @@ public class AppUtil {
         //5.加载完成事件
         SolonJT.onLoad();
 
-        //6.执行完后，再运行一次
+        //6.执行完后，运行勾子
         CallUtil.callLabel(null, "hook.start", false, null);
     }
 
