@@ -112,8 +112,12 @@
                     if(data.code==1){
                         layer.msg('操作成功');
                         window.setTimeout(function(){
-                            self.location="/.admin/?_L0n5="+data.token;
-                        },1000);
+                            if(data.home){
+                                self.location = data.home;
+                            }else {
+                                self.location = "/.admin/?_L0n5=" + data.token;
+                            }
+                        },2000);
                     }else{
                         if(data.msg){
                             layer.msg(data.msg);

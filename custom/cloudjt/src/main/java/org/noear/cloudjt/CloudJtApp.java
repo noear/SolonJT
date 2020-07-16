@@ -28,7 +28,8 @@ public class CloudJtApp {
 
             //::2.初始化配置
             if (TextUtils.isEmpty(home) == false) {
-                PluginUtil.initCfg("upassport_jump_def", home);
+                //JtUtilEx.g2.rootSet(home);
+                //PluginUtil.initCfg("upassport_jump_def", home);
             }
 
             if (TextUtils.isEmpty(title) == false) {

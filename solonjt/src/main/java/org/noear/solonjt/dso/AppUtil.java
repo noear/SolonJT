@@ -71,6 +71,7 @@ public class AppUtil {
                 ONode rst = new ONode();
                 rst.set("code",1);
                 rst.set("token",_token);
+                rst.set("home",XApp.cfg().argx().get("home"));
 
                 ctx.outputAsJson(rst.toJson());
 
