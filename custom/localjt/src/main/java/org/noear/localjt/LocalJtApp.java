@@ -22,13 +22,18 @@ public class LocalJtApp{
 
         XApp app = SolonJT.start(LocalJtApp.class, args);
 
-        app.sharedAdd("__solonjt_standalone_model",1);
-
         app.onError((ctx, err) -> {
             err.printStackTrace();
         });
 
         XMap argx = app.prop().argx();
+
+        if(argx.getInt("server") != 2) {
+            //
+            //server: 0,个人app；1,个人网站；2,多人网站
+            //
+            app.sharedAdd("__solonjt_standalone_model", 1);
+        }
 
         //添加插件
         plugin_add = argx.get("add");
