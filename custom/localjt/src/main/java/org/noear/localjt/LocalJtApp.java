@@ -28,7 +28,7 @@ public class LocalJtApp{
 
         XMap argx = app.prop().argx();
 
-        if(argx.getInt("server") != 2) {
+        if(argx.getInt("model") != 2) {
             //
             //server: 0,个人app；1,个人网站；2,多人网站
             //
@@ -64,7 +64,7 @@ public class LocalJtApp{
             title = "LocalJt";
         }
 
-        if(argx.getInt("server") == 0) {
+        if(argx.getInt("model") == 0) {
             new Thread(() -> {
                 WebShell.start(args);
             }).start();
