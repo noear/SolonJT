@@ -20,7 +20,30 @@ public class LocalJtApp{
             err.printStackTrace();
         });
 
-        XApp app = SolonJT.start(LocalJtApp.class, args);
+        XApp app = SolonJT.start(LocalJtApp.class, args,()->{
+            XMap argx = XApp.cfg().argx();
+
+            if(argx.getInt("model") != 2) {
+                //
+                //server: 0,个人app；1,个人网站；2,多人网站
+                //
+                XApp.global().sharedAdd("__solonjt_standalone_model", 1);
+            }
+
+            //添加插件
+            plugin_add = argx.get("add");
+            PluginUtil.add(plugin_add);
+            //添加插件
+            PluginUtil.udp(argx.get("upd"));
+            //移徐插件
+            PluginUtil.rem(argx.get("rem"));
+
+            //::1.初始化调用
+            PluginUtil.initCall(argx.get("init"));
+
+            //::2.重启数据
+            JtUtilEx.g2.restart();
+        });
 
         app.onError((ctx, err) -> {
             err.printStackTrace();
@@ -28,26 +51,6 @@ public class LocalJtApp{
 
         XMap argx = app.prop().argx();
 
-        if(argx.getInt("model") != 2) {
-            //
-            //server: 0,个人app；1,个人网站；2,多人网站
-            //
-            app.sharedAdd("__solonjt_standalone_model", 1);
-        }
-
-        //添加插件
-        plugin_add = argx.get("add");
-        PluginUtil.add(plugin_add);
-        //添加插件
-        PluginUtil.udp(argx.get("upd"));
-        //移徐插件
-        PluginUtil.rem(argx.get("rem"));
-
-        //::1.初始化调用
-        PluginUtil.initCall(argx.get("init"));
-
-        //::2.重启数据
-        JtUtilEx.g2.restart();
 
         //主页
         home = argx.get("home");
