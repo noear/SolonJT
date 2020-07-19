@@ -126,7 +126,7 @@ public class DbMsgApi {
                     .set("file_id", subs.file_id)
                     .set("receive_url", subs.path)
                     .set("receive_way", 0)
-                    .set("log_date", "$DATE(NOW())")
+                    .set("log_date", Datetime.Now().getDate())
                     .set("log_fulltime", "$NOW()")
                     .insert();
         }

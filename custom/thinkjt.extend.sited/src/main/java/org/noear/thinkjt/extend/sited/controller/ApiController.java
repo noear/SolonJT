@@ -158,7 +158,7 @@ public class ApiController {
                 temp.set("ver", ctx.param("sd_ver"));
                 temp.set("url", ctx.param("sd_url"));
                 temp.set("url_md5", ctx.param("sd_url_md5"));
-                temp.set("log_date", Datetime.Now().toString("yyyyMMdd"));
+                temp.set("log_date", Datetime.Now().getDate());
                 temp.set("log_fulltime", Datetime.Now().toString("yyyy-MM-dd HH:mm:ss"));
 
                 DbUtil.db().table("sited_logs").insert(temp);
