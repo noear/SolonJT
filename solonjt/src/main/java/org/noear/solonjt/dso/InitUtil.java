@@ -153,7 +153,7 @@ public class InitUtil {
                 "  KEY `IX_a_menu__label` (`label`) USING BTREE\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='jt-菜单表' ");
 
-        do_initDbTable(" CREATE TABLE IF NOT EXISTS CREATE TABLE `a_message` (\n" +
+        do_initDbTable(" CREATE TABLE IF NOT EXISTS `a_message` (\n" +
                 "  `msg_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '消息ID',\n" +
                 "  `topic` varchar(100) NOT NULL DEFAULT '' COMMENT '主题',\n" +
                 "  `topic_source` varchar(100) DEFAULT NULL COMMENT '原始主题',\n" +
