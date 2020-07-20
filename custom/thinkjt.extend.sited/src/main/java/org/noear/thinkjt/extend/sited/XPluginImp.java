@@ -10,11 +10,11 @@ import org.noear.weed.cache.ICacheServiceEx;
 public class XPluginImp implements XPlugin {
     @Override
     public void start(XApp app) {
-        app.sharedGet("db",(DbContext db)->{
+        app.sharedGet("db", (DbContext db) -> {
             DbUtil.setDefDb(db);
         });
 
-        app.sharedGet("cache",(ICacheServiceEx cache)->{
+        app.sharedGet("cache", (ICacheServiceEx cache) -> {
             DbUtil.setDefCache(cache);
         });
 
