@@ -1,11 +1,11 @@
 package org.noear.solonjt.queue.redis;
 
-import org.noear.solon.ext.Act1;
-import org.noear.solon.ext.Fun1;
 import org.noear.solonjt.utils.TextUtils;
 import redis.clients.jedis.*;
 
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Redis 使用类
@@ -89,22 +89,22 @@ class RedisX {
         return new RedisUsing(jx);
     }
 
-    public void open0(Act1<RedisUsing> using){
+    public void open0(Consumer<RedisUsing> using){
         RedisUsing ru = doOpen();
 
         try {
-            using.run(ru);
+            using.accept(ru);
         }finally {
             ru.close();
         }
     }
 
-    public <T> T open1(Fun1<RedisUsing,T> using){
+    public <T> T open1(Function<RedisUsing,T> using){
         RedisUsing ru = doOpen();
 
         T temp;
         try {
-            temp = using.run(ru);
+            temp = using.apply(ru);
         }finally {
             ru.close();
         }
@@ -316,10 +316,12 @@ class RedisX {
         public long hashVal(String field) {
             String temp = client.hget(_key, field);
 
-            if(TextUtils.isEmpty(temp))
+            if(TextUtils.isEmpty(temp)) {
                 return 0;
-            else
+            }
+            else {
                 return Long.parseLong(temp);
+            }
         }
 
         public Map<String,String> hashGetAll() {
