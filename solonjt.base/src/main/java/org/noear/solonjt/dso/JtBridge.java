@@ -1,24 +1,24 @@
 package org.noear.solonjt.dso;
 
-import org.noear.solon.ext.Fun1;
 import org.noear.solonjt.executor.IJtConfigAdapter;
 import org.noear.solonjt.executor.IJtExecutorAdapter;
 import org.noear.solonjt.model.AFileModel;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class JtBridge {
     private static IJtConfigAdapter _configAdapter;
     private static IJtExecutorAdapter _executorAdapter;
     private static IJtLock _lock = new DefaultJtLock();
-    private static Fun1<String, IJtQueue> _queueFactory = (name) -> new DefaultJtQueue(name);
+    private static Function<String, IJtQueue> _queueFactory = (name) -> new DefaultJtQueue(name);
     private static Map<String, IJtQueue> _queueMap = new HashMap<>();
 
     /**
      * 设置队列工厂
      */
-    public static void queueFactorySet(Fun1<String, IJtQueue> queueFactory) {
+    public static void queueFactorySet(Function<String, IJtQueue> queueFactory) {
         _queueFactory = queueFactory;
     }
 
@@ -103,7 +103,7 @@ public class JtBridge {
             synchronized (_queueMap) {
                 tmp = _queueMap.get(name);
                 if (tmp == null) {
-                    tmp = _queueFactory.run(name);
+                    tmp = _queueFactory.apply(name);
                     _queueMap.put(name, tmp);
                 }
             }

@@ -1,7 +1,8 @@
 package org.luaj.vm2;
 
-import org.noear.solon.ext.Act1;
-import org.noear.solon.ext.Act2;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class LuaTableEx  {
     public LuaValue[] array;
@@ -14,23 +15,23 @@ public class LuaTableEx  {
         hashEntries = tb.hashEntries;
     }
 
-    public void hashForEach(Act2<String,LuaValue> fun){
+    public void hashForEach(BiConsumer<String,LuaValue> fun){
         for(int i=0, len = hash.length; i<len; i++) {
             LuaTable.Slot tmp0 = hash[i];
             while (tmp0 != null) {
                 LuaTable.StrongSlot tmp = tmp0.first();
-                fun.run(tmp.key().toString(), tmp.value());
+                fun.accept(tmp.key().toString(), tmp.value());
 
                 tmp0 = tmp0.rest();
             }
         }
     }
 
-    public void arrayForEach(Act1<LuaValue> fun){
+    public void arrayForEach(Consumer<LuaValue> fun){
         for(int i=0,len=array.length; i<len; i++){
             LuaValue tmp = array[i];
             if(tmp!=null) {
-                fun.run(tmp);
+                fun.accept(tmp);
             }
         }
     }

@@ -1,12 +1,10 @@
 package org.noear.solonjt.utils;
 
-
-import org.noear.solon.ext.Act1;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.function.Consumer;
 
 /**
  * 写入时，先写到队列
@@ -20,15 +18,15 @@ public class EventPipeline<Event> implements TaskUtils.ITask {
     private int packetSize = 100; //必须大于100
     private int packetSize_min = 100; //必须大于100
 
-    private Act1<List<Event>> handler; //不要用Act1Ex
+    private Consumer<List<Event>> handler; //不要用Act1Ex
 
-    public EventPipeline(Act1<List<Event>> handler) {
+    public EventPipeline(Consumer<List<Event>> handler) {
         this.handler = handler;
 
         TaskUtils.run(this);
     }
 
-    public EventPipeline(long interval,int packetSize, Act1<List<Event>> handler) {
+    public EventPipeline(long interval,int packetSize, Consumer<List<Event>> handler) {
         this.handler = handler;
 
         setInterval(interval);
@@ -85,7 +83,7 @@ public class EventPipeline<Event> implements TaskUtils.ITask {
             collectDo(list);
 
             if (list.size() > 0) {
-                handler.run(list);
+                handler.accept(list);
             } else {
                 break;
             }
