@@ -87,7 +87,7 @@ public class JavascriptJtExecutor implements IJtExecutor {
 
             sb.append("function stringify_java(k,v){if(v){if(v.getTicks){return v.getTicks()}if(v.getTime){return v.getTime()}if(v.putAll){var obj={};v.forEach(function(k2,v2){obj[k2]=v2});return obj}if(v.addAll){var ary=[];v.forEach(function(v2){ary.push(v2)});return ary}}return v};\n");
 
-            sb.append("function API_RUN(api){var rst=api(XContext.current());if(exp===null){return null}else{if(typeof(rst)=='object'){return JSON.stringify(rst,stringify_java)}else{return rst}}};\n");
+            sb.append("function API_RUN(api){var rst=api(XContext.current());if(rst===null){return null}else{if(typeof(rst)=='object'){return JSON.stringify(rst,stringify_java)}else{return rst}}};\n");
 
             _eng.eval(sb.toString());
 
