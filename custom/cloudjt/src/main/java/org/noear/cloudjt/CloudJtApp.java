@@ -1,5 +1,7 @@
 package org.noear.cloudjt;
 
+import org.noear.snack.core.Constants;
+import org.noear.snack.core.Feature;
 import org.noear.solon.XApp;
 import org.noear.solonjt.SolonJT;
 import org.noear.solonjt.dso.JtUtilEx;
@@ -9,6 +11,12 @@ import org.noear.weed.WeedConfig;
 
 public class CloudJtApp {
     public static void main(String[] args) {
+        Constants.features_serialize = Feature.of(
+                Feature.OrderedField,
+                Feature.BrowserCompatible,
+                Feature.WriteClassName,
+                Feature.QuoteFieldNames);
+
         WeedConfig.onException((cmd, err) -> {
             err.printStackTrace();
         });

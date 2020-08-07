@@ -1,6 +1,8 @@
 package org.noear.localjt;
 
 import org.noear.localjt.dso.WebShell;
+import org.noear.snack.core.Constants;
+import org.noear.snack.core.Feature;
 import org.noear.solon.XApp;
 import org.noear.solon.core.XMap;
 import org.noear.solonjt.SolonJT;
@@ -16,7 +18,14 @@ public class LocalJtApp{
     public static String plugin_add;
 
     public static void main(String[] args) {
+        Constants.features_serialize = Feature.of(
+                Feature.OrderedField,
+                Feature.BrowserCompatible,
+                Feature.WriteClassName,
+                Feature.QuoteFieldNames);
+
         WeedConfig.onException((cmd, err) -> {
+            System.out.println(cmd.text2());
             err.printStackTrace();
         });
 
