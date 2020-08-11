@@ -54,7 +54,7 @@ public class LocalJtApp{
             JtUtilEx.g2.restart();
         });
 
-        app.onError((ctx, err) -> {
+        app.onError((err) -> {
             err.printStackTrace();
         });
 
