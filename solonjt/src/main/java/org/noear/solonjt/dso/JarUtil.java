@@ -88,7 +88,7 @@ public class JarUtil {
 
             //尝试加载插件类
             if (TextUtils.isEmpty(xPlugin) == false) {
-                XPlugin p1 = newClass(xPlugin);
+                XPlugin p1 = newInstance(xPlugin);
                 if (p1 != null) {
                     XApp.global().plug(p1);
                     return false;
@@ -101,7 +101,7 @@ public class JarUtil {
         return true;
     }
 
-    public static <T> T newClass(String className) {
-        return XUtil.newClass(className);
+    public static <T> T newInstance(String className) {
+        return XUtil.newInstance(className);
     }
 }
