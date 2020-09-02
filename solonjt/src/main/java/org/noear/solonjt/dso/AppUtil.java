@@ -171,7 +171,7 @@ public class AppUtil {
             }
 
             if(cmd.timespan()>1000){
-                LogUtil.log("weed", "slow_log",LogLevel.ERROR, cmd.timespan()+"ms", cmd.text);
+                LogUtil.log("weed", "slow_log",LogLevel.WARN, cmd.timespan()+"ms", cmd.text);
             }
         });
     }

@@ -57,7 +57,7 @@ public class HeiheiApi {
         try {
             rest = HttpUtils.http(apiUrl).headers(headers).bodyTxt(message, "text/plain").post();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
             LogUtil.log("heihei", LogLevel.ERROR, ExceptionUtils.getString(ex));
         }
 

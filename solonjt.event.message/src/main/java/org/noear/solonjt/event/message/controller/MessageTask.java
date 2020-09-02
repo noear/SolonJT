@@ -138,7 +138,7 @@ public class MessageTask extends JtTaskBase {
             }
 
         } catch (Throwable ex) {
-            distributeMessage_log(msg, dist, ExceptionUtils.getString(ex));
+            distributeMessage_log_err(msg, dist, ex);
             callback.run(tag, dist, false);
         }
     }
@@ -215,6 +215,18 @@ public class MessageTask extends JtTaskBase {
                 msg.topic,
                 msg.msg_id + "",
                 LogLevel.INFO,
+                msg.content,
+                dist.receive_url + ":" + note);
+    }
+
+    private void distributeMessage_log_err(AMessageModel msg, AMessageDistributionModel dist, Throwable err) {
+        String note = ExceptionUtils.getString(err);
+
+        LogUtil.log(getName(),
+                "distributeMessage",
+                msg.topic,
+                msg.msg_id + "",
+                LogLevel.ERROR,
                 msg.content,
                 dist.receive_url + ":" + note);
     }
