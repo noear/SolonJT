@@ -3,6 +3,7 @@ package org.noear.solonjt;
 import org.noear.solonjt.dso.*;
 import org.noear.solon.XApp;
 import org.noear.solon.core.*;
+import org.noear.solonjt.utils.ExceptionUtils;
 import org.noear.solonjt.utils.TextUtils;
 import org.noear.weed.ext.Act0;
 import org.noear.weed.xml.XmlSqlLoader;
@@ -64,6 +65,9 @@ public class SolonJT {
 
             //不再支持
             x.sharedAdd("XBus", JtMsg.g);//为兼容旧版本
+        }).onError((err)->{
+            String txt = ExceptionUtils.getString(err);
+            LogUtil.log("XAPP",LogLevel.ERROR, txt);
         });
 
         //4.1.加载自己的bean
