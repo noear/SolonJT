@@ -172,6 +172,6 @@ public class ScheduleTask extends JtTaskBase {
 
         DbApi.taskSetState(task, 9);
 
-        LogUtil.log(getName(), task.tag, task.path, task.file_id + "", LogLevel.INFO, "", "执行成功");
+        LogUtil.log(getName(), task.tag, task.path, task.file_id + "", LogLevel.TRACE, "", "执行成功");
     }
 }

@@ -214,7 +214,7 @@ public class MessageTask extends JtTaskBase {
                 "distributeMessage",
                 msg.topic,
                 msg.msg_id + "",
-                LogLevel.INFO,
+                LogLevel.TRACE,
                 msg.content,
                 dist.receive_url + ":" + note);
     }
