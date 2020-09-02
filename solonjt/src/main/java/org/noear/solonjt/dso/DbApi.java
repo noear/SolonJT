@@ -1,5 +1,6 @@
 package org.noear.solonjt.dso;
 
+import org.noear.solon.XApp;
 import org.noear.solon.core.XContext;
 import org.noear.solonjt.Config;
 import org.noear.solonjt.executor.ExecutorFactory;
@@ -323,31 +324,32 @@ public class DbApi {
     public static boolean log(Map<String, Object> data) {
 
         Datetime datetime = Datetime.Now();
-
         DataItem dm = new DataItem();
 
-        dm.setDf("tag", data.get("tag"),"");
-        dm.setDf("tag1", data.get("tag1"),"");
-        dm.setDf("tag2", data.get("tag2"),"");
-        dm.setDf("tag3", data.get("tag3"),"");
-        dm.setDf("tag4", data.get("tag4"),"");
-        dm.setDf("summary", data.get("summary"),"");
-        dm.setDf("content", data.get("content"),"");
+        Object content = data.get("content");
+
+        dm.setDf("tag", data.get("tag"), "");
+        dm.setDf("tag1", data.get("tag1"), "");
+        dm.setDf("tag2", data.get("tag2"), "");
+        dm.setDf("tag3", data.get("tag3"), "");
+        dm.setDf("tag4", data.get("tag4"), "");
+        dm.setDf("summary", data.get("summary"), "");
+        dm.setDf("content", content, "");
 
         if (data.containsKey("from")) {
-            dm.setDf("from", data.get("from"),"");
+            dm.setDf("from", data.get("from"), "");
         } else {
-            dm.setDf("from", JtBridge.nodeId(),"");
+            dm.setDf("from", JtBridge.nodeId(), "");
         }
 
         Object level = data.get("level");
-        if(level instanceof Integer){
-            if((Integer)level == 0){
+        if (level instanceof Integer) {
+            if ((Integer) level == 0) {
                 dm.set("level", 3);
-            }else{
+            } else {
                 dm.set("level", level);
             }
-        }else {
+        } else {
             dm.set("level", 3);
         }
 
@@ -356,6 +358,10 @@ public class DbApi {
         dm.set("log_fulltime", datetime.getFulltime());
 
         logPipeline.add(dm);
+
+        if (XApp.cfg().isDebugMode() && content != null) {
+            System.out.println(content);
+        }
 
         return true;
     }
