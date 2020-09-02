@@ -29,7 +29,7 @@ public class RedisJtQueue implements IJtQueue {
         if (prop != null && prop.size() >= 5) {
             JtBridge.queueFactorySet((name) -> new RedisJtQueue(name, prop));
         }else{
-            LogUtil.log("RedisJtQueue", 0, "初始化失败，参数有问题", prop_str);
+            LogUtil.log("RedisJtQueue", LogLevel.WARN, "初始化失败，参数有问题", prop_str);
         }
     }
 

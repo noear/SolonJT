@@ -2,6 +2,7 @@ package org.noear.solonjt.utils;
 
 
 import org.noear.snack.ONode;
+import org.noear.solonjt.dso.LogLevel;
 import org.noear.solonjt.dso.LogUtil;
 
 import java.util.HashMap;
@@ -57,11 +58,11 @@ public class HeiheiApi {
             rest = HttpUtils.http(apiUrl).headers(headers).bodyTxt(message, "text/plain").post();
         } catch (Exception ex) {
             ex.printStackTrace();
-            LogUtil.log("heihei", 0, ExceptionUtils.getString(ex));
+            LogUtil.log("heihei", LogLevel.ERROR, ExceptionUtils.getString(ex));
         }
 
         if (text.startsWith("报警") == false && text.startsWith("恢复") == false) {
-            LogUtil.log("heihei", 0, text);
+            LogUtil.log("heihei", LogLevel.ERROR, text);
         }
 
         return rest;

@@ -161,7 +161,7 @@ public class AppUtil {
         WeedConfig.onException((cmd, ex) -> {
             if (cmd.text.indexOf("a_log") < 0 && cmd.isLog >= 0) {
                 System.out.println(cmd.text);
-                LogUtil.log("weed", "err_log",0, "出错", cmd.text + "<br/><br/>" + ExceptionUtils.getString(ex));
+                LogUtil.log("weed", "err_log",LogLevel.ERROR, "出错", cmd.text + "<br/><br/>" + ExceptionUtils.getString(ex));
             }
         });
 
@@ -171,7 +171,7 @@ public class AppUtil {
             }
 
             if(cmd.timespan()>1000){
-                LogUtil.log("weed", "slow_log",0, cmd.timespan()+"ms", cmd.text);
+                LogUtil.log("weed", "slow_log",LogLevel.ERROR, cmd.timespan()+"ms", cmd.text);
             }
         });
     }

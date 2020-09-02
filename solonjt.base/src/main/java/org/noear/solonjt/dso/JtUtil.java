@@ -413,7 +413,7 @@ public class JtUtil {
 
     @XNote("日志")
     public boolean log(String content) throws Exception{
-        return LogUtil.log(null,3,content);
+        return LogUtil.log(null,LogLevel.INFO,content);
     }
 
     private String _localAddr;

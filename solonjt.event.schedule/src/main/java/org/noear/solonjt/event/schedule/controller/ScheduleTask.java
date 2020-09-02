@@ -4,6 +4,7 @@ import org.noear.solon.core.XContext;
 import org.noear.solon.core.XContextEmpty;
 import org.noear.solon.core.XContextUtil;
 import org.noear.solonjt.dso.JtLock;
+import org.noear.solonjt.dso.LogLevel;
 import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.executor.ExecutorFactory;
 import org.noear.solonjt.task.JtTaskBase;
@@ -64,7 +65,7 @@ public class ScheduleTask extends JtTaskBase {
 
             try {
                 String err = ExceptionUtils.getString(ex);
-                LogUtil.log(getName(), task.tag, task.path, task.file_id + "", 0, "", err);
+                LogUtil.log(getName(), task.tag, task.path, task.file_id + "", LogLevel.ERROR, "", err);
             } catch (Throwable ee) {
                 ee.printStackTrace();
             }
@@ -171,6 +172,6 @@ public class ScheduleTask extends JtTaskBase {
 
         DbApi.taskSetState(task, 9);
 
-        LogUtil.log(getName(), task.tag, task.path, task.file_id + "", 0, "", "执行成功");
+        LogUtil.log(getName(), task.tag, task.path, task.file_id + "", LogLevel.INFO, "", "执行成功");
     }
 }

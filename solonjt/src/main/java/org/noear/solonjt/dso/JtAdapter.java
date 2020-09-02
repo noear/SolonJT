@@ -25,7 +25,7 @@ public class JtAdapter implements IJtExecutorAdapter, IJtConfigAdapter {
 
     @Override
     public void logError(AFileModel file, String msg, Throwable err) {
-        LogUtil.log("_file", file.tag, file.path, 0, "", msg);
+        LogUtil.log("_file", file.tag, file.path, LogLevel.ERROR, "", msg);
     }
 
     @Override

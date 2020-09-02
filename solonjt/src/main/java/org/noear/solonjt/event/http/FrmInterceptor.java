@@ -77,7 +77,7 @@ public class FrmInterceptor implements XHandler {
         }catch (Exception ex) {
             String err = ExceptionUtils.getString(ex);
             ctx.output(err);
-            LogUtil.log("_file", file.tag, file.path, 0, "", err);
+            LogUtil.log("_file", file.tag, file.path, LogLevel.ERROR, "", err);
 
             ctx.setHandled(true);
         }

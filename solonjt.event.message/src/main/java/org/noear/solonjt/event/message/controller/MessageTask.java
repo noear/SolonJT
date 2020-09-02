@@ -4,6 +4,7 @@ import org.noear.solon.core.XContext;
 import org.noear.solon.core.XContextEmpty;
 import org.noear.solon.core.XContextUtil;
 import org.noear.solonjt.dso.JtLock;
+import org.noear.solonjt.dso.LogLevel;
 import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.dso.JtMsg;
 import org.noear.solonjt.executor.ExecutorFactory;
@@ -62,7 +63,7 @@ public class MessageTask extends JtTaskBase {
         try {
             do_distribute(msg);
         } catch (Throwable ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
 
             DbMsgApi.msgSetRepet(msg, 0); //如果失败，重新设为0 //重新操作一次
 
@@ -70,7 +71,7 @@ public class MessageTask extends JtTaskBase {
                     "distribute",
                     msg.topic,
                     msg.msg_id + "",
-                    0,
+                    LogLevel.ERROR,
                     msg.content,
                     ExceptionUtils.getString(ex));
         }
@@ -213,7 +214,7 @@ public class MessageTask extends JtTaskBase {
                 "distributeMessage",
                 msg.topic,
                 msg.msg_id + "",
-                0,
+                LogLevel.INFO,
                 msg.content,
                 dist.receive_url + ":" + note);
     }

@@ -1,5 +1,6 @@
 package org.noear.solonjt.event.message.dso;
 
+import org.noear.solonjt.dso.LogLevel;
 import org.noear.solonjt.dso.LogUtil;
 import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.event.message.Config;
@@ -81,9 +82,9 @@ public class DbMsgApi {
 
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
 
-            LogUtil.log("msg", "setMessageState", msg_id + "", 0, "", ExceptionUtils.getString(ex));
+            LogUtil.log("msg", "setMessageState", msg_id + "", LogLevel.ERROR, "", ExceptionUtils.getString(ex));
 
             return false;
         }
@@ -105,9 +106,9 @@ public class DbMsgApi {
 
             return true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
 
-            LogUtil.log("msg", "setMessageRepet", msg.msg_id + "", 0, "", ExceptionUtils.getString(ex));
+            LogUtil.log("msg", "setMessageRepet", msg.msg_id + "", LogLevel.ERROR, "", ExceptionUtils.getString(ex));
 
             return false;
         }
@@ -150,9 +151,9 @@ public class DbMsgApi {
 
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
 
-            LogUtil.log("msg", "setDistributionState", msg_id + "", 0, "", ExceptionUtils.getString(ex));
+            LogUtil.log("msg", "setDistributionState", msg_id + "", LogLevel.ERROR, "", ExceptionUtils.getString(ex));
 
             return false;
         }

@@ -9,29 +9,29 @@ public class LogUtil {
         JtBridge.log(data);
         return true;
     }
-    public static boolean log(String tag, int level,String content){
+    public static boolean log(String tag, LogLevel level,String content){
         return log(tag, null, null, null,null, level, null, content);
     }
-    public static boolean log(String tag, int level,String summary,String content) {
+    public static boolean log(String tag, LogLevel level,String summary,String content) {
         return log(tag, null, null, null,null, level, summary, content);
     }
 
-    public static boolean log(String tag, String tag1, int level,String summary,String content) {
+    public static boolean log(String tag, String tag1, LogLevel level,String summary,String content) {
         return log(tag, tag1, null, null, null,level, summary, content);
     }
 
-    public static boolean log(String tag, String tag1, String tag2,int level,String summary,String content) {
+    public static boolean log(String tag, String tag1, String tag2,LogLevel level,String summary,String content) {
         return log(tag, tag1, tag2, null, null,level, summary, content);
     }
 
-    public static boolean log(String tag, String tag1, String tag2, String tag3,int level,String summary,String content) {
+    public static boolean log(String tag, String tag1, String tag2, String tag3,LogLevel level,String summary,String content) {
         return log(tag, tag1, tag2, tag3, null,level, summary, content);
     }
 
-    public static boolean log(String tag, String tag1,String tag2, String tag3, String tag4,int level,String summary,String content) {
+    public static boolean log(String tag, String tag1,String tag2, String tag3, String tag4,LogLevel level,String summary,String content) {
         Map<String, Object> map = new HashMap<>();
 
-        map.put("level", level);
+        map.put("level", level.code);
 
         if (tag != null) {
             map.put("tag", tag);
