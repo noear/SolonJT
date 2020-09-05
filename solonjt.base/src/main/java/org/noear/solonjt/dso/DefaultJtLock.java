@@ -1,6 +1,5 @@
 package org.noear.solonjt.dso;
 
-import org.noear.solonjt.dso.IJtLock;
 import org.noear.weed.cache.LocalCache;
 
 public class DefaultJtLock implements IJtLock {
