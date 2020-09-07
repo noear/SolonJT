@@ -18,7 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <solon.ver>1.0.21</solon.ver>
+        <solon.ver>1.0.22</solon.ver>
 
         <solonjt.ver>1.0.7</solonjt.ver>
 
