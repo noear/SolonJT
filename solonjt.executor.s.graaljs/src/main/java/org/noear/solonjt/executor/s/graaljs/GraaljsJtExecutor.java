@@ -165,6 +165,11 @@ public class GraaljsJtExecutor implements IJtExecutor {
 
         if(outString){
             Object api = _eng.get("API_"+name2);
+            if(api == null){
+                del(name);
+                throw new RuntimeException("接口未找到或初始化失败");
+            }
+
             Object tmp = _eng_call.invokeFunction("API_RUN",api);
 
             if (tmp == null) {

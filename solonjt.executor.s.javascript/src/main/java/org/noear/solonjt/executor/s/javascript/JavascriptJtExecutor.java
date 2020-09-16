@@ -7,7 +7,10 @@ import org.noear.solonjt.model.AFileModel;
 import org.noear.solonjt.utils.ThreadData;
 
 import javax.script.*;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * javascript 代码运行工具
@@ -152,6 +155,11 @@ public class JavascriptJtExecutor implements IJtExecutor {
 
         if (outString) {
             Object api = _eng.get("API_" + name2);
+            if(api == null){
+                del(name);
+                throw new RuntimeException("接口未找到或初始化失败");
+            }
+
             Object tmp = _eng_call.invokeFunction("API_RUN", api);
 
             if (tmp == null) {
