@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class CallUtil {
 
-    private static Object do_call(String path, boolean outString) throws Exception {
+    private static Object callDo(String path, boolean outString) throws Exception {
         String path2 = path;//不用转换*
         String name = path2.replace("/", "__");
 
@@ -40,7 +40,7 @@ public class CallUtil {
             XContext.current().attrSet(attrs);
         }
 
-        return do_call(path, false);
+        return callDo(path, false);
     }
 
     /**
@@ -67,7 +67,7 @@ public class CallUtil {
 
             list.forEach((f) -> {
                         try {
-                            Object tmp = do_call(f.path, true);
+                            Object tmp = callDo(f.path, true);
                             if (tmp != null) {
                                 sb.append(tmp.toString()).append("\r\n");
                             }
