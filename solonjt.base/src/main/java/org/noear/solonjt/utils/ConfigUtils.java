@@ -13,7 +13,7 @@ public class ConfigUtils {
             return new Properties();
         }
 
-        return XUtil.getProperties(text);
+        return XUtil.buildProperties(text);
     }
 
     public static ONode getNode(String text) {
